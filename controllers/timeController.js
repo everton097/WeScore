@@ -1,4 +1,9 @@
 const Time = require('../models/Time')
+const Jogador = require('../models/Jogador')
+const Partida = require('../models/Partida')
+const Ponto = require('../models/Ponto')
+const Substituicao = require('../models/Substituicao')
+const Posicoe = require('../models/Posicoe')
 
 module.exports = class TimeController{
 
