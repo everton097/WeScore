@@ -1,0 +1,195 @@
+.area-logada {
+  background-image: url("/WeScore/public/img/Bola-de-volei-saque.jpg");
+}
+
+.mural-al {
+  padding: 20px;
+  width: 95vw;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: var(--nav-bar-a-color-border-solid);
+  border-radius: 20px;
+  margin: 5px auto;
+}
+
+.time-al {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.mural-al .logotime-al {
+  width: 100px;
+  height: 100px;
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.mural-al .nometime-al {
+  font-size: 28px;
+  font-weight: bold;
+  color: white;
+}
+
+.menu-al ul {
+  display: flex;
+  list-style: none;
+}
+
+.menu-al ul li a {
+  text-decoration: none;
+  display: block;
+  color: var(--nav-bar-a-color);
+  font-size: 25px;
+  padding: 10px 25px;
+  margin: 0 5px;
+  transition: 0.2s;
+}
+
+.menu-al ul li a::after {
+  display: block;
+  content: "";
+  border-bottom: 4px solid rgba(0, 0, 0, 0.3);
+  transform: scaleX(0);
+  transition: transform 250ms ease-in-out;
+}
+.menu-al ul li a:hover::after {
+  transform: scaleX(1);
+}
+
+/*Formulário cadastro */
+.cadastro {
+  background-color: var(--nav-bar-a-color-border-solid);
+  border-radius: 20px;
+  padding: 20px;
+  width: 95vw;
+  margin: 20px auto; /* Margem ajustada para espaçamento uniforme */
+}
+
+.cadastro h1 {
+  text-align: center;
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.form-control {
+  display: inline-block;
+  margin-inline: 20px;
+  margin-bottom: 20px;
+}
+
+.form-control label {
+  display: block;
+  color: var(--nav-bar-a-color);
+  font-size: 20px;
+}
+
+.form-control input {
+  width: 18rem;
+  padding: 10px;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: white;
+  margin-top: 5px;
+  outline-offset: none;
+}
+
+.form-control input:focus {
+  border: 2px solid var(--nav-bar-a-color);
+  outline: none;
+}
+
+.form-control-button {
+  text-align: center;
+}
+
+.form-button {
+  padding: 8px 18px;
+  border: 1px solid var(--nav-bar-a-color);
+  border-radius: 6px;
+  transition: all 0.2s ease-in;
+  overflow: hidden;
+  font-size: 20px;
+  color: white;
+  font-weight: bold;
+  background-color: transparent;
+}
+
+.form-button:hover {
+  color: var(--nav-bar-a-color);
+  border: none;
+  background-color: rgba(0, 0, 0, 0.3);
+  outline-offset: none;
+}
+
+.form-control #imagem_time{
+  width: auto;
+}
+
+
+
+/* Telas médias */
+@media only screen and (max-width: 950px) {
+  .mural-al {
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .mural-al .logotime-al {
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+
+  .mural-al .nometime-al {
+    font-size: 24px;
+  }
+
+  .form-control #imagem_time{
+    width: auto;
+  }
+}
+
+/* Telas Pequenas */
+@media only screen and (max-width: 580px) {
+  .mural-al {
+    flex-direction: column;
+    /* Altera a direção do flex container */
+    height: auto;
+    /* Remove a altura fixa para acomodar conteúdo verticalmente */
+    padding: 10px;
+    /* Reduz o espaço ao redor do container */
+    text-align: center;
+    /* Centraliza o conteúdo verticalmente */
+  }
+
+  .mural-al .logotime-al {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    /* Adiciona margem inferior para separar a imagem do nome */
+  }
+
+  .mural-al .nometime-al {
+    font-size: 18px;
+  }
+
+  .menu-al ul li a {
+    font-size: 16px;
+    padding: 10px 15px;
+  }
+
+  .form-control #imagem_time{
+    width: 275px;
+  }
+}

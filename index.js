@@ -33,6 +33,9 @@ app.get('/contato', function(req,res){
 app.get('/login', function(req,res){
     res.render('login')
 })
+app.get('/areaLogada', function(req,res){
+    res.render('areaLogada')
+})
 
 app.listen(port, ()=>{
     console.log(`Servidor rodando: http://localhost:${port}`)
