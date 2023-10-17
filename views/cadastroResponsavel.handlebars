@@ -1,0 +1,39 @@
+<!--
+nome
+email
+senha
+confirma senha
+logo usuario
+-->
+<section class="tamanho-tela">
+	<div class="area-login">
+		<div class="cadastro-responsavel">
+			<h1>Cadastro de Responsavel</h1>
+			<form action="/adicionar" method="POST">
+				<div class="half-box">
+					<label for="nome">Nome:</label>
+					<input type="text" id="nome" name="nome" placeholder="Digite seu nome" >
+				</div>
+				<div class="half-box">
+					<label for="email">E-mail:</label>
+					<input type="text" id="email" name="email" placeholder="Digite seu E-mail" required>
+				</div>
+				<div class="half-box">
+					<label for="password">Senha:</label>
+					<input type="password" id="password" name="password" placeholder="Digite sua senha" required>
+				</div>
+				<div class="half-box spacing">
+                <label for="passconfirmation">Confirme sua senha:</label>
+                <input type="password" name="passconfirmation" id="passconfirmation" placeholder="Confirme sua senha"required>
+            </div>
+                <div class="half-box">
+                    <label for="imagem_usuario">Imagem Usuario (JPEG ou PNG):</label>
+                    <input type="file" id="imagem_usuario" name="imagem_usuario" accept="image/jpeg, image/png, image/gif">
+                </div>
+			</form>
+			<div class="form-control-button button-center">
+				<input type="submit" class="form-button" value="Cadastrar">
+			</div>
+		</div>
+	</div>
+</section>

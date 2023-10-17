@@ -1,18 +1,18 @@
 const { DataTypes } = require('sequelize')
 const db = require ('../db/conn')
 
-const Tarefa = db.define('Pessoa', {
-    cpf : {
+const Pessoas = db.define('Pessoas', {
+    nome : {
         type : DataTypes.STRING,
         allowNull : false
     },
-    Nome : {
+    email : {
         type : DataTypes.STRING,
     },
-    Sobrenome : {
+    senha : {
         type : DataTypes.STRING,
     },
-    sexo : {
+    imagem : {
         type : DataTypes.STRING,
     },
     concluida: {
@@ -20,4 +20,4 @@ const Tarefa = db.define('Pessoa', {
         allowNull : false
     }
 })
-module.exports = Pessoa
+module.exports = Pessoas

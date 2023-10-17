@@ -1,0 +1,33 @@
+<!--
+nome camp
+logo
+-->
+<section class="tamanho-tela">
+	<div class="area-logada">
+		<div class="muralCad-al">
+			<div class="menuCad-al">
+				<ul>
+					<li><a href="/cadastroTime">Cadastro de times</a></li>
+					<li><a href="/cadastroJogadores">Cadastro de jogadores</a></li>
+					<li><a href="/cadastroCamp">Cadastro de Campeonatos</a></li>
+				</ul>
+			</div>
+		</div>
+        <div class="cadastro-responsavel">
+			<h1>Cadastro de Campeonatos</h1>
+			<form action="/adicionar" method="POST">
+				<div class="half-box">
+					<label for="nome">Nome:</label>
+					<input type="text" id="nome" name="nome" placeholder="Digite nome do Campeonato" >
+				</div>
+                <div class="half-box">
+                    <label for="imagem_camp">Logo do Campeonato(JPEG ou PNG):</label>
+                    <input type="file" id="imagem_camp" name="imagem_camp" accept="image/jpeg, image/png, image/gif">
+                </div>
+			</form>
+			<div class="form-control-button button-center">
+				<input type="submit" class="form-button" value="Cadastrar">
+			</div>
+		</div>
+	</div>
+</section>

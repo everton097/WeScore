@@ -1,0 +1,99 @@
+<section class="tamanho-tela">
+	<div class="area-logada">
+		<div class="muralCad-al">
+			<div class="menuCad-al">
+				<ul>
+					<li><a href="/cadastroTime">Cadastro de times</a></li>
+					<li><a href="/cadastroJogadores">Cadastro de jogadores</a></li>
+					<li><a href="/cadastroCamp">Cadastro de Campeonatos</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="alinha-centro">
+			<div class="registros lado-lado" id="div1">
+				<h1>Todos os Times:</h1>
+				<ul class="registro-lista">
+				{{#if nenhumRegistro}}
+					<p>Não há registro de calculos IMC</p>
+				{{/if}}
+				{{#each imc}}
+					<li>
+					<!--{{#if this.concluida}}
+						<a href="/imc/editar/{{this.id}}" class="titulo concluida">{{this.nome}}</a>
+					{{else}}
+						<a href="/imc/editar/{{this.id}}" class="titulo">{{this.nome}}</a>
+					{{/if}}-->
+					<a href="/editar/{{this.id}}" class="nome">{{this.nome}} {{this.sobrenome}}</a>
+					<span class="actions">
+						<a href="/editar/{{this.id}}"><i class="bi bi-pencil-square"></i></a>
+						<form action="/remover" method="POST">
+						<input type="hidden" name="id" value={{this.id}}>
+						<button type="submit">
+							<i class="bi bi-x-lg"></i>
+						</button>
+						</form>
+					</span>
+					</li>
+				{{/each}}
+				</ul>
+			</div>
+			<div class="registros lado-lado" id="div2">
+				<h1>Todos os jogadores:</h1>
+				<ul class="registro-lista">
+				{{#if nenhumRegistro}}
+					<p>Não há registro de calculos IMC</p>
+				{{/if}}
+				{{#each imc}}
+					<li>
+					<!--{{#if this.concluida}}
+						<a href="/imc/editar/{{this.id}}" class="titulo concluida">{{this.nome}}</a>
+					{{else}}
+						<a href="/imc/editar/{{this.id}}" class="titulo">{{this.nome}}</a>
+					{{/if}}-->
+					<a href="/imc/editar/{{this.id}}" class="nome">{{this.nome}} {{this.sobrenome}}</a>
+					<span class="actions">
+						<a href="/imc/editar/{{this.id}}"><i class="bi bi-pencil-square"></i></a>
+						<form action="/imc/remover" method="POST">
+						<input type="hidden" name="id" value={{this.id}}>
+						<button type="submit">
+							<i class="bi bi-x-lg"></i>
+						</button>
+						</form>
+					</span>
+					</li>
+				{{/each}}
+				</ul>
+			</div>
+			<div class="registros lado-lado" id="div3">
+				<h1>Todos os Campeonatos:</h1>
+				<ul class="registro-lista">
+				{{#if nenhumRegistro}}
+					<p>Não há registro de calculos IMC</p>
+				{{/if}}
+				{{#each imc}}
+					<li>
+					<!--{{#if this.concluida}}
+						<a href="/imc/editar/{{this.id}}" class="titulo concluida">{{this.nome}}</a>
+					{{else}}
+						<a href="/imc/editar/{{this.id}}" class="titulo">{{this.nome}}</a>
+					{{/if}}-->
+					<a href="/imc/editar/{{this.id}}" class="nome">{{this.nome}} {{this.sobrenome}}</a>
+					<span class="actions">
+						<a href="/imc/editar/{{this.id}}"><i class="bi bi-pencil-square"></i></a>
+						<form action="/imc/remover" method="POST">
+						<input type="hidden" name="id" value={{this.id}}>
+						<button type="submit">
+							<i class="bi bi-x-lg"></i>
+						</button>
+						</form>
+					</span>
+					</li>
+				{{/each}}
+				</ul>
+			</div>
+		</div>
+
+		
+		
+	</div>
+</section>

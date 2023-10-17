@@ -1,0 +1,273 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Helvetica, sans-serif;
+    /*color: #323232;*/
+    border: none;
+}
+
+input, label{
+    display:block;
+    width: 100%;
+}
+
+input:focus, label:focus{
+    outline: none;
+}
+
+a {
+    color: #e60084;
+}
+
+h1{
+    padding-top: 1vh;
+}
+
+.imagefundo {
+    background-image: url('../img/Home/bola-na-rede.png');
+    /*background-size: cover;*/
+    background-position-y: -150px;
+}
+
+
+/* form */
+
+#main-container{
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 25px;
+}
+
+#main-container h1{
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 1.6rem; /*adpdata do elemento root*/
+}
+
+form{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.full-box{
+    flex: 1 1 100%;
+    position: relative;
+}
+
+.half-box{
+    flex: 1 1 45%;
+    position: relative;
+}
+
+.spacing{
+    margin-right: 2.5%;
+}
+
+label {
+    font-weight: bold;
+    font-size: .8rem;
+}
+
+input{
+    border-bottom: 2px solid #323232;
+    padding: 10px;
+    font-size: .9rem;
+    margin-bottom: 40 px;
+}
+
+input:focus{
+    border-color: #5e54f3;
+}
+
+input[type="submit"]{
+    background-color: #5e54f3;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    height: 40px;
+    cursor: pointer;
+}
+/*
+
+TENTATIVA DE VALIDAÇÃO VISUAL
+
+#agreement {
+    margin-right: 5px;
+}
+
+#agreement, #agreemente-label{
+    display: incline-block;
+    width: auto;
+}
+
+/*validação
+.error-validation{
+    color: #ff1a1a;
+    position: absolute;
+    top: 57px;
+    font-size: .8rem;
+}
+
+.template{
+    display: none;
+}
+*/
+
+/*----------------------------------------------------------------*/
+/*classe half box responsavel por manter os dados do form bonitinho*/
+.half-box {
+    display: inline-block;
+    margin-inline: 20px;
+    margin-bottom: 20px;
+}
+
+.half-box label {
+    display: block;
+    color: var(--nav-bar-a-color);
+    font-size: 20px;
+}
+
+.half-box input {
+    padding: 10px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    margin-top: 5px;
+    outline-offset: none;
+}
+
+.half-box input:focus {
+    border: 2px solid var(--nav-bar-a-color);
+    outline: none;
+}
+/*--------------------------------------------------*/
+
+/*aparentemente não faz nada kkk*/
+.form-control-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*controla a largura do botão cadastrar*/
+.button-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto; /*controla a lagura do botão*/
+    margin: 0 auto 0 auto;
+}
+
+/*mantém o footer fixo no final da pagina*/
+.tamanho-tela{
+    height: 94vh;
+    width: 100vw;
+}
+
+.area-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+    margin-bottom: 50px;
+}
+
+/*.form-button {
+    padding: 8px 18px;
+    border: 1px solid var(--nav-bar-a-color);
+    border-radius: 6px;
+    transition: all 0.2s ease-in;
+    overflow: hidden;
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+    background-color: transparent;
+    text-align: center;
+}*/
+  
+/*.form-button:hover {
+    color: var(--nav-bar-a-color);
+    border: none;
+    background-color: rgba(0, 0, 0, 0.3);
+    outline-offset: none;
+    text-align: center;
+}*/
+
+/*Formulário cadastro */
+.cadastro-responsavel {
+    background-color: var(--nav-bar-a-color-border-solid);
+    border-radius: 20px;
+    padding: 20px;
+    width: 25vw;
+    margin: 20px auto; /* Margem ajustada para espaçamento uniforme */
+}
+
+.cadastro-responsavel h1 {
+    text-align: center;
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+/*------------------------------------------------------------------------------------------*/
+/* Estilos para o modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+    background-color: #fff;
+    border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border: 1px solid #333;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para fechar o modal */
+.close {
+    color: #333;
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+select {
+    width: 200px; /* Largura personalizada */
+    height: 40px; /* Altura personalizada */
+    border-radius: 10px;
+    font-family: Arial, sans-serif; /* Fonte personalizada */
+    font-size: 16px; /* Tamanho do texto personalizado */
+    border: 2px solid #333; /* Cor da borda personalizada */
+    background: #f5f5f5; /* Cor de fundo personalizada */
+    color: #333; /* Cor do texto personalizada */
+    outline: none; /* Remove o contorno de foco */
+}
+
+select::-webkit-inner-spin-button {
+    appearance: none;
+    display: none;
+}
+select:focus {
+    border-color: #007bff; /* Cor da borda quando em foco */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra quando em foco */
+}
+/*------------------------------------------------------------------------------------------*/
