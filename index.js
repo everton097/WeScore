@@ -1,7 +1,7 @@
 const express = require("express")
 const exphds = require("express-handlebars")
 const app = express()
-const port = 3000
+//const port = 3000
 
 app.engine('handlebars', exphds.engine())
 app.set('view engine', 'handlebars')
@@ -37,6 +37,8 @@ app.get('/areaLogada', function(req,res){
     res.render('areaLogada')
 })
 
-app.listen(port, ()=>{
+/*app.listen(port, ()=>{
     console.log(`Servidor rodando: http://localhost:${port}`)
 })
+*/
+app.listen(5000)
