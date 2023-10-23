@@ -1,0 +1,64 @@
+/* Estilo para o overlay do modal */
+.modal.show {
+    background-color:  rgba(0, 0, 0, 0.5);
+}
+
+/* definindo variáveis para cores */
+/* sobrescrevendo classes padrão do Bootstrap */
+/* a marcação !important dá um peso maior a regra, sobrescrevendo regras prévias */
+
+/*
+:root{
+    --primary: #026E81;
+    --secondary: #00ABBD;
+    --success: #0099DD;
+    --info: #A1C7E0;
+    --warning: #FF9933;
+    --danger: #E3371E;
+    --white: #FFF;
+}*/
+
+/*Dark mode*/
+:root{
+    --primary: #03243f;
+    --secondary: #0ebeff;
+    --success: #964EC2;
+    --info: #03243f;
+    --warning: #0ebeff;
+    --danger: #313866;
+    --white: #03243f;
+}*/
+
+.bg-primary, .btn-primary{
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+}
+.bg-secondary, .btn-secondary{
+    background-color: var(--secondary) !important;
+    border-color: var(--secondary) !important;
+}
+
+.bg-success, .btn-success{
+    background-color: var(--success) !important;
+    border-color: var(--success) !important;
+}
+.bg-info, .btn-info{
+    background-color: var(--info) !important;
+    border-color: var(--info) !important;
+}
+.bg-warning, .btn-warning{
+    background-color: var(--warning) !important;
+    border-color: var(--warning) !important;
+}
+.bg-danger, .btn-danger{
+    background-color: var(--danger) !important;
+    border-color: var(--danger) !important;
+}
+
+.nav-link {
+    color: var(--white) !important ;
+}
+.nav-link:hover{
+    color: var(--warning) !important ; 
+}
+

@@ -1,3 +1,5 @@
+/*
+
 const { Op } = require('sequelize')//para utilizar like
 const Usuario = require('../models/usuario')
 const path = require('path')
@@ -279,3 +281,5 @@ exports.checkUser = async (req, res) => {
         res.status(401).json({ error: "Acesso negado. Token não enviado!" });
     }
 }
+
+*/

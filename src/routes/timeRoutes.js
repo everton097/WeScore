@@ -1,3 +1,4 @@
+/*
 const express = require('express')
 const routerTime = express.Router()
 
@@ -40,3 +41,4 @@ routerTime.put('/:idTime',checkToken,upload.single('logoTime'), timeController.u
 routerTime.delete('/:idTime',checkToken, timeController.deleteTime)
 
 module.exports = routerTime
+*/

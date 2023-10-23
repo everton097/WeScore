@@ -1,0 +1,221 @@
+.quadradejogo{
+  width: 50%;
+  aspect-ratio: 16 / 9;
+  margin: 5px auto;
+}
+.quadraVolei {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ballplayer {
+  width: 45%;
+  height: 75%;
+  font-size: 2.5vw;
+  display: flex;
+  align-items: center;
+}
+.jogadoresTime01{
+  width: 98%;
+  height: 95%;
+  margin: 0 0 0 auto;
+}
+.jogadoresTime02{
+  width: 98%;
+  height: 95%;
+  margin: 0 auto 0 0;
+}
+.quadra {
+  position: relative;
+}
+.bolinha {
+  position: absolute;
+  width: 20%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background-color: var(--nav-bar-a-color);
+  display: flex;
+  color: white;
+  font-size: 100%;
+  text-align: center;
+  font-weight: bolder;
+  align-items: center;
+  justify-content: center;
+  transition: left 0.5s ease, top 0.5s ease;
+}
+.bolinha2 {
+  position: absolute;
+  width: 20%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background-color: var(--nav-bar-a-color-border-solid);
+  display: flex;
+  color: white;
+  font-size: 100%;
+  text-align: center;
+  font-weight: bolder;
+  align-items: center;
+  justify-content: center;
+  transition: left 0.5s ease, top 0.5s ease;
+}
+.volleyball-court {
+  width: 50%;
+  aspect-ratio: 16 / 9;
+  background-color: var(--nav-bar-a-color-border-solid);
+  border: 2px solid #ffffff;
+  border-radius: 10px;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.net {
+  width: 3px;
+  height: 85%;
+  background-color: #ffffff;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.baseline {
+  left: 4%;
+  width: 92%;
+  height: 76%;
+  background-color: transparent;
+  position: absolute;
+  border: 2px solid rgb(255, 255, 255);
+}
+.attack-line {
+  width: 2px;
+  height: 76%;
+  background-color: #ffffff;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.attack-line.left {
+  left: 34.3%;
+}
+.attack-line.right {
+  right: 34.3%;
+}
+.service-area {
+  width: 44%;
+  height: 76%;
+  background-color: var(--cor-quadra);
+  position: absolute;
+}
+.service-area.left {
+  left: 4%;
+}
+.service-area.right {
+  right: 4%;
+}
+.attack-area {
+  width: 22%;
+  height: 76%;
+  background-color: var(--cor-quadra);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.attack-area.left {
+  left: 38%;
+}
+.attack-area.right {
+  right: 38%;
+}
+.coach-box {
+  width: 30.5%;
+  height: 12%;
+  position: absolute;
+  top: 0.5%;
+  border-left: 2px dashed rgb(255, 255, 255);
+  border-right: 2px dashed rgb(255, 255, 255);
+}
+.coach-box.left {
+  border-top: none;
+  border-left: none;
+  left: 4%;
+}
+.coach-box.right {
+  border-top: none;
+  border-right: none;
+  right: 4%;
+}
+.coach-box.left.bottom {
+  top: 87.5%;
+  border-top: none;
+  border-left: none;
+  background-color: rgba(255, 255, 0, 0.2);
+  border-bottom: 2px dashed rgb(255, 255, 255);
+}
+.coach-box.right.bottom {
+  top: 87.5%;
+  border-top: none;
+  border-right: none;
+  background-color: rgba(255, 255, 0, 0.2);
+  border-bottom: 2px dashed rgb(255, 255, 255);
+}
+@media only screen and (max-width: 1700px) {
+  .volleyball-court {
+    width: 50%;
+    transition: 0.5s;
+  }
+  .quadradejogo{
+    width: 50%;
+    transition: 0.5s;
+  }
+  .attack-line.left {
+    left: 34.3%;
+  }
+  .attack-line.right {
+    right: 34.3%;
+  }
+}
+@media only screen and (max-width: 1400px) {
+  .attack-line.left {
+    left: 34.2%;
+  }
+  .attack-line.right {
+    right: 34.2%;
+  }
+}
+@media only screen and (max-width: 1200px) {
+  .volleyball-court {
+    width: 70%;
+    transition: 0.5s;
+  }
+  .quadradejogo{
+    width: 70%;
+    transition: 0.5s;
+  }
+}
+@media only screen and (max-width: 950px) {
+  .volleyball-court {
+    width: 80%;
+    transition: 0.5s;
+  }
+  .quadradejogo{
+    width: 80%;
+    transition: 0.5s;
+  }
+  .attack-line.left {
+    left: 34%;
+  }
+  .attack-line.right {
+    right: 34%;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .volleyball-court {
+    width: 90%;
+    transition: 0.5s;
+  }
+  .quadradejogo{
+    width: 90%;
+    transition: 0.5s;
+  }
+}

@@ -1,3 +1,4 @@
+/*
 const { Op } = require('sequelize')//para utilizar like
 const Time = require('../models/time')
 const Usuario = require('../models/usuario')
@@ -189,3 +190,4 @@ exports.deleteTime = async (req,res) => {
       res.status(500).json({error:`Erro ao excluir o time`})        
   }
 }
+*/

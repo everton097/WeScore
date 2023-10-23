@@ -1,3 +1,4 @@
+/*
 const express = require('express')
 const routerUsuario = express.Router()
 
@@ -40,3 +41,4 @@ routerUsuario.delete('/:idUsuario',checkToken, usuarioController.deleteUsuario)
 
 routerUsuario.post('/token', usuarioController.tokenPost)
 module.exports = routerUsuario
+*/

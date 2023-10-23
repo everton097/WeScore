@@ -1,3 +1,4 @@
+/*
 const { Op } = require("sequelize")
 // Importe o modelo de campeonato e de time
 const Time_Campeonato = require("../models/time_campeonato")
@@ -83,3 +84,4 @@ exports.deleteTimeCampeonato = async (req, res) => {
 		res.status(500).json({ error: "Erro interno do servidor." })
 	}
 }
+*/

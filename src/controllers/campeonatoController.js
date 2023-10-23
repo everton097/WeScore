@@ -1,3 +1,4 @@
+/*
 const { Op } = require('sequelize')
 const Campeonato = require('../models/campeonato')
 const Usuario = require('../models/usuario')
@@ -202,4 +203,4 @@ exports.deleteCampeonatoByID = async (req,res) => {
         res.status(500).json({error : `Erro ao deletar o campeonato.`})
     }
 }
-
+*/

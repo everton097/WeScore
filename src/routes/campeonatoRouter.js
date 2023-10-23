@@ -1,3 +1,4 @@
+/*
 const express = require('express')
 const routerCampeonato = express.Router()
 
@@ -38,3 +39,4 @@ routerCampeonato.put('/:idCampeonato',checkToken,upload.single('logoCampeonato')
 routerCampeonato.delete('/:idCampeonato',checkToken, campeonatoController.deleteCampeonatoByID)
 
 module.exports = routerCampeonato
+*/
