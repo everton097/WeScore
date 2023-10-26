@@ -53,7 +53,7 @@ function CreateJogadorClick(event) {
         }; */
 
         //Faz uma solicitação POST para criar o Jogador
-        axios.post('api/jogador/', formData, config) //axios.post('api/jogador/', formData, config)
+        axios.post(`${url}api/jogador/`, formData) //axios.post('api/jogador/', formData, config)
             .then(response => {
                 //console.log(response.data);
 

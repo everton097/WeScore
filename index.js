@@ -61,11 +61,11 @@ app.use('/jogador',jogadorRouter)
 
 //TODO: (Para Fazer) Implementar o site para renderizar com o handlebars.
 app.get('/', function (req, res) {
-    res.render('site')
+    res.render('home')
 })
 
 app.get('/areaLogada', function(req,res){
-    res.render('areaLogada')
+    res.render('areaLogada/arealogada')
 })
 
 app.get('/areaLogada/create', function (req, res) {
