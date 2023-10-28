@@ -3,7 +3,7 @@
 {{!-- Seção de conteúdo da página --}}
 <div class="container mt-4 w-80">
     <h1 class="mb-4">Cadastrar Jogador</h1>
-    <form id="createPlayerForm" enctype="multipart/form-data" method="post">
+    <form id="createJogadorForm" enctype="multipart/form-data" method="post">
         <div class="form-group mb-3">
             <label for="createNome">Nome</label>
             <input type="text" class="form-control" id="createNome" name="nome" required>
@@ -21,14 +21,18 @@
             <input type="number" class="form-control" id="createTelefone" name="telefone" required>
         </div>
         <div class="form-group mb-3">
-            <label for="createNumeroCamisa">Número da Camisa</label>
-            <input type="number" class="form-control" id="createNumeroCamisa" name="numerocamisa" required>
+            <label for="createNumeroCamiseta">Número da Camisa</label>
+            <input type="number" class="form-control" id="createNumeroCamiseta" name="numerocamiseta" required>
+        </div>
+        <div class="form-group mb-3">
+            <label for="createEscolheTime">Time</label>
+            <input type="number" class="form-control" id="createEscolheTime" name="escolhetime" required>
         </div>
 
         <!-- Campo oculto para armazenar o ID do jogador -->
         <a  href="../areaLogada/" class="btn btn-secondary" id="cancelCreatePlayer"><i class="bi bi-x-circle"></i> Cancelar</a>
-        <button  type="button" class="btn btn-primary" id="saveCreatePlayer" onclick="CreatePlayerClick(event)"><i class="bi bi-check-circle"></i> Salvar</button>
+        <button  type="button" class="btn btn-primary" id="saveCreatePlayer" onclick="CreateJogadorClick(event)"><i class="bi bi-check-circle"></i> Salvar</button>
     </form>
 </div>
-<!-- Scripts do formulário player -->
+<!-- Scripts do formulário player <script src="../js/menu.js"></script> -->
 <script src="../js/playerScripts.js"></script> 

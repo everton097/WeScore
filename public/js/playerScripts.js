@@ -9,9 +9,10 @@ function validateForm(formData) {
     const cpf = formData.get('cpf');
     const telefone = formData.get('telefone');
     const numeroCamiseta = formData.get('numeroCamiseta');
+    const escolhetime = formData.get('escolhetime');
 
 
-    if (!nomeJogador || !sobrenome || !cpf || !telefone || !numeroCamiseta) {
+    if (!nomeJogador || !sobrenome || !cpf || !telefone || !numeroCamiseta || !escolhetime) {
         // Exibir mensagem de erro para o usuário
         Swal.fire({
             icon: 'error',
@@ -37,6 +38,7 @@ function CreateJogadorClick(event) {
 
     //Obtém os valores dos campos do formulário
     const formData = new FormData(document.querySelector("#createJogadorForm"));
+    console.log(formData);
 
     //Chama a função de validação antes de enviar a solicitação POST
     if (validateForm(formData)) {
@@ -53,7 +55,7 @@ function CreateJogadorClick(event) {
         }; */
 
         //Faz uma solicitação POST para criar o Jogador
-        axios.post(`${url}api/jogador/`, formData) //axios.post('api/jogador/', formData, config)
+        axios.post(`${url}jogador/create`, formData) //axios.post('api/jogador/', formData, config)
             .then(response => {
                 //console.log(response.data);
 
@@ -63,7 +65,7 @@ function CreateJogadorClick(event) {
                     showConfirmButton: false,
                     timer: 1500
                 }).then(() => {
-                    window.location.href = '/jogador/';
+                    window.location.href = '../arealogada';
                 });
             })
             .catch(error => {

@@ -9,7 +9,7 @@ const api = require('../config/api');
 exports.createJogador = async (req, res) => {
     try {
         //Renderiza a pagina jogador/create.handlebars
-        res.render('jogador/create');
+        res.render('arealogada/create');
     } catch (error) {
         console.log(error)
         res.status(500).json({ error: `Erro ao criar jogador.` })
