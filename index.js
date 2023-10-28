@@ -41,4 +41,4 @@ app.get('/areaLogada', function(req,res){
     console.log(`Servidor rodando: http://localhost:${port}`)
 })
 */
-app.listen(5000)
+app.listen(6000)
