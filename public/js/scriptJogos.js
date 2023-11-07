@@ -120,14 +120,24 @@ let countTime01 = 0;
 let intervalIDTime01 = 0;
 plusButtonTime01.addEventListener("click", () => {
   if (countTime01 >= 0 && countTime01 < 40) {
-    intervalIDTime01 = countTime01 += 1;
-    console.log("botao + ANTES: "+controlet1,rotacaot1);
+    intervalIDTime01 = countTime01 += 1;console
     updateTime01();
     updateValueTime01();
     updateBola01();
     controlet1 = "ponto";
     controlet2 = "semponto";
-    console.log("botao + DPS: "+controlet1,rotacaot1);
+  }
+});
+// Adicione um ouvinte de evento ao documento
+document.addEventListener("keydown", () => {
+   // Verifique se a tecla pressionada é a tecla desejada (por exemplo, tecla 'A' com código 65)
+  if (countTime01 >= 0 && countTime01 < 40 && event.key === 'a') {
+    intervalIDTime01 = countTime01 += 1;console
+    updateTime01();
+    updateValueTime01();
+    updateBola01();
+    controlet1 = "ponto";
+    controlet2 = "semponto";
   }
 });
 plusButtonTime01.addEventListener("mousedown", () => {
@@ -146,10 +156,12 @@ plusButtonTime01.addEventListener("mousedown", () => {
   }
 });
 minusButtonTime01.addEventListener("click", () => {
+  console.log(countTime01,countTime02)//Chamda de rota redução ponto api
   if (countTime01 > 0 && countTime01 <= 40) {
     intervalIDTime01 = countTime01 -= 1;
     updateMenusTime01();
     updateValueTime01();
+    console.log(countTime01,countTime02)
     console.log(controlet1,rotacaot1);
   }
 });
@@ -191,8 +203,7 @@ jogador5.style.top =  `${posiocaoTopT1[1]}%`;
 jogador6.style.left = `${posiocaoLeftT1[0]}%`;
 jogador6.style.top =  `${posiocaoTopT1[0]}%`;
 
-const updateTime01 = () => {  
-  console.log("Controle de rotação +"+controlet1,rotacaot1);
+const updateTime01 = () => {
   if (controlet1 == "semponto" && rotacaot1 == "mantem") {
     //Altera posição dos jogadores.
     moveLeft(posiocaoLeftT1);
@@ -249,7 +260,6 @@ plusButtonTime02.addEventListener("click", () => {
     updateBola02();
     controlet2 = "ponto";
     controlet1 = "semponto";
-    console.log("botao+"+controlet2,rotacaot2);
   }
 });
 plusButtonTime02.addEventListener("mousedown", () => {
@@ -272,7 +282,6 @@ minusButtonTime02.addEventListener("click", () => {
     intervalIDTime02 = countTime02 -= 1;
     updateMenusTime02();
     updateValueTime02();
-    console.log(controlet2,rotacaot2);
   }
 });
 minusButtonTime02.addEventListener("mousedown", () => {
