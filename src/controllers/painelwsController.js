@@ -4,8 +4,8 @@ const api = require('../config/api')
 exports.getALLDatas = async (req,res) => {
     try {
         // Configurar o cabeçalho com a autorização do token
-        const token = req.session.token
-        console.log(token)
+        const token = await req.session.token
+        console.log("Toekn getALLDatas: "+token)
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         }
@@ -26,5 +26,6 @@ exports.getALLDatas = async (req,res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Erro ao buscar datas.' });
+        console.log("Toekn getALLDatas: "+req.session.token)
     }
 }

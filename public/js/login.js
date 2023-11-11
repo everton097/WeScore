@@ -81,8 +81,7 @@ function loginClick(event) {
         // Armazena o token de resposta no localStorage
         localStorage.setItem('token', response.data.token);
         const token = localStorage.getItem('token');
-        console.log(token);
-
+        console.log("Token: "+ token);
         // Redireciona para a página inicial do cms
         window.location.href = `../painelws`;
       })
