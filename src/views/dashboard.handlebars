@@ -1,0 +1,115 @@
+<main class="flex_main">
+	<section class="sectionCamp">
+		<div class="cardDashboard">
+			<p class="cardDashboard_title">Campeonatos</p>
+			<div class="testedas">
+				<div class="cardDashboard_container">
+
+					{{#each campeonatos}}
+						<div class="cardDashboard_division">
+							<div class="cardDashboard_division_image">
+								<img
+									src="http://localhost:3001/public/upload/img/campeonato/{{logoCampeonato}}"
+									alt="logo do campeonato"
+									width="100px"
+								/></div>
+							<div class="cardDashboard_division_content">
+								<div class="cardDashboard_division_text">
+									<span
+										class="cardDashboard_division_name"
+									>{{nomeCampeonato}}</span>
+									<p
+										class="cardDashboard_division_username"
+									>{{Usuario.nomeUsuario}}</p>
+								</div>
+								<button class="cardDashboard_division_follow">Follow</button>
+							</div>
+						</div>
+					{{/each}}
+
+				</div>
+			</div>
+			<a class="cardDashboard_more" href="#">See more</a>
+		</div>
+		<div class="cardDashboard">
+			<p class="cardDashboard_title">Partidas</p>
+			<div class="testedas">
+				<div class="cardDashboard_container">
+					{{#each partidas}}
+						<div class="cardDashboard_division">
+							<div class="cardDashboard_division_image"></div>
+							<div class="cardDashboard_division_content">
+								<div class="cardDashboard_division_text">
+									<span class="cardDashboard_division_name">Partida:
+										{{idPartida}}</span>
+									<p class="cardDashboard_division_username">{{nomeTime1}}
+										vs
+										{{nomeTime2}}</p>
+								</div>
+								<button class="cardDashboard_division_follow">Follow</button>
+							</div>
+						</div>
+					{{/each}}
+
+				</div>
+			</div>
+			<a class="cardDashboard_more" href="#">See more</a>
+		</div>
+	</section>
+	<section2 class="sectionCamp2">
+		<div class="cardDashboard2">
+			<p class="cardDashboard_title">Times</p>
+			<div class="testedas">
+				<div class="cardDashboard_container">
+					{{#each times}}
+						<div class="cardDashboard_division">
+							<div class="cardDashboard_division_image">
+								<img
+									src="http://localhost:3001/public/upload/img/time/{{logoTime}}"
+									alt="logo do time"
+								/>
+							</div>
+							<div class="cardDashboard_division_content">
+								<div class="cardDashboard_division_text">
+									<span class="cardDashboard_division_name">{{nomeTime}} </span>
+									<p class="cardDashboard_division_username">ID time:
+										{{idTime}}</p>
+								</div>
+								<button class="cardDashboard_division_follow">Follow</button>
+							</div>
+						</div>
+					{{/each}}
+
+				</div>
+			</div>
+			<a class="cardDashboard_more" href="#">See more</a>
+		</div>
+	</section2>
+	<section2 class="sectionCamp2">
+		<div class="cardDashboard2">
+			<p class="cardDashboard_title">Jogadores</p>
+			<div class="testedas">
+				<div class="cardDashboard_container">
+					{{#each jogadores}}
+						<div class="cardDashboard_division">
+							<div class="cardDashboard_division_image"></div>
+							<div class="cardDashboard_division_content">
+								<div class="cardDashboard_division_text">
+									<span class="cardDashboard_division_name">{{nomeJogador}}
+										{{sobrenome}}</span>
+									<p class="cardDashboard_division_username">Time:
+										{{Time.nomeTime}}
+										Nº Camiseta:
+										{{numeroCamiseta}}</p>
+								</div>
+								<button class="cardDashboard_division_follow">Follow</button>
+							</div>
+						</div>
+					{{/each}}
+
+				</div>
+			</div>
+			<a class="cardDashboard_more" href="#">See more</a>
+		</div>
+	</section2>
+</main>

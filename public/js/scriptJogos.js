@@ -379,3 +379,19 @@ function moveLeft(arr) {
   const firstElement = arr.shift();
   arr.push(firstElement);
 }
+// Obtenha todos os botões com atributo 'data-target'
+const alterCards = document.querySelectorAll("[data-target]");
+
+// Adicione um evento de clique a cada botão
+alterCards.forEach(alterCard => {
+  alterCard.addEventListener("click", () => {
+    // Oculte todos os elementos
+    document.querySelectorAll("#cartoes, #quadradejogos, #substituicao").forEach(element => {
+      element.style.display = "none";
+    });
+    
+    // Mostre o elemento correspondente com base no atributo 'data-target'
+    const targetId = alterCard.getAttribute("data-target");
+    document.getElementById(targetId).style.display = "block";
+  });
+});

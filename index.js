@@ -8,6 +8,7 @@ const port = 3002
 //Import routes
 const routesLogin = require("./src/routes/loginRoutes")
 const routesHome = require("./src/routes/homeRoutes")
+const routesPainelws = require("./src/routes/painelwsRoutes")
 // Lê as configurações do .env 
 dotenv.config()
 // Definindo uma função para que o handlebars possa formatar a data corretamente para o usuário final
@@ -89,6 +90,7 @@ app.use(
 // Configuração das rotas
 app.use('/',routesHome)
 app.use('/',routesLogin)
+app.use('/painelws', routesPainelws)
 
 //GET route for notes page
 app.get('/contato', function(req,res){

@@ -1,0 +1,136 @@
+.flex_main{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 2px;
+}
+.sectionCamp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: clamp(350px,calc(100% /3.1) + 10px,calc(100% /3.1) + 10px);
+  height: 92vh;
+}
+
+.sectionCamp2 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  width: clamp(350px,100% / 3.1,100% / 3.1);
+  height: 92vh;
+}
+
+.cardDashboard {
+  width: calc(100%);
+  height: 44vh;
+  background: #E8EAEA;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 5px;
+}
+
+.cardDashboard2 {
+    width: calc(100%);
+    height: 90vh;
+    background: #E8EAEA;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 5px 2px 5px 5px;
+  }
+  
+  .testedas{
+    height: calc(100%);
+    overflow: auto;
+  }
+  .cardDashboard_title, .cardDashboard_more {
+    padding: 10px 15px;
+  }
+  
+  .cardDashboard_division {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+  }
+  
+  .cardDashboard_division_content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 1;
+  }
+  
+  .cardDashboard_container {
+    display: flex;
+    flex-direction: column;
+
+  }
+  
+  .cardDashboard_title {
+    font-weight: 900;
+    font-size: 1.3em;
+  }
+  
+  .cardDashboard_divisionname {
+    font-weight: 800;
+  }
+  
+  .cardDashboard_division_username {
+    font-size: .9em;
+    color: #64696e;
+  }
+  
+  .cardDashboard_division_image {
+    width: 60px;
+    height: 60px;
+    background: rgb(22,19,70);
+    background: linear-gradient(295deg, rgba(22,19,70,1) 41%, rgba(89,177,237,1) 100%);
+    border-radius: 50%;
+    margin-right: 15px;
+    overflow: hidden;
+  }
+  .cardDashboard_division_image img {
+    max-width: 100%;
+    max-height: 100%;
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+  }
+  
+  .cardDashboard_division_follow {
+    border: none;
+    border-radius: 25px;
+    background-color: #0f1113;
+    color: white;
+    padding: 8px 15px;
+    font-weight: 700;
+  }
+  
+  .cardDashboard_more {
+    display: block;
+    text-decoration: none;
+    color: rgb(29, 155, 240);
+    font-weight: 800;
+  }
+  
+  .cardDashboard_division:hover {
+    background-color: #b3b6b6;
+  }
+  
+  .cardDashboard_more:hover {
+    background-color: #b3b6b6;
+    border-radius: 0px 0px 15px 15px;
+  }
+  
+  .cardDashboard_division_follow:hover {
+    background-color: #2c3136;
+  }

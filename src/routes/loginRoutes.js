@@ -5,10 +5,7 @@ const loginController = require('../controllers/loginController')
 routerLogin.get('/login',loginController.loginPage)
 routerLogin.post('/login', loginController.autenticate);
 
-// Rota para a página inicial do CMS
-routerLogin.get('/painelws/', function (req, res) {
-    res.render('adm',{layout : 'teste'})
-});
+
 routerLogin.get('/painelws/jogos', function (req, res) {
     res.render('jogos',{layout : 'teste'})
 });
