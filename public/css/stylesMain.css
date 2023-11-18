@@ -54,6 +54,7 @@ header .logo span {
 }
 .nav-bar ul {
 	display: flex;
+	align-items: center;
 	list-style: none;
 }
 .nav-bar ul li a {
@@ -250,6 +251,7 @@ section .footer-content span {
 		transition: 0.5s;
 		overflow: hidden;
 		z-index: 10;
+		align-items: center;
 	}
 	.nav-bar.active {
 		height: 400px;
@@ -258,7 +260,7 @@ section .footer-content span {
 	.nav-bar ul {
 		display: block;
 		width: fit-content;
-		margin: 80px auto 0 auto;
+		margin: 10px auto 0 auto;
 		text-align: center;
 		transition: 0.5s;
 		opacity: 0;

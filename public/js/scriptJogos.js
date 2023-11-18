@@ -131,7 +131,7 @@ plusButtonTime01.addEventListener("click", () => {
 // Adicione um ouvinte de evento ao documento
 document.addEventListener("keydown", () => {
    // Verifique se a tecla pressionada é a tecla desejada (por exemplo, tecla 'A' com código 65)
-  if (countTime01 >= 0 && countTime01 < 40 && event.key === 'a') {
+  if (countTime01 >= 0 && countTime01 < 40 && event.key === 'q') {
     intervalIDTime01 = countTime01 += 1;console
     updateTime01();
     updateValueTime01();
@@ -161,9 +161,15 @@ minusButtonTime01.addEventListener("click", () => {
     intervalIDTime01 = countTime01 -= 1;
     updateMenusTime01();
     updateValueTime01();
-    console.log(countTime01,countTime02)
-    console.log(controlet1,rotacaot1);
   }
+});
+document.addEventListener("keydown", () => {
+  // Verifique se a tecla pressionada é a tecla desejada (por exemplo, tecla 'A' com código 65)
+ if (countTime01 > 0 && countTime01 <= 40 && event.key === 'a') {
+    intervalIDTime01 = countTime01 -= 1;
+    updateMenusTime01();
+    updateValueTime01();
+ }
 });
 minusButtonTime01.addEventListener("mousedown", () => {
   if (countTime01 > 0 && countTime01 <= 40) {
@@ -262,6 +268,18 @@ plusButtonTime02.addEventListener("click", () => {
     controlet1 = "semponto";
   }
 });
+// Adicione um ouvinte de evento ao documento
+document.addEventListener("keydown", () => {
+  // Verifique se a tecla pressionada é a tecla desejada (por exemplo, tecla 'A' com código 65)
+ if (countTime02 >= 0 && countTime02 < 40 && event.key === 'e') {
+    intervalIDTime02 = countTime02 += 1;
+    updateTime02();
+    updateValueTime02();
+    updateBola02();
+    controlet2 = "ponto";
+    controlet1 = "semponto";
+ }
+});
 plusButtonTime02.addEventListener("mousedown", () => {
   if (countTime02 >= 0 && countTime02 < 40) {
     intervalIDTime02 = setInterval(() => {
@@ -283,6 +301,14 @@ minusButtonTime02.addEventListener("click", () => {
     updateMenusTime02();
     updateValueTime02();
   }
+});
+document.addEventListener("keydown", () => {
+  // Verifique se a tecla pressionada é a tecla desejada (por exemplo, tecla 'A' com código 65)
+ if (countTime02 > 0 && countTime02 <= 40 && event.key === 'd') {
+  intervalIDTime02 = countTime02 -= 1;
+  updateMenusTime02();
+  updateValueTime02();
+ }
 });
 minusButtonTime02.addEventListener("mousedown", () => {
   if (countTime02 > 0 && countTime02 <= 40) {

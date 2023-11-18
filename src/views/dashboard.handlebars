@@ -1,7 +1,7 @@
 <main class="flex_main">
 	<section class="sectionCamp">
 		<div class="cardDashboard">
-			<p class="cardDashboard_title">Campeonatos</p>
+			<p class="cardDashboard_title">Campeonatos <a href="/painelws/campeonato/add"><i class="ri-add-fill"></i>{{!-- <i class="ri-add-circle-line"></i> --}}</a></p>
 			<div class="container__">
 				<div class="cardDashboard_container">
 
@@ -23,13 +23,13 @@
 
 								<div class="paste-button">
 									<button class="painelws_Btn">
-										<i class="bx bx-dots-vertical-rounded"></i>
+										<i class="ri-more-2-fill"></i>
 										<div class="painelws_Btn_text">Opções</div>
 									</button>
 									<div class="dropdown-content">
-										<a id="top" href="#"><i class="bx bx-pencil"></i>Editar</a>
+										<a id="top" href="/painelws/campeonatos/{{idCampeonato}}"><i class="ri-pencil-line"></i>Editar</a>
 										{{! <a id="middle" href="#"></a> }}
-										<a id="bottom" href="#"><i class="bx bx-trash"></i>Remover</a>
+										<a id="bottom" href="#"><i class="ri-delete-bin-line"></i></i>Remover</a>
 									</div>
 								</div>
 
@@ -42,7 +42,7 @@
 			<a class="cardDashboard_more" href="#">See more</a>
 		</div>
 		<div class="cardDashboard">
-			<p class="cardDashboard_title">Partidas</p>
+			<p class="cardDashboard_title">Partidas {{campeonatos.idCampeonato}} <a href="/painelws/partida/add"><i class="ri-add-fill"></i>{{!-- <i class="ri-add-circle-line"></i> --}}</a></p>
 			<div class="container__">
 				<div class="cardDashboard_container">
 					{{#each partidas}}
@@ -57,7 +57,7 @@
 										{{nomeTime2}}</p>
 								</div>
 								<button class="painelws_Btn">
-										<i class="bx bx-dots-vertical-rounded"></i>
+										<i class="ri-more-2-fill"></i>
 										<div class="painelws_Btn_text">Opções</div>
 									</button>
 							</div>
@@ -71,7 +71,7 @@
 	</section>
 	<section2 class="sectionCamp2">
 		<div class="cardDashboard2">
-			<p class="cardDashboard_title">Times</p>
+			<p class="cardDashboard_title">Times <a href="/painelws/time/add"><i class="ri-add-fill"></i>{{!-- <i class="ri-add-circle-line"></i> --}}</a></p>
 			<div class="container__">
 				<div class="cardDashboard_container">
 					{{#each times}}
@@ -89,7 +89,7 @@
 										{{idTime}}</p>
 								</div>
 								<button class="painelws_Btn">
-										<i class="bx bx-dots-vertical-rounded"></i>
+										<i class="ri-more-2-fill"></i>
 										<div class="painelws_Btn_text">Opções</div>
 									</button>
 							</div>
@@ -103,12 +103,11 @@
 	</section2>
 	<section2 class="sectionCamp2">
 		<div class="cardDashboard2">
-			<p class="cardDashboard_title">Jogadores</p>
+			<p class="cardDashboard_title">Jogadores <a href="/painelws/jogador/add"><i class="ri-add-fill"></i>{{!-- <i class="ri-add-circle-line"></i> --}}</a></p>
 			<div class="container__">
 				<div class="cardDashboard_container">
 					{{#each jogadores}}
 						<div class="cardDashboard_division">
-							<div class="cardDashboard_division_image"></div>
 							<div class="cardDashboard_division_content">
 								<div class="cardDashboard_division_text">
 									<span class="cardDashboard_division_name">{{nomeJogador}}
@@ -121,7 +120,7 @@
 										{{numeroCamiseta}}</p>
 								</div>
 								<button class="painelws_Btn">
-										<i class="bx bx-dots-vertical-rounded"></i>
+										<i class="ri-more-2-fill"></i>
 										<div class="painelws_Btn_text">Opções</div>
 									</button>
 							</div>

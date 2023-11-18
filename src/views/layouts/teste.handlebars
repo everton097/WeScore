@@ -8,17 +8,24 @@
 		<link id="style" rel="stylesheet" href="../css/styleDashboard.css" />
 		<!-- icon link -->
 		<link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
-		<link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"/>
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"
+		/>
+		<link
+			href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css"
+			rel="stylesheet"
+		/>
 		<!-- axios link -->
 		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script src="../js/token.js"></script>
+		<script src="../js/token.js"></script>
 		<title>WeScore</title>
 	</head>
 	<body>
-        <script>token();</script>
+		<script>token();</script>
 		<!-- Menu -->
 		<header>
-			<div class="logo"><a href="/painelws" >We<span>Score</span></a></div>
+			<div class="logo"><a href="/painelws">We<span>Score</span></a></div>
 			<div class="hamburger">
 				<div class="line"></div>
 				<div class="line"></div>
@@ -26,8 +33,31 @@
 			</div>
 			<nav class="nav-bar">
 				<ul>
-					<li><a href="/painelws/jogos">Jogos</a></li>
-					<a href="/login" class="button">Sair<i class="lni lni-exit"></i></i></a>
+					<li><a href="/painelws/Campeonatos">Campeonatos</a></li>
+					<li><a href="/painelws/partidas">Partidas</a></li>
+					<li><a href="/painelws/times">Times</a></li>
+					<li><a href="/painelws/jogadores">Jogadores</a></li>
+					<li><a href="/painelws/usuarios">Usuarios</a></li>
+					<div class="user_image">
+						<img id="user_img"
+							src="http://localhost:3001/public/upload/img/usuario/{{user.userLogo}}"
+							alt="logo do usuario"
+						/>
+						<div id="user_input" class="user_input">
+							<button class="user_input_value">
+								<i class="ri-user-line"></i>
+								Public profile
+							</button>
+							<button class="user_input_value">
+								<i class="ri-settings-5-line"></i>
+								Account
+							</button>
+							<button id="logoutButton" class="user_input_value">
+								<i class="ri-logout-box-r-line"></i>
+								Sair
+							</button>
+						</div>
+					</div>
 				</ul>
 			</nav>
 		</header>
@@ -38,7 +68,7 @@
 		<!-- footer -->
 		<section class="section-footer footer">
 			<div class="footer-content logo">
-				<a href="/" >We<span>Score</span></a>
+				<a href="/">We<span>Score</span></a>
 				<p>Potencializando o Seu Controle.</p>
 				<div class="icon">
 					<a href="#"><i class="bx bxl-tiktok"></i></a>
@@ -58,5 +88,6 @@
 		</section>
 		<script src="../js/menu.js"></script>
 		<script src="../js/scriptJogos.js"></script>
+		<script src="../js/dashboard.js"></script>
 	</body>
 </html>

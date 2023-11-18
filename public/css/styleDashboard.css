@@ -1,3 +1,120 @@
+.nav-bar ul li a {
+	padding: 10px 8px;
+	margin: 0 5px;
+}
+.user_image {
+	width: 40px;
+	height: 40px;
+	background: rgb(22, 19, 70);
+	background: linear-gradient(
+		295deg,
+		rgba(22, 19, 70, 1) 41%,
+		rgba(89, 177, 237, 1) 100%
+	);
+	border-radius: 50%;
+	margin: 5px auto;
+	display: flex;
+	align-items: flex-end;
+	flex-direction: column;
+	z-index: 200 !important;
+	cursor: pointer;
+}
+
+.user_image img {
+	max-width: 100%;
+	max-height: 100%;
+	width: 40px;
+	height: 40px;
+	object-fit: cover;
+	justify-content: center;
+	z-index: 300 !important;
+}
+
+.user_input {
+	display: flex;
+	flex-direction: column;
+	width: 200px;
+	background-color: #0D1117;
+	justify-content: center;
+	border-radius: 5px;
+	position: absolute;
+	top: 40px;
+	transition: 0.3s ease-out;
+	visibility: hidden;
+	opacity: 0;
+}
+  .user_input::before {
+	content: "";
+	position: absolute;
+	width: 0; 
+	height: 0;
+	top: -8px; 
+	right: 0;
+	transform: translateX(-50%);
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-bottom: 8px solid #0D1117;
+	z-index: -1 !important;
+  }
+  
+  .user_input_value {
+	background-color: transparent;
+	border: none;
+	padding: 10px;
+	color: white;
+	display: flex;
+	position: relative;
+	gap: 5px;
+	cursor: pointer;
+	border-radius: 4px;
+	align-items: center;
+  }
+  
+  .user_input_value:not(:active):hover,
+  .user_input_value:focus {
+	background-color: #21262C;
+  }
+  
+  .user_input_value:focus,
+  .user_input_value:active {
+	background-color: #1A1F24;
+	outline: none;
+  }
+  
+  .user_input_value::before {
+	content: "";
+	position: absolute;
+	top: 5px;
+	left: -10px;
+	width: 5px;
+	height: 80%;
+	background-color: #2F81F7;
+	border-radius: 5px;
+	opacity: 0;
+  }
+  
+  .user_input_value:focus::before,
+  .user_input_value:active::before {
+	opacity: 1;
+  }
+  
+  .user_input_value svg {
+	width: 15px
+  }
+  .user_input_value i {
+	width: 15px;
+	font-weight: 600;
+	color: #7D8590;
+  }
+  
+  .user_input:hover > :not(.user_input_value:hover) {
+	transition: 300ms;
+	filter: blur(1px);
+	transform: scale(0.95,0.95);
+  }
+
+
+
 .flex_main {
 	display: flex;
 	flex-direction: row;
@@ -76,9 +193,20 @@
 }
 
 .cardDashboard_title {
+	display: flex;
 	font-weight: 900;
 	font-size: 1.3em;
+	align-items: center;
+	justify-content: space-between;
 }
+.cardDashboard_title a {
+	text-decoration: none;
+}
+.cardDashboard_title i {
+	cursor: pointer;
+	color: #000;
+}
+
 
 .cardDashboard_divisionname {
 	font-weight: 800;
@@ -143,7 +271,7 @@
 }
 
 .painelws_Btn i {
-	font-size: 1.5em;
+	font-size: 1.8em;
 	color: white;
 	transition-duration: 0.3s;
 	display: flex;
@@ -209,6 +337,8 @@
 .dropdown-content i {
 	padding-left: 5px;
 	padding-right: 10px;
+	font-size: 1.3em;
+	color: white;
 }
 
 .dropdown-content a {

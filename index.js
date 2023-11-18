@@ -2,6 +2,7 @@ const exphbs = require("express-handlebars")
 const bodyParser = require('body-parser');
 const express = require("express")
 const dotenv  = require('dotenv')
+dotenv.config()
 const path = require("path")
 const app = express()
 const port = 3002
@@ -10,12 +11,10 @@ const routesLogin = require("./src/routes/loginRoutes")
 const routesHome = require("./src/routes/homeRoutes")
 const routesPainelws = require("./src/routes/painelwsRoutes")
 // Lê as configurações do .env 
-dotenv.config()
 // Definindo uma função para que o handlebars possa formatar a data corretamente para o usuário final
 const hbs = exphbs.create({
     helpers: {
         formatDate: function (dateTimeString) {
-            
             const date = new Date(dateTimeString); //Converte a string em data
     
             // Defina o fuso horário para UTC
@@ -53,8 +52,8 @@ app.use(
     // Define o nome do cookie de sessão.
     name: 'session',
 
-    // Define uma chave secreta para assinar o cookie de sessão (mantenha isso em segredo).
-    secret: 'nosso_secret',
+    // Define uma chave secreta para assinar o cookie de sessão.
+    secret: process.env.SECRET,
 
     // Impede que a sessão seja regravada no servidor a cada solicitação.
     resave: false,
@@ -75,10 +74,10 @@ app.use(
       secure: false,
 
       // Define o tempo de vida máximo do cookie em milissegundos (1 hora neste exemplo).
-      maxAge: 3600000,
+      maxAge: 7200000,
 
       // Define a data de expiração do cookie (1 hora a partir do momento atual).
-      expires: new Date(Date.now() + 3600000),
+      expires: new Date(Date.now() + 7200000),
 
       // Impede que o cookie de sessão seja acessado por JavaScript no navegador (para segurança).
       httpOnly: true,

@@ -1,24 +1,21 @@
 const api = require('../config/api')
 
 // Metodo para buscar todos os elementos da api
-exports.getALLDatas = async (req,res) => {
+exports.getJogos = async (req,res) => {
     try {
         // Configurar o cabeçalho com a autorização do token
         const token = await req.session.token
-        console.log("Toekn getALLDatas: "+token)
+        console.log("Toekn getJogos: "+token)
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         }
+        
         // Fazer a requisição para a API
         let response = await api.get("/campeonato/all", config)
         const campeonatos = response.data
-        const idcamp = campeonatos[0].idCampeonato
 
-
-       /*  response = await api.get(`/partida/${idcamp}`, config) */
-        response = await api.get(`/partida/all`, config)
+        response = await api.get("/partida/all", config)
         const partidas = response.data
-        console.log(partidas);
 
         response = await api.get("/time/all", config)
         const times = response.data
@@ -31,8 +28,8 @@ exports.getALLDatas = async (req,res) => {
             userLogo: req.session.userLogo,
             userMail: req.session.userMail
         }
-
-        res.render('dashboard', { user, campeonatos, partidas, times, jogadores, layout : 'teste' })
+        console.log("user"+user);
+        res.render('jogos', { user, campeonatos, partidas, times, jogadores, layout : 'teste' })
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Erro ao buscar datas.' });
