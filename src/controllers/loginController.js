@@ -26,6 +26,7 @@ exports.autenticate = async (req, res) => {
             // Armazena informações importantes da sessão do usuário no objeto 'req.session'
             req.session.token = response.data.token; // Armazena o token de autenticação
             req.session.userId = response.data.userId; // Armazena o ID do usuário
+            req.session.userName = response.data.userName; // Armazena o nome do usuário
             req.session.userMail = response.data.userMail; // Armazena o email do usuário
             req.session.userLogo = response.data.userLogo; // Armazena o logo do usuário
             // Renova o tempo de expiração da sessão do servidor.
@@ -40,6 +41,7 @@ exports.autenticate = async (req, res) => {
                     message: "Você está autenticado!",
                     token: req.session.token,
                     userMail: response.data.userId,
+                    userName: response.data.userName,
                     userId: response.data.userMail,
                     userLogo: response.data.userLogo
                 })

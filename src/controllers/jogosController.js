@@ -25,8 +25,9 @@ exports.getJogos = async (req,res) => {
 
         const user = {
             userId: req.session.userId,
-            userLogo: req.session.userLogo,
-            userMail: req.session.userMail
+            userName: req.session.userName,
+            userMail: req.session.userMail,
+            userLogo: req.session.userLogo
         }
         console.log("user"+user);
         res.render('jogos', { user, campeonatos, partidas, times, jogadores, layout : 'teste' })

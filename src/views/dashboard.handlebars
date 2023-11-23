@@ -3,10 +3,14 @@
 		<div class="cardDashboard">
 			<p class="cardDashboard_title">Campeonatos <a href="/painelws/campeonato/add"><i class="ri-add-fill"></i>{{!-- <i class="ri-add-circle-line"></i> --}}</a></p>
 			<div class="container__">
-				<div class="cardDashboard_container">
+				<div id="campeonatosContainer" class="cardDashboard_container">
 
 					{{#each campeonatos}}
-						<div class="cardDashboard_division">
+						<div class="cardDashboard_division" data-campeonato-id="{{idCampeonato}}"
+						{{#if active}}
+							class="campeonato_active" aria-current="true" 
+						{{/if}}
+						>
 							<div class="cardDashboard_division_image">
 								<img
 									src="http://localhost:3001/public/upload/img/campeonato/{{logoCampeonato}}"
@@ -44,14 +48,14 @@
 		<div class="cardDashboard">
 			<p class="cardDashboard_title">Partidas {{campeonatos.idCampeonato}} <a href="/painelws/partida/add"><i class="ri-add-fill"></i>{{!-- <i class="ri-add-circle-line"></i> --}}</a></p>
 			<div class="container__">
-				<div class="cardDashboard_container">
+				<div id="partidasContainer" class="cardDashboard_container">
 					{{#each partidas}}
-						<div class="cardDashboard_division">
+						<div id="partidas" class="cardDashboard_division">
 							<div class="cardDashboard_division_image"></div>
 							<div class="cardDashboard_division_content">
 								<div class="cardDashboard_division_text">
 									<span class="cardDashboard_division_name">Partida:
-										{{idPartida}}</span>
+										{{rodada}}</span>
 									<p class="cardDashboard_division_username">{{nomeTime1}}
 										vs
 										{{nomeTime2}}</p>
@@ -66,7 +70,6 @@
 
 				</div>
 			</div>
-			<a class="cardDashboard_more" href="#">See more</a>
 		</div>
 	</section>
 	<section2 class="sectionCamp2">

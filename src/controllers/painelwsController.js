@@ -13,10 +13,19 @@ exports.getALLDatas = async (req,res) => {
         let response = await api.get("/campeonato/all", config)
         const campeonatos = response.data
         const idcamp = campeonatos[0].idCampeonato
+        let cont = 0;
+        campeonatos.forEach(function (element){
+            if (cont == 0){
+                element.active = true
+                cont++
+            } else{
+                element.active = false
+            }
+        })
+        console.log(campeonatos);
 
-
-       /*  response = await api.get(`/partida/${idcamp}`, config) */
-        response = await api.get(`/partida/all`, config)
+        response = await api.get(`/partida/${idcamp}`, config)
+        /* response = await api.get(`/partida/all`, config) */
         const partidas = response.data
         console.log(partidas);
 
@@ -28,8 +37,9 @@ exports.getALLDatas = async (req,res) => {
 
         const user = {
             userId: req.session.userId,
-            userLogo: req.session.userLogo,
-            userMail: req.session.userMail
+            userName: req.session.userName,
+            userMail: req.session.userMail,
+            userLogo: req.session.userLogo
         }
 
         res.render('dashboard', { user, campeonatos, partidas, times, jogadores, layout : 'teste' })
