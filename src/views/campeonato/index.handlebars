@@ -1,0 +1,73 @@
+{{!-- Campeonato.handlebars --}}
+
+{{!-- Seção de conteúdo da página --}}
+<div class="container mt-4">
+    <h1 class="mb-4">Cadastro de Campeonatos</h1>
+    <div class="row mb-3">
+        <div class="col-md-10 mb-3">
+            <form action="../campeonatosSearch/" method="post" class="d-flex" id="searchForm">
+                <!-- Define a ação e o método POST e utiliza display flex para alinhar o botão e a input -->
+                <div class="input-group">
+                    <input type="text" class="form-control" name="valorPesquisa" id="valorPesquisa"
+                        placeholder="Pesquisar...">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i> Pesquisar</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <div class="col-md-2 d-flex justify-content-end mb-3">
+            <!-- Botão Novo -->
+            <a href="../campeonatosCreate/" class="btn btn-success"><i class="bi bi-plus-circle"></i> Novo</a>
+        </div>
+    </div>
+
+    <div class="row" id="card-list">
+        {{#each campeonatos}}
+        <div class="col-md-3 mb-4" id="card{{id}}">
+            <div class="card h-100">
+                <img src="http://localhost:3000/img/campeonatos/{{imagem}}" class="card-img-top" alt="{{titulo}}">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{titulo}}</h5>
+                    <div class="d-flex mt-auto justify-content-between">
+                        <!-- Link de Edição -->
+                        <a class="btn btn-secondary" href="../campeonatos/{{id}}"><i class="bi bi-pencil"></i> Editar</a>
+
+                        <!-- Link de Exclusão - Botão para acionar o modal -->
+                        <button class="btn btn-danger" data-bs-toggle="modal"
+                            data-bs-target="#confirmDeleteModal{{id}}"><i class="bi bi-trash3"></i> Excluir</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal de Confirmação de Exclusão -->
+
+        <div class="modal fade" id="confirmDeleteModal{{id}}" tabindex="-1"
+            aria-labelledby="confirmDeleteModalLabel{{id}}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="confirmDeleteModalLabel{{id}}">Exclusão</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Tem certeza que deseja excluir o Campeonato: <strong>{{titulo}}</strong>?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i
+                                class="bi bi-x-circle"></i> Cancelar</button>
+                        <!-- Botão de Confirmação - Chama a função JavaScript para excluir -->
+                        <button type="button" class="btn btn-danger" onclick="confirmDeleteCampeonato({{id}})"><i
+                                class="bi bi-check-circle"></i> Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+
+</div>
+<!-- Scripts do formulário Campeonato -->
+<script src="../js/campeonatoScripts.js"></script>

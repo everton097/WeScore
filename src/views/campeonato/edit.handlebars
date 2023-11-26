@@ -1,0 +1,26 @@
+{{!-- edit.handlebars --}}
+
+{{!-- Seção de conteúdo da página --}}
+<div class="container mt-4 w-80">
+    <h1 class="mb-4">Editar Campeonato</h1>
+    <form id="editCampeonatoForm" enctype="multipart/form-data" method="post">
+        <div class="form-group mb-3">
+            <label for="editTitulo">Título</label>
+            <input type="text" class="form-control" id="editTitulo" name="titulo" value="{{campeonato.titulo}}" required>
+        </div>
+        
+        <div class="form-group mb-3">
+            <label for="editImagem">Imagem</label>
+            <input type="file" class="form-control-file" id="editImagem" name="imagem" required>
+        </div>
+       
+        <!-- Campo oculto para armazenar o ID do Campeonato -->
+        <input type="hidden" id="editCampeonatoId" name="id" value="{{campeonato.id}}">
+        <a  href="../campeonatos/" class="btn btn-secondary" id="cancelEditCampeonato"><i class="bi bi-x-circle"></i> Cancelar</a>
+        <button  type="button" class="btn btn-primary" id="saveEditCampeonato" onclick="UpdateCampeonatoClick(event)"><i class="bi bi-check-circle"></i> Salvar</button>
+    </form>
+</div>
+
+
+<!-- Scripts do formulário curso -->
+<script src="../js/campeonatoScripts.js"></script> 
