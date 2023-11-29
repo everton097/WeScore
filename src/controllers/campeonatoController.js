@@ -24,18 +24,22 @@ exports.createCampeonato =  async (req, res) => {
       deste modo a configuração do cabeçalho abaixo é opcional. 
       Eu coloquei esta configuração para que se um dia vocês precisarem enviar o token para a API o código é este.
       Inicialmente busca o token da sessão e envia no cabeçalho da requisição. 
-      
       const token = req.session.token;
-  
       const config = {
         headers: {
           'Authorization': `Bearer ${token}`
         },
       };
       */
+      // Configurar o cabeçalho com a autorização do token
+      const token = await req.session.token
+      console.log("Toekn getALLDatas: "+token)
+      const config = {
+          headers: { Authorization: `Bearer ${token}` }
+      }
   
       // Faz uma solicitação GET para a API que fornece os banners
-      const response = await api.get(`/campeonatos`); //... ,config);
+      const response = await api.get(`/campeonato/all`); //... ,config);
   
       // Obtenha os dados JSON da resposta
       const campeonatos = response.data;
@@ -52,9 +56,9 @@ exports.createCampeonato =  async (req, res) => {
     // Método para buscar campeonato para edição
 exports.updateCampeonato = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { idCampeonato } = req.params;
     // Faz uma solicitação GET para a API que fornece o compeonato
-    const response = await api.get(`/campeonatos/${id}`);
+    const response = await api.get(`/campeonato/${idCampeonato}`);
 
     // Obtenha os dados JSON da resposta
     const campeonato = response.data;

@@ -19,24 +19,24 @@
         </div>
         <div class="col-md-2 d-flex justify-content-end mb-3">
             <!-- Botão Novo -->
-            <a href="../campeonatosCreate/" class="btn btn-success"><i class="bi bi-plus-circle"></i> Novo</a>
+            <a href="../campeonato/campeonatosCreate/" class="btn btn-success"><i class="bi bi-plus-circle"></i> Novo</a>
         </div>
     </div>
 
     <div class="row" id="card-list">
         {{#each campeonatos}}
-        <div class="col-md-3 mb-4" id="card{{id}}">
+        <div class="col-md-3 mb-4" id="card{{idCampeonato}}">
             <div class="card h-100">
-                <img src="http://localhost:3000/img/campeonatos/{{imagem}}" class="card-img-top" alt="{{titulo}}">
+                <img src="http://localhost:3000/img/campeonatos/{{logoCampeonato}}" class="card-img-top" alt="{{nomeCampeonato}}">
                 <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">{{titulo}}</h5>
+                    <h5 class="card-title">{{nomeCampeonato}}</h5>
                     <div class="d-flex mt-auto justify-content-between">
                         <!-- Link de Edição -->
-                        <a class="btn btn-secondary" href="../campeonatos/{{id}}"><i class="bi bi-pencil"></i> Editar</a>
+                        <a class="btn btn-secondary" href="../campeonato/{{idCampeonato}}"><i class="bi bi-pencil"></i> Editar</a>
 
                         <!-- Link de Exclusão - Botão para acionar o modal -->
                         <button class="btn btn-danger" data-bs-toggle="modal"
-                            data-bs-target="#confirmDeleteModal{{id}}"><i class="bi bi-trash3"></i> Excluir</button>
+                            data-bs-target="#confirmDeleteModal{{idCampeonato}}"><i class="bi bi-trash3"></i> Excluir</button>
 
                     </div>
                 </div>

@@ -9,10 +9,10 @@ const campeonatoController = require('../controllers/campeonatoController');
 //const checkSession = require("../helpers/sessao").checkSession;
 
 // Rota para Campeonatos
-routerCampeonato.post('/campeonatosCreate/', campeonatoController.createCampeonato);
-routerCampeonato.get('/campeonatos/', campeonatoController.getAllCampeonatos);
-routerCampeonato.get('/campeonatosCreate/', campeonatoController.createCampeonato);
-routerCampeonato.get('/campeonatos/:id', campeonatoController.updateCampeonato);
+routerCampeonato.get('/', campeonatoController.getAllCampeonatos);
+routerCampeonato.get('/campeonatoCreate/', campeonatoController.createCampeonato);
+routerCampeonato.post('/campeonatoCreate/', campeonatoController.createCampeonato);
+routerCampeonato.get('/:id', campeonatoController.updateCampeonato);
 
 /*
 router.get('/campeonatos/',checkSession, campeonatoController.getAllCampeonatos);
