@@ -31,7 +31,7 @@ body {
 }
 /*Menu*/
 header {
-	width: 100%;
+	width: 100vw;
 	height: var(--height-nav-bar);
 	background-color: var(--header-background-color);
 	display: flex;
@@ -152,12 +152,17 @@ header .logo span {
 }
 
 /*footer*/
+.section-footer{
+	display: flex;
+	width: 100vw;
+}
 .footer {
 	padding: 2vw 2vw;
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(200px, auto));
 	gap: 3.5rem;
 	background: #03243f;
+	width: 100vw;
 	left: 0;
 	right: 0;
 	align-items: center;

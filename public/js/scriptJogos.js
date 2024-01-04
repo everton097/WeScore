@@ -23,7 +23,7 @@ const subsTime02jgd4 = document.getElementById("Time02jgd4");
 const subsTime02jgd5 = document.getElementById("Time02jgd5");
 const subsTime02jgd6 = document.getElementById("Time02jgd6");
 //recupera o Card de Substituição
-const statusDisplayCard = document.getElementById("card");
+const statusDisplayCard = document.getElementById("popupcard");
 //Computar o estilo do css 
 const compStyles = window.getComputedStyle(statusDisplayCard);
 const closecard = document.getElementById("closecard");
@@ -37,14 +37,14 @@ const AlterStatusCard = (time) => {
     document.getElementById("subistituicaoTime02").style.display = "flex";
   }
   if (compStyles.display == "none") {
-    document.getElementById("card").style.display = "flex";
+    document.getElementById("popupcard").style.display = "flex";
   } else if (compStyles.display == "flex") {
-    document.getElementById("card").style.display = "none";
+    document.getElementById("popupcard").style.display = "none";
   }
 };
 closecard.addEventListener("click", () => {
   AlterStatusCard();
-  //document.getElementById("card").style.display = "none";
+  //document.getElementById("popupcard").style.display = "none";
 });
 //Jogadores para substituição do time 01
 subsTime01jgd6.addEventListener("click", () => {
@@ -64,7 +64,7 @@ subsTime01jgd2.addEventListener("click", () => {
 });
 subsTime01jgd1.addEventListener("click", () => {
   AlterStatusCard("time01");
-  //document.getElementById("card").style.display = "flex";
+  //document.getElementById("popupcard").style.display = "flex";
 });
 //Jogadores para substituição do time 02
 subsTime02jgd6.addEventListener("click", () => {
@@ -84,7 +84,7 @@ subsTime02jgd2.addEventListener("click", () => {
 });
 subsTime02jgd1.addEventListener("click", () => {
   AlterStatusCard("time02");
-  //document.getElementById("card").style.display = "flex";
+  //document.getElementById("popupcard").style.display = "flex";
 });
 
 
@@ -94,6 +94,9 @@ const updateValueTime01 = () => {
     valueTime01.innerHTML = "0" + countTime01;
   } else if (countTime01 > 9) {
     valueTime01.innerHTML = countTime01;
+    if (countTime01>24 && countTime01 >= (countTime02+2)) {
+      console.log("time 1 ganhou");
+    }
   }
 };
 const updateBola01 = () => {
@@ -113,6 +116,9 @@ const updateValueTime02 = () => {
     valueTime02.innerHTML = "0" + countTime02;
   } else if (countTime02 > 9) {
     valueTime02.innerHTML = countTime02;
+    if (countTime02>24 && countTime02 >= (countTime01+2)) {
+      console.log("time 2 ganhou");
+    }
   }
 };
 
@@ -120,19 +126,19 @@ let countTime01 = 0;
 let intervalIDTime01 = 0;
 plusButtonTime01.addEventListener("click", () => {
   if (countTime01 >= 0 && countTime01 < 40) {
-    intervalIDTime01 = countTime01 += 1;console
+    intervalIDTime01 = countTime01 += 1;
     updateTime01();
     updateValueTime01();
     updateBola01();
     controlet1 = "ponto";
-    controlet2 = "semponto";
+    controlet2 = "semponto"
   }
 });
 // Adicione um ouvinte de evento ao documento
 document.addEventListener("keydown", () => {
    // Verifique se a tecla pressionada é a tecla desejada (por exemplo, tecla 'A' com código 65)
   if (countTime01 >= 0 && countTime01 < 40 && event.key === 'q') {
-    intervalIDTime01 = countTime01 += 1;console
+    intervalIDTime01 = countTime01 += 1;
     updateTime01();
     updateValueTime01();
     updateBola01();

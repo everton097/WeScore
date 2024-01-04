@@ -17,7 +17,7 @@ const checkToken = (req, res, next) => {
             if (response.status != 200){
                 window.location.href = `../login`;
             }
-            console.log("Token Valido.");
+            console.log("CheckToken - Token Valido.");
         })
         .catch(error => {
             window.location.href = `../login`;

@@ -1,4 +1,6 @@
 const exphbs = require("express-handlebars")
+const handlebars = require('handlebars');
+const helpers = require('handlebars-helpers')();
 const bodyParser = require('body-parser');
 const express = require("express")
 const dotenv  = require('dotenv')
@@ -10,7 +12,14 @@ const port = 3002
 const routesLogin = require("./src/routes/loginRoutes")
 const routesHome = require("./src/routes/homeRoutes")
 const routesPainelws = require("./src/routes/painelwsRoutes")
+const routesCampeonato = require('./src/routes/campeonatoRoutes')
+const routesPartida = require("./src/routes/partidaRoutes")
 // Lê as configurações do .env 
+// todos os helpers fornecidos por handlebars-helpers:
+const { eq } = handlebars.helpers;
+
+// Adicione o helper ao Handlebars
+handlebars.registerHelper('eq', eq);
 // Definindo uma função para que o handlebars possa formatar a data corretamente para o usuário final
 const hbs = exphbs.create({
     helpers: {
@@ -42,6 +51,7 @@ app.use(express.static('public'))
 /* CONFIGURAÇÕES DA SESSÃO DO USUÁRIO */
 // Importa o módulo 'express-session'.
 const session = require('express-session');
+const partidaRoutes = require("../WeScore-API/src/routes/partidaRoutes");
 
 // Importa o módulo 'FileStore' que será usado para armazenar as sessões em arquivos no sistema de arquivos do servidor.
 const FileStore = require('session-file-store')(session);
@@ -90,6 +100,8 @@ app.use(
 app.use('/',routesHome)
 app.use('/',routesLogin)
 app.use('/painelws', routesPainelws)
+app.use('/painelws/campeonato', routesCampeonato)
+app.use('/painelws/partida', routesPartida)
 
 //GET route for notes page
 app.get('/contato', function(req,res){

@@ -16,7 +16,7 @@ function token() {
             if (response.status != 200){
                 window.location.href = `../login`;
             }
-            console.log("Token Valido.");
+            console.log("Front JS - Token Valido.");
         })
         .catch(error => {
             window.location.href = `../login`;

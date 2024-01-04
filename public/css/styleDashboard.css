@@ -166,6 +166,17 @@
 	justify-content: space-between;
 	margin: 5px 2px 5px 5px;
 }
+.cardSeeMore {
+	width: calc(100%);
+	background: #e8eaea;
+	border-radius: 15px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: calc(100% - 10px);
+    margin: 5px;
+	background-color: #fff;
+}
 
 .container__ {
 	height: calc(100%);
@@ -195,6 +206,10 @@
 	display: flex;
 	flex-direction: column;
 }
+.cardDashboard_container p{
+	display: flex;
+	align-items: center;
+}
 
 .cardDashboard_title {
 	display: flex;
@@ -211,13 +226,34 @@
 	color: #000;
 }
 
-.cardDashboard_divisionname {
-	font-weight: 800;
+.cardDashboard_division_name {
+	font-weight: 600;
 }
 
 .cardDashboard_division_username {
 	font-size: 0.9em;
 	color: #64696e;
+	text-align: justify;
+}
+.cardDashboard_division_status{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 20px;
+	font-size: 0.9em;
+	color: #fff;
+	min-width: 120px;
+	padding: 10px;
+	background-color: red;
+}
+.cardDashboard_division_status_aguardando{
+	background-color: yellow;
+}
+.cardDashboard_division_status_andamento{
+	background-color: green;
+}
+.cardDashboard_division_status_finalizado{
+	background-color: cyan;
 }
 
 .cardDashboard_division_image {
@@ -248,7 +284,7 @@
 	font-weight: 800;
 }
 .campeonato_active{
-	background-color: #b3b6b6;
+	background-color: #c8cbcb
 }
 .cardDashboard_division:hover {
 	background-color: #b3b6b6;
@@ -321,13 +357,16 @@
 }
 
 .paste-button {
+    display: flex;
 	position: relative;
-	display: block;
+	min-width: 100px;
+	justify-content: end;
 }
 
 .dropdown-content {
 	font-size: 13px;
 	position: absolute;
+	top: 35px;
 	right: 0px;
 	z-index: 50;
 	opacity: 0;
@@ -360,14 +399,6 @@
 
 .dropdown-content a:focus {
 	color: var(--nav-bar-a-color);
-}
-
-.dropdown-content #top:hover {
-	border-radius: 15px 0px 0px 0px;
-}
-
-.dropdown-content #bottom:hover {
-	border-radius: 0px 0px 15px 15px;
 }
 
 .paste-button:hover button {

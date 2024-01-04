@@ -49,7 +49,7 @@ exports.autenticate = async (req, res) => {
         })
         .catch(error => {
             // Lida com erros de autenticação da API externa
-            const mensagem = error.response.data.error;
+            const mensagem = error.response.error;
             res.status(401).json({ error: mensagem });
             console.log(error)
         });

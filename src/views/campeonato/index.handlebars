@@ -1,0 +1,63 @@
+<section class="containePainelws">
+		<div class="cardSeeMore">
+			<p class="cardDashboard_title">Campeonatos <a href="/painelws/campeonato/add"><i class="ri-add-fill"></i></a></p>
+			<div class="container__">
+				<div id="campeonatosContainer" class="cardDashboard_container">
+
+					{{#each campeonatos}}
+						{{#if active}}
+							<div class="cardDashboard_division campeonato_active" aria-current="true"  data-campeonato-id="{{idCampeonato}}">
+						{{else}}
+							<div class="cardDashboard_division" data-campeonato-id="{{idCampeonato}}">
+						{{/if}}
+							<div class="cardDashboard_division_image">
+								<img 
+									src="http://localhost:3001/public/upload/img/campeonato/{{logoCampeonato}}"
+									alt="logo do campeonato"/>
+								</div>
+							<div class="cardDashboard_division_content">
+								<div class="cardDashboard_division_text">
+									<span
+										class="cardDashboard_division_name"
+									>{{nomeCampeonato}}</span>
+									<p class="cardDashboard_division_username">
+										{{Usuario.nomeUsuario}}</p>
+								</div>
+
+								<div class="cardDashboard_division_text">
+									{{#if (eq status "Aguardando")}}
+											<span id="status{{idCampeonato}}" class="cardDashboard_division_status cardDashboard_division_status_aguardando"> {{status}} </span>
+										{{else if (eq status "Em Andamento")}}
+											<span id="status{{idCampeonato}}" class="cardDashboard_division_status cardDashboard_division_status_andamento"> {{status}} </span>
+										{{else if (eq status "Finalizado")}}
+											<span id="status{{idCampeonato}}" class="cardDashboard_division_status cardDashboard_division_status_finalizado"> {{status}} </span>
+									{{/if}}
+								</div>
+
+								<div class="paste-button">
+									<button class="painelws_Btn">
+										<i class="ri-more-2-fill"></i>
+										<div class="painelws_Btn_text">Opções</div>
+									</button>
+									<div class="dropdown-content">
+										<a id="top{{idCampeonato}}" href="/painelws/campeonatos/{{idCampeonato}}"><i class="ri-pencil-line"></i>Editar</a>
+										
+										{{#if (eq status "Aguardando")}}
+											<!-- Botão Iniciar se o status for "Aguardando" -->
+											<a id="start{{idCampeonato}}"><i class="ri-play-line"></i>Iniciar</a>
+										{{else if (eq status "Em Andamento")}}
+											<!-- Botão Finalizar se o status for "Em Andamento" -->
+											<a id="finish{{idCampeonato}}"><i class="ri-stop-line"></i>Finalizar</a>
+										{{/if}}
+										
+										<a id="bottom" href="#"><i class="ri-delete-bin-line"></i>Remover</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					{{/each}}
+
+				</div>
+			</div>
+		</div>
+	</section>
