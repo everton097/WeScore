@@ -28,7 +28,28 @@ html {
 body {
 	background-color: var(--body-background-color);
 	overflow-x: hidden;
+	transition: overflow 0.3s ease-in-out;
 }
+/* width */
+::-webkit-scrollbar {
+	width: 05px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: #f1f1f1; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	border-radius: 2px;
+	background: rgb(71, 71, 71); 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+	background: var(--activePage); 
+  }
 /*Menu*/
 header {
 	width: 100vw;

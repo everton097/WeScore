@@ -27,6 +27,36 @@ logoutButton.addEventListener("click", function () {
 	window.location.href = "/logout";
 });
 
+document.getElementById("partidasContainer").addEventListener("click", async function (event) {
+	console.log(event.target);
+	console.log(event.target.classList);
+
+	const parentElement = event.target.parentNode;
+	console.log(parentElement);
+	// Verifique se o clique foi em um botão dentro do contêiner de partidas
+	if (parentElement.classList.contains("dropdown-content")) {
+        // Obtenha a referência ao botão clicado
+		console.log("Entrou!!");
+        const button = event.target;
+		
+        // Obtenha o ID da partida associado a este botão
+        const partidaId = button.closest(".cardDashboard_division").id.replace("partida_", "");
+
+        // Realize a lógica relacionada ao botão aqui
+        if (button.id.startsWith("startPartida")) {
+            // Lógica para o botão Iniciar
+            console.log(`Botão Iniciar clicado para a partida ${partidaId}`);
+            // Faça sua requisição axios para iniciar a partida
+        } else if (button.id.startsWith("turnBackPartida")) {
+            // Lógica para o botão Retomar
+            console.log(`Botão Retomar clicado para a partida ${partidaId}`);
+            // Faça sua requisição axios para retomar a partida
+        }
+        /* // Adicione outras lógicas conforme necessário Exemplo: redirecione para a página de edição da partida
+        window.location.href = `/painelws/partida/${partidaId}/edit`; */
+	}
+})
+
 // Adicione um ouvinte de evento para os itens de campeonato
 document.getElementById("campeonatosContainer").addEventListener("click", async function (event) {
 		// Obtenha o ID do campeonato clicado
@@ -164,8 +194,6 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 								startButton.addEventListener("click", async () => {
 									try {
 										
-										console.log("Campeonato: "+campeonatoId);
-										console.log("Partida: "+partida.idPartida);
 										// Faça a requisição para alterar o status da partida para "Em Andamento"
 										const idPartida = partida.idPartida
 										axios.get(`${url}partida/status/${idPartida}`, config)
@@ -192,8 +220,6 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 													parentElement.querySelector(`#delPartida${idPartida}`)
 												);
 											}
-											console.log(campeonatoId);
-											console.log(idPartida);
 											window.location.href = `/painelws/partida/${idPartida}`;
 										})
 
@@ -220,7 +246,7 @@ function getAnchorsHTML(status, idPartida, campeonatoId) {
 		`;
 	} else if (status === "Em Andamento") {
 		return `
-			<a id="turnBackPartida${idPartida}" href="/painelws/partida/${campeonatoId}/${idPartida}"><i class="ri-arrow-turn-back-line"></i></i>Retomar</a>
+			<a id="turnBackPartida${idPartida}" href="/painelws/partida/${idPartida}"><i class="ri-arrow-turn-back-line"></i></i>Retomar</a>
 		`;
 	}/*  else {
 		return `

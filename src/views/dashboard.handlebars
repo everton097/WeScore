@@ -25,6 +25,16 @@
 										{{Usuario.nomeUsuario}}</p>
 								</div>
 
+							<div class="cardDashboard_division_text">
+									{{#if (eq status "Aguardando")}}
+											<span id="status{{idCampeonato}}" class="cardDashboard_division_status_min cardDashboard_division_status_aguardando"></span>
+										{{else if (eq status "Em Andamento")}}
+											<span id="status{{idCampeonato}}" class="cardDashboard_division_status_min cardDashboard_division_status_andamento"></span>
+										{{else if (eq status "Finalizado")}}
+											<span id="status{{idCampeonato}}" class="cardDashboard_division_status_min cardDashboard_division_status_finalizado"></span>
+									{{/if}}
+								</div>
+
 								<div class="paste-button">
 									<button class="painelws_Btn">
 										<i class="ri-more-2-fill"></i>
@@ -58,7 +68,7 @@
 				<div id="partidasContainer" class="cardDashboard_container">
 					{{#if partidas.length}}
 						{{#each partidas}}
-							<div id="partidas" class="cardDashboard_division">
+							<div id="partida_{{idPartida}}" class="cardDashboard_division">
 								<div class="cardDashboard_division_image"></div>
 								<div class="cardDashboard_division_content">
 									<div class="cardDashboard_division_text">
@@ -81,7 +91,7 @@
 												<a id="startPartida{{idPartida}}"><i class="ri-play-line"></i>Iniciar</a>
 											{{else if (eq status "Em Andamento")}}
 												<!-- Botão Finalizar se o status for "Em Andamento" -->
-												<a id="turnBackPartida{{idPartida}}" href="/painelws/partida/{{idCampeonato}}/{{idPartida}}"><i class="ri-arrow-turn-back-line"></i></i>Retomar</a>
+												<a id="turnBackPartida{{idPartida}}" href="/painelws/partida/{{idPartida}}"><i class="ri-arrow-turn-back-line"></i></i>Retomar</a>
 											{{/if}}
 											
 											<a id="bottom" href="#"><i class="ri-delete-bin-line"></i>Remover</a>

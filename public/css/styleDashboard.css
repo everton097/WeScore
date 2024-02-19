@@ -1,3 +1,6 @@
+.container__::-webkit-scrollbar {
+	width: 04px;
+  }
 .nav-bar ul li a {
 	padding: 10px 8px;
 	margin: 0 5px;
@@ -16,7 +19,7 @@
 	display: flex;
 	align-items: flex-end;
 	flex-direction: column;
-	z-index: 200 !important;
+	z-index: 2000 !important;
 	cursor: pointer;
 }
 
@@ -27,7 +30,7 @@
 	height: 40px;
 	object-fit: cover;
 	justify-content: center;
-	z-index: 300 !important;
+	z-index: 3000 !important;
 }
 .user_input p {
 	color: white;
@@ -180,7 +183,9 @@
 
 .container__ {
 	height: calc(100%);
-	overflow: auto;
+	overflow-y: auto;
+	overflow-x: hidden;
+	transition: 0.3s ease-in-out;
 }
 .cardDashboard_title,
 .cardDashboard_more {
@@ -225,9 +230,17 @@
 	cursor: pointer;
 	color: #000;
 }
+.cardDashboard_division_text{
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
 
 .cardDashboard_division_name {
-	font-weight: 600;
+	white-space: nowrap; 
+	width: 150; 
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .cardDashboard_division_username {
@@ -243,6 +256,17 @@
 	font-size: 0.9em;
 	color: #fff;
 	min-width: 120px;
+	padding: 10px;
+	background-color: red;
+}
+.cardDashboard_division_status_min{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 20px;
+	font-size: 0.9em;
+	color: #fff;
+	min-width: 20px;
 	padding: 10px;
 	background-color: red;
 }
@@ -359,7 +383,7 @@
 .paste-button {
     display: flex;
 	position: relative;
-	min-width: 100px;
+	min-width: 100px; /*remover dps para evitar pulo no canto direito no botão*/
 	justify-content: end;
 }
 
