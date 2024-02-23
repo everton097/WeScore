@@ -72,6 +72,7 @@
 .form .group .custum-file-upload:hover, .form .group input:hover,
 .form .group textarea:hover {
   border-color: #3366cc;
+  background: #ecf0f5;
 }
 /*   movimentação active */
 .form .group input:focus+ label, .form .group textarea:focus +label {

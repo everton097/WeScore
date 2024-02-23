@@ -4,7 +4,6 @@
 			<p class="cardDashboard_title">Campeonatos <a href="/painelws/campeonato/add"><i class="ri-add-fill"></i>{{!-- <i class="ri-add-circle-line"></i> --}}</a></p>
 			<div class="container__">
 				<div id="campeonatosContainer" class="cardDashboard_container">
-
 					{{#each campeonatos}}
 						{{#if active}}
 							<div class="cardDashboard_division campeonato_active" aria-current="true"  data-campeonato-id="{{idCampeonato}}">
@@ -25,12 +24,15 @@
 										{{Usuario.nomeUsuario}}</p>
 								</div>
 
-							<div class="cardDashboard_division_text">
+							<div class="cardDashboard_division_text_status">
 									{{#if (eq status "Aguardando")}}
+										<span class="tooltip cardDashboard_division_status_aguardando">Aguardando</span>
 											<span id="status{{idCampeonato}}" class="cardDashboard_division_status_min cardDashboard_division_status_aguardando"></span>
 										{{else if (eq status "Em Andamento")}}
+											<span class="tooltip cardDashboard_division_status_andamento">Em Andamento</span>
 											<span id="status{{idCampeonato}}" class="cardDashboard_division_status_min cardDashboard_division_status_andamento"></span>
 										{{else if (eq status "Finalizado")}}
+											<span class="tooltip cardDashboard_division_status_finalizado">Finalizado</span>
 											<span id="status{{idCampeonato}}" class="cardDashboard_division_status_min cardDashboard_division_status_finalizado"></span>
 									{{/if}}
 								</div>

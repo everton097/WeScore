@@ -16,11 +16,15 @@
 	);
 	border-radius: 50%;
 	margin: 5px auto;
-	display: flex;
-	align-items: flex-end;
 	flex-direction: column;
 	z-index: 2000 !important;
 	cursor: pointer;
+	
+	display: flex;
+    position: relative;
+	align-items: flex-end;
+	/* align-items: center; */
+	justify-content: center;
 }
 
 .user_image img {
@@ -48,7 +52,7 @@
 	justify-content: center;
 	border-radius: 5px;
 	position: absolute;
-	top: 40px;
+	top: 30px;
 	transition: 0.3s ease-out;
 	visibility: hidden;
 	opacity: 0;
@@ -197,6 +201,7 @@
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
+	gap: 5px;
 	padding: 10px 15px;
 }
 
@@ -232,6 +237,7 @@
 }
 .cardDashboard_division_text{
 	display: flex;
+	align-items: start;
 	flex-direction: column;
 	justify-content: flex-start;
 }
@@ -270,19 +276,63 @@
 	padding: 10px;
 	background-color: red;
 }
-.cardDashboard_division_status_aguardando{
+.cardDashboard_division_text_status{
+	display: flex;
+    position: relative;
+	align-items: center;
+	justify-content: center;
+}
+.cardDashboard_division_text_status .tooltip {
+	position: absolute;
+	top: 0;
+	font-size: 14px;
+	white-space: nowrap;
+	color: #fff;
+	padding: 5px 8px;
+	border-radius: 5px;
+	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+	opacity: 0;
+	pointer-events: none;
+	transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+.cardDashboard_division_text_status .tooltip::before {
+	position: absolute;
+	content: "";
+	height: 8px;
+	width: 8px;
+	color: #fff;
+	bottom: -3px;
+	left: 50%;
+	transform: translate(-50%) rotate(45deg);
+	transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+.cardDashboard_division_text_status:hover .tooltip {
+	top: -31px;
+	opacity: 1;
+	visibility: visible;
+	pointer-events: auto;
+  }
+.cardDashboard_division_text_status:hover span,
+.cardDashboard_division_text_status:hover .tooltip {
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
+}
+
+.cardDashboard_division_status_aguardando,
+.cardDashboard_division_status_aguardando::before{
 	background-color: yellow;
 }
-.cardDashboard_division_status_andamento{
+.cardDashboard_division_status_andamento,
+.cardDashboard_division_status_andamento::before{
 	background-color: green;
 }
-.cardDashboard_division_status_finalizado{
+.cardDashboard_division_status_finalizado,
+.cardDashboard_division_status_finalizado::before{
 	background-color: cyan;
 }
 
 .cardDashboard_division_image {
 	width: 60px;
-	height: 60px;
+	aspect-ratio: 1 / 1;
 	background: rgb(22, 19, 70);
 	background: linear-gradient(
 		295deg,
@@ -290,14 +340,11 @@
 		rgba(89, 177, 237, 1) 100%
 	);
 	border-radius: 50%;
-	margin-right: 15px;
 	overflow: hidden;
 }
 .cardDashboard_division_image img {
-	max-width: 100%;
-	max-height: 100%;
-	width: 60px;
-	height: 60px;
+	width: 100%;
+	aspect-ratio: 1 / 1;
 	object-fit: cover;
 }
 

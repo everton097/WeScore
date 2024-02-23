@@ -12,11 +12,11 @@ userImage.addEventListener("click", function () {
 	) {
 		userInput.style.visibility = "visible";
 		userInput.style.opacity = "1";
-		userInput.style.top = "55px";
+		userInput.style.top = "48px";
 	} else {
 		userInput.style.visibility = "hidden";
 		userInput.style.opacity = "0";
-		userInput.style.top = "40px";
+		userInput.style.top = "30px";
 	}
 });
 
