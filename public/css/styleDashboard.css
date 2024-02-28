@@ -307,7 +307,7 @@
 	transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 .cardDashboard_division_text_status:hover .tooltip {
-	top: -31px;
+	top: -35px;
 	opacity: 1;
 	visibility: visible;
 	pointer-events: auto;
