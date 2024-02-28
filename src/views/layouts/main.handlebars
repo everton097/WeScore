@@ -2,14 +2,14 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link id="style" rel="stylesheet" href="css/stylesMain.css" />
-		<link id="style" rel="stylesheet" href="css/styleJogos.css" />
-		<link id="style" rel="stylesheet" href="css/styleJogosQuadra.css" />
-		<link id="style" rel="stylesheet" href="css/styleHome.css" />
+		<link id="style" rel="stylesheet" href="/css/stylesMain.css" />
+		<link id="style" rel="stylesheet" href="/css/styleHome.css" />
 		<link id="style" rel="stylesheet" href="css/stylesLogin.css" />
 		<!-- icon link -->
 		<link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
 		<link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"/>
+		<!-- axios link -->
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 		<title>WeScore</title>
 	</head>
 	<body>
@@ -24,7 +24,6 @@
 			<nav class="nav-bar">
 				<ul>
 					<li><a href="/">Home</a></li>
-					<li><a href="/jogos">Jogos</a></li>
 					<a href="/login" class="button">Login</a>
 				</ul>
 			</nav>
@@ -34,8 +33,9 @@
 		{{{body}}}
 
 		<!-- footer -->
-		<section class="section-footer footer">
-			<div class="footer-content logo">
+		<section class="section-footer">
+			<div class="footer">
+				<div class="footer-content logo">
 				<a href="/" >We<span>Score</span></a>
 				<p>Potencializando o Seu Controle.</p>
 				<div class="icon">
@@ -53,7 +53,10 @@
 				<li><a href="/contato">Contato</a></li>
 				<li><a href="/login">Login</a></li>
 			</div>
+			</div>
 		</section>
-		<script src="js/menu.js"></script>
+		<script src="/js/menu.js"></script>
+		<script src="/js/token.js"></script>
+	<script>clearToken();</script>
 	</body>
 </html>

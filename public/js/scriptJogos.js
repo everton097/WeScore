@@ -23,7 +23,7 @@ const subsTime02jgd4 = document.getElementById("Time02jgd4");
 const subsTime02jgd5 = document.getElementById("Time02jgd5");
 const subsTime02jgd6 = document.getElementById("Time02jgd6");
 //recupera o Card de Substituição
-const statusDisplayCard = document.getElementById("card");
+const statusDisplayCard = document.getElementById("popupcard");
 //Computar o estilo do css 
 const compStyles = window.getComputedStyle(statusDisplayCard);
 const closecard = document.getElementById("closecard");
@@ -37,14 +37,14 @@ const AlterStatusCard = (time) => {
     document.getElementById("subistituicaoTime02").style.display = "flex";
   }
   if (compStyles.display == "none") {
-    document.getElementById("card").style.display = "flex";
+    document.getElementById("popupcard").style.display = "flex";
   } else if (compStyles.display == "flex") {
-    document.getElementById("card").style.display = "none";
+    document.getElementById("popupcard").style.display = "none";
   }
 };
 closecard.addEventListener("click", () => {
   AlterStatusCard();
-  //document.getElementById("card").style.display = "none";
+  //document.getElementById("popupcard").style.display = "none";
 });
 //Jogadores para substituição do time 01
 subsTime01jgd6.addEventListener("click", () => {
@@ -64,7 +64,7 @@ subsTime01jgd2.addEventListener("click", () => {
 });
 subsTime01jgd1.addEventListener("click", () => {
   AlterStatusCard("time01");
-  //document.getElementById("card").style.display = "flex";
+  //document.getElementById("popupcard").style.display = "flex";
 });
 //Jogadores para substituição do time 02
 subsTime02jgd6.addEventListener("click", () => {
@@ -84,7 +84,7 @@ subsTime02jgd2.addEventListener("click", () => {
 });
 subsTime02jgd1.addEventListener("click", () => {
   AlterStatusCard("time02");
-  //document.getElementById("card").style.display = "flex";
+  //document.getElementById("popupcard").style.display = "flex";
 });
 
 
@@ -94,6 +94,9 @@ const updateValueTime01 = () => {
     valueTime01.innerHTML = "0" + countTime01;
   } else if (countTime01 > 9) {
     valueTime01.innerHTML = countTime01;
+    if (countTime01>24 && countTime01 >= (countTime02+2)) {
+      console.log("time 1 ganhou");
+    }
   }
 };
 const updateBola01 = () => {
@@ -113,6 +116,9 @@ const updateValueTime02 = () => {
     valueTime02.innerHTML = "0" + countTime02;
   } else if (countTime02 > 9) {
     valueTime02.innerHTML = countTime02;
+    if (countTime02>24 && countTime02 >= (countTime01+2)) {
+      console.log("time 2 ganhou");
+    }
   }
 };
 
@@ -121,13 +127,23 @@ let intervalIDTime01 = 0;
 plusButtonTime01.addEventListener("click", () => {
   if (countTime01 >= 0 && countTime01 < 40) {
     intervalIDTime01 = countTime01 += 1;
-    console.log("botao + ANTES: "+controlet1,rotacaot1);
+    updateTime01();
+    updateValueTime01();
+    updateBola01();
+    controlet1 = "ponto";
+    controlet2 = "semponto"
+  }
+});
+// Adicione um ouvinte de evento ao documento
+document.addEventListener("keydown", () => {
+   // Verifique se a tecla pressionada é a tecla desejada (por exemplo, tecla 'A' com código 65)
+  if (countTime01 >= 0 && countTime01 < 40 && event.key === 'q') {
+    intervalIDTime01 = countTime01 += 1;
     updateTime01();
     updateValueTime01();
     updateBola01();
     controlet1 = "ponto";
     controlet2 = "semponto";
-    console.log("botao + DPS: "+controlet1,rotacaot1);
   }
 });
 plusButtonTime01.addEventListener("mousedown", () => {
@@ -146,12 +162,20 @@ plusButtonTime01.addEventListener("mousedown", () => {
   }
 });
 minusButtonTime01.addEventListener("click", () => {
+  console.log(countTime01,countTime02)//Chamda de rota redução ponto api
   if (countTime01 > 0 && countTime01 <= 40) {
     intervalIDTime01 = countTime01 -= 1;
     updateMenusTime01();
     updateValueTime01();
-    console.log(controlet1,rotacaot1);
   }
+});
+document.addEventListener("keydown", () => {
+  // Verifique se a tecla pressionada é a tecla desejada (por exemplo, tecla 'A' com código 65)
+ if (countTime01 > 0 && countTime01 <= 40 && event.key === 'a') {
+    intervalIDTime01 = countTime01 -= 1;
+    updateMenusTime01();
+    updateValueTime01();
+ }
 });
 minusButtonTime01.addEventListener("mousedown", () => {
   if (countTime01 > 0 && countTime01 <= 40) {
@@ -191,8 +215,7 @@ jogador5.style.top =  `${posiocaoTopT1[1]}%`;
 jogador6.style.left = `${posiocaoLeftT1[0]}%`;
 jogador6.style.top =  `${posiocaoTopT1[0]}%`;
 
-const updateTime01 = () => {  
-  console.log("Controle de rotação +"+controlet1,rotacaot1);
+const updateTime01 = () => {
   if (controlet1 == "semponto" && rotacaot1 == "mantem") {
     //Altera posição dos jogadores.
     moveLeft(posiocaoLeftT1);
@@ -249,8 +272,19 @@ plusButtonTime02.addEventListener("click", () => {
     updateBola02();
     controlet2 = "ponto";
     controlet1 = "semponto";
-    console.log("botao+"+controlet2,rotacaot2);
   }
+});
+// Adicione um ouvinte de evento ao documento
+document.addEventListener("keydown", () => {
+  // Verifique se a tecla pressionada é a tecla desejada (por exemplo, tecla 'A' com código 65)
+ if (countTime02 >= 0 && countTime02 < 40 && event.key === 'e') {
+    intervalIDTime02 = countTime02 += 1;
+    updateTime02();
+    updateValueTime02();
+    updateBola02();
+    controlet2 = "ponto";
+    controlet1 = "semponto";
+ }
 });
 plusButtonTime02.addEventListener("mousedown", () => {
   if (countTime02 >= 0 && countTime02 < 40) {
@@ -272,8 +306,15 @@ minusButtonTime02.addEventListener("click", () => {
     intervalIDTime02 = countTime02 -= 1;
     updateMenusTime02();
     updateValueTime02();
-    console.log(controlet2,rotacaot2);
   }
+});
+document.addEventListener("keydown", () => {
+  // Verifique se a tecla pressionada é a tecla desejada (por exemplo, tecla 'A' com código 65)
+ if (countTime02 > 0 && countTime02 <= 40 && event.key === 'd') {
+  intervalIDTime02 = countTime02 -= 1;
+  updateMenusTime02();
+  updateValueTime02();
+ }
 });
 minusButtonTime02.addEventListener("mousedown", () => {
   if (countTime02 > 0 && countTime02 <= 40) {
@@ -370,3 +411,19 @@ function moveLeft(arr) {
   const firstElement = arr.shift();
   arr.push(firstElement);
 }
+// Obtenha todos os botões com atributo 'data-target'
+const alterCards = document.querySelectorAll("[data-target]");
+
+// Adicione um evento de clique a cada botão
+alterCards.forEach(alterCard => {
+  alterCard.addEventListener("click", () => {
+    // Oculte todos os elementos
+    document.querySelectorAll("#cartoes, #quadradejogos, #substituicao").forEach(element => {
+      element.style.display = "none";
+    });
+    
+    // Mostre o elemento correspondente com base no atributo 'data-target'
+    const targetId = alterCard.getAttribute("data-target");
+    document.getElementById(targetId).style.display = "block";
+  });
+});

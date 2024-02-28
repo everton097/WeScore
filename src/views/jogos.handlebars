@@ -1,4 +1,4 @@
-<div id="card" class="card">
+<div id="popupcard" class="popupcard">
 	<div id="closecard" class="close">
 		<div class="lineCard one"></div>
 		<div class="lineCard two"></div>
@@ -26,8 +26,10 @@
 <section>
 	<div class="mural">
 		<div class="time01">
-			<img class="logotime01" src="/img/VoleiBrasil.png" alt="logotime1" />
-			<p class="nometime01">VoleiBrasil</p>
+			<div class="logotime01">
+				<img src="http://localhost:3001/public/upload/img/time/{{partida.logoTime1}}" alt="logotime1" />
+			</div>
+			<p class="nometime01">{{partida.nomeTime1}}</p>
 		</div>
 		<div class="score" id="counter">
 			<img id="bolavolei01" class="bolavolei01" src="/img/bola.png" />
@@ -35,9 +37,9 @@
 				<button id="plusTime01" class="count-button">+</button>
 				<button id="minusTime01" class="count-button">-</button>
 			</div>
-			<span id="valueTime01" class="pontostime01">00</span>
+			<span id="valueTime01" class="pontostime">00</span>
 			<p class="vs">X</p>
-			<span id="valueTime02" class="pontostime02">00</span>
+			<span id="valueTime02" class="pontostime">00</span>
 			<div class="controlTime02">
 				<button id="plusTime02" class="count-button">+</button>
 				<button id="minusTime02" class="count-button">-</button>
@@ -45,13 +47,15 @@
 			<img id="bolavolei02" class="bolavolei02" src="/img/bola.png" />
 		</div>
 		<div class="time02">
-			<p class="nometime02">VoleiBrasil</p>
-			<img class="logotime02" src="/img/VoleiBrasil.png" alt="logotime1" />
+			<p class="nometime02">{{partida.nomeTime2}}</p>
+			<div class="logotime02">
+				<img src="http://localhost:3001/public/upload/img/time/{{partida.logoTime2}}" alt="logotime1" />
+			</div>
 		</div>
 	</div>
 </section>
 
-<section>
+<section id="quadradejogos">
 	<div class="quadradejogo">
 		<div class="volleyball-court">
 			<div class="service-area left"></div>
@@ -92,5 +96,16 @@
 	</div>
 
 </section>
-
-<script src="js/scriptJogos.js"></script>
+<nav>
+	
+<button id="testeonclick2" data-target="quadradejogos">Mostrar Quadra</button>
+<button id="testeonclick" data-target="cartoes">Mostrar Cartões</button>
+<button id="testeonclickc" data-target="substituicao">Mostrar Substituição</button>
+</nav>
+<section  id="cartoes" style="display: none;">
+	<div>cartoes</div>
+</section>
+<section id="substituicao" style="display: none;">
+	<div>subistutuição</div>
+</section>
+<script src="/js/scriptJogos.js"></script>
