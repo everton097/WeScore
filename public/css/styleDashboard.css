@@ -496,3 +496,6 @@
 	min-width: 150px;
 	opacity: 1;
 }
+.container__ .cardDashboard_container:last-child .cardDashboard_division .cardDashboard_division_content .paste-button .dropdown-content  {
+	background-color: red;
+ }

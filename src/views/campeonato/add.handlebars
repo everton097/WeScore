@@ -1,10 +1,11 @@
 <section class="containePainelws">
     <div class="cardForm">
         <span class="title">Adicionar Campeonato</span>
-        <form class="form">
+
+        <form id="createCampeonatoForm" enctype="multipart/form-data" class="form">
             <div class="group">
-                <input placeholder="" type="text" required="">
-                <label for="name">Nome</label>
+                <input name="nomeCampeonato" placeholder="" type="text" required="">
+                <label for="nomeCampeonato">Nome</label>
             </div>
             <div class="group">
                 <label for="file" class="custum-file-upload">
@@ -19,10 +20,12 @@
                     <div class="text">
                         <span>Click to upload image</span>
                     </div>
-                    <input id="file" type="file" />
+                    <input name="logoCampeonato" id="file" type="file" />
                 </label>
             </div>
         </form>
-        <button type="submit">Adicionar</button>
+        <button id="saveCampeonatoForm" type="submit">Adicionar</button>
     </div>
 </section>
+<!-- Scripts do formulário curso -->
+<script src="/js/campeonato.js"></script>

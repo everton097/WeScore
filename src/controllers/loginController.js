@@ -40,9 +40,9 @@ exports.autenticate = async (req, res) => {
                 res.status(200).json({
                     message: "Você está autenticado!",
                     token: req.session.token,
-                    userMail: response.data.userId,
+                    userId: response.data.userId,
                     userName: response.data.userName,
-                    userId: response.data.userMail,
+                    userMail: response.data.userMail,
                     userLogo: response.data.userLogo
                 })
             })

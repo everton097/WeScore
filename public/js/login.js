@@ -78,8 +78,12 @@ function loginClick(event) {
     axios.post(`${urlSPA}login/`, serializedData, config)
       .then(response => {
         //console.log(response.data);
-        // Armazena o token de resposta no localStorage
+        // Armazena o token e dados de usuario de resposta no localStorage
         localStorage.setItem('token', response.data.token);
+        localStorage.setItem('userId', response.data.userId);
+        localStorage.setItem('userName', response.data.userName);
+        localStorage.setItem('userMail', response.data.userMail);
+        localStorage.setItem('userLogo', response.data.userLogo);
         const token = localStorage.getItem('token');
         console.log("Token: "+ token);
         // Redireciona para a página inicial do cms

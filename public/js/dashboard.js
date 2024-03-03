@@ -41,7 +41,6 @@ document.getElementById("partidasContainer").addEventListener("click", async fun
 		
         // Obtenha o ID da partida associado a este botão
         const partidaId = button.closest(".cardDashboard_division").id.replace("partida_", "");
-
         // Realize a lógica relacionada ao botão aqui
         if (button.id.startsWith("startPartida")) {
             // Lógica para o botão Iniciar
