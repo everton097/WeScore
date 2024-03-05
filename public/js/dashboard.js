@@ -21,7 +21,6 @@ userImage.addEventListener("click", function () {
 });
 
 var logoutButton = document.getElementById("logoutButton");
-
 logoutButton.addEventListener("click", function () {
 	// Limpa dados do usuario do localStorage
 	localStorage.removeItem('token');
@@ -33,31 +32,6 @@ logoutButton.addEventListener("click", function () {
 	window.location.href = "/logout";
 });
 
-document.getElementById("partidasContainer").addEventListener("click", async function (event) {
-	console.log(event.target);
-	console.log(event.target.classList);
-
-	const parentElement = event.target.parentNode;
-	// Verifique se o clique foi em um botão dentro do contêiner de partidas
-	if (parentElement.classList.contains("dropdown-content")) {
-        // Obtenha a referência ao botão clicado
-		console.log("Entrou!!");
-        const button = event.target;
-		
-        // Obtenha o ID da partida associado a este botão
-        const partidaId = button.closest(".cardDashboard_division").id.replace("partida_", "");
-        // Realize a lógica relacionada ao botão aqui
-        if (button.id.startsWith("startPartida")) {
-            // Lógica para o botão Iniciar
-            console.log(`Botão Iniciar clicado para a partida ${partidaId}`);
-            // Faça sua requisição axios para iniciar a partida
-        } else if (button.id.startsWith("turnBackPartida")) {
-            // Lógica para o botão Retomar
-            console.log(`Botão Retomar clicado para a partida ${partidaId}`);
-            // Faça sua requisição axios para retomar a partida
-        }
-	}
-})
 
 // Adicione um ouvinte de evento para os itens de campeonato
 document.getElementById("campeonatosContainer").addEventListener("click", async function (event) {
@@ -65,7 +39,7 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 		const campeonatoId = event.target.closest(".cardDashboard_division").dataset.campeonatoId;
 		const campeonatoElement = event.target.closest(".cardDashboard_division");
 
-		// Verifique se o clique foi no botão de Iniciar
+		// Verifica se o clique foi no botão de Iniciar
 		if (event.target.id === `start${campeonatoId}`) {
 			try {
 				// Fazer uma solicitação PUT para atualizar o status do campeonato para "Em Andamento"
@@ -78,7 +52,7 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 				// Faça a requisição para alterar o status do campeonato
 				await axios.put(`${url}campeonato/status/${campeonatoId}`, config);
 
-				// Remova o botão de Iniciar
+				// Remover o botão de Iniciar
 				const startButton = document.getElementById(`start${campeonatoId}`);
 				if (startButton) {
 					// Obtenha o pai do botão de Iniciar
@@ -97,10 +71,10 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 					// Adicione o botão de Finalizar antes do botão de Remover
 					parentElement.insertBefore(
 						finishButton,
-						parentElement.querySelector("#bottom")
+						parentElement.querySelector(`#del${campeonatoId}`)
 					);
 				}
-				console.log(`${campeonatoId}`);
+
 				const statusAguardando = document.querySelector(`#status${campeonatoId}`);
 				if (statusAguardando) {
 					// Obtenha o pai do status
@@ -109,10 +83,26 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 					statusAguardando.parentNode.removeChild(statusAguardando);
 					// Crie e adicione o botão de Finalizar
 					const finishStatus = document.createElement("span");
-					finishStatus.id = `status${campeonatoId}`;
-					finishStatus.classList.add("cardDashboard_division_status");
-					finishStatus.classList.add("cardDashboard_division_status_andamento");
-					finishStatus.innerHTML = "Em Andamento";
+					// Verifica se a página ativa é a página de painelws para adicionar a tooltip para o status do campeonato
+					if (activePage === '/painelws') {
+						finishStatus.id = `status${campeonatoId}`;
+						finishStatus.classList.add("cardDashboard_division_status_min");
+						finishStatus.classList.add("cardDashboard_division_status_andamento");
+						finishStatus.innerHTML = "";
+						const tooltipAguardando = document.querySelector(`#tooltip${campeonatoId}`);
+						tooltipAguardando.parentNode.removeChild(tooltipAguardando);
+						const tooltipstatus = document.createElement("span");
+						tooltipstatus.id = `tooltip${campeonatoId}`;
+						tooltipstatus.classList.add("tooltip");
+						tooltipstatus.classList.add("cardDashboard_division_status_andamento");
+						tooltipstatus.innerHTML = "Em Andamento";
+						parentElementStatus.appendChild(tooltipstatus);
+					}else{
+						finishStatus.id = `status${campeonatoId}`;
+						finishStatus.classList.add("cardDashboard_division_status");
+						finishStatus.classList.add("cardDashboard_division_status_andamento");
+						finishStatus.innerHTML = "Em Andamento";
+					}
 					// Adicione o status
 					parentElementStatus.appendChild(finishStatus);
 				}
@@ -120,8 +110,28 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 				console.error(error);
 			}
 		}
+		// Verifica se o clique foi no botão de Finalizar
+		else if (event.target.id === `del${campeonatoId}`) {
+			// Fazer uma solicitação PUT para atualizar o status do campeonato para "Em Andamento"
+			var token = localStorage.getItem("token");
+			var config = {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			};
+			// Faça a requisição para remover o campeonato
+			await axios.delete(`${url}campeonato/${campeonatoId}`, config)
+			.then((response) => {
+				// Remover o campeonato
+				campeonatoElement.parentNode.removeChild(campeonatoElement);
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+		}
 
-		// Verifique se o clique foi em um item de campeonato (excluindo botões de opções)
+		// Verifica se o clique foi em um item de campeonato (excluindo botões de opções),
+		// para remover a classe campeonato_active e renderizar as partidas
 		const campeonatoDivision = event.target.closest(".cardDashboard_division");
 		if (campeonatoDivision && !event.target.closest(".dropdown-content")) {
 			// Remova a classe campeonato_active do campeonato antigo
@@ -144,9 +154,8 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 			// Fazer uma solicitação GET para buscar as partidas do campeonato clicado
 			axios.get(`${url}partida/${campeonatoId}`, config)
 				.then((response) => {
-					// Renderize as partidas no contêiner de partidas
-					const partidasContainer =
-						document.getElementById("partidasContainer");
+					// Renderiza as partidas no contêiner de partidas
+					const partidasContainer = document.getElementById("partidasContainer");
 					partidasContainer.innerHTML = ""; // Limpe o conteúdo anterior
 					// Se não houverem partidas, mostre mensagem informativa
 					if (response.data.length === 0) {
@@ -248,9 +257,31 @@ function getAnchorsHTML(status, idPartida, campeonatoId) {
 		`;
 	}/*  else {
 		return `
-			<a id="bottom">
+			<a id="del">
 			<i class="ri-delete-bin-line"></i>Remover
 			</a>
 		`;
 	} */
 }
+// ouvinte para elemesntos com ID partidasContainer
+document.getElementById("partidasContainer").addEventListener("click", async function (event) {
+	const parentElement = event.target.parentNode;
+	// Verifique se o clique foi em um botão dentro do contêiner de partidas
+	if (parentElement.classList.contains("dropdown-content")) {
+        // Obtenha a referência ao botão clicado
+        const button = event.target;
+		
+        // Obtenha o ID da partida associado a este botão
+        const partidaId = button.closest(".cardDashboard_division").id.replace("partida_", "");
+        // Realize a lógica relacionada ao botão aqui
+        if (button.id.startsWith("startPartida")) {
+            // Lógica para o botão Iniciar
+            console.log(`Botão Iniciar clicado para a partida ${partidaId}`);
+            // Faça sua requisição axios para iniciar a partida
+        } else if (button.id.startsWith("turnBackPartida")) {
+            // Lógica para o botão Retomar
+            console.log(`Botão Retomar clicado para a partida ${partidaId}`);
+            // Faça sua requisição axios para retomar a partida
+        }
+	}
+})

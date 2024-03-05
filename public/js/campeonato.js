@@ -129,7 +129,18 @@ document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
 
   function updateThumbnail(dropZoneElement, file) {
     let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
-  
+    
+    const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
+    const imageExtension = file.name.split('.').pop().toLowerCase();
+    if (!allowedExtensions.includes(`.${imageExtension}`)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'A imagem deve ser um arquivo de imagem válido [jpg, jpeg, png, gif]!',
+        });
+        return false;
+    }
+
     // First time - remove the prompt
     if (dropZoneElement.querySelector(".drop-zone__prompt")) {
       dropZoneElement.querySelector(".drop-zone__prompt").remove();

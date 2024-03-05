@@ -26,7 +26,7 @@
 
 							<div class="cardDashboard_division_text_status">
 									{{#if (eq status "Aguardando")}}
-										<span class="tooltip cardDashboard_division_status_aguardando">Aguardando</span>
+										<span id="tooltip{{idCampeonato}}" class="tooltip cardDashboard_division_status_aguardando">Aguardando</span>
 											<span id="status{{idCampeonato}}" class="cardDashboard_division_status_min cardDashboard_division_status_aguardando"></span>
 										{{else if (eq status "Em Andamento")}}
 											<span class="tooltip cardDashboard_division_status_andamento">Em Andamento</span>
@@ -43,7 +43,7 @@
 										<div class="painelws_Btn_text">Opções</div>
 									</button>
 									<div class="dropdown-content">
-										<a id="top{{idCampeonato}}" href="/painelws/campeonatos/{{idCampeonato}}"><i class="ri-pencil-line"></i>Editar</a>
+										<a id="edit{{idCampeonato}}" href="/painelws/campeonatos/{{idCampeonato}}"><i class="ri-pencil-line"></i>Editar</a>
 										
 										{{#if (eq status "Aguardando")}}
 											<!-- Botão Iniciar se o status for "Aguardando" -->
@@ -53,7 +53,7 @@
 											<a id="finish{{idCampeonato}}"><i class="ri-stop-line"></i>Finalizar</a>
 										{{/if}}
 										
-										<a id="bottom" href="#"><i class="ri-delete-bin-line"></i>Remover</a>
+										<a id="del{{idCampeonato}}"><i class="ri-delete-bin-line"></i>Remover</a>
 									</div>
 								</div>
 							</div>
@@ -96,7 +96,7 @@
 												<a id="turnBackPartida{{idPartida}}" href="/painelws/partida/{{idPartida}}"><i class="ri-arrow-turn-back-line"></i></i>Retomar</a>
 											{{/if}}
 											
-											<a id="bottom" href="#"><i class="ri-delete-bin-line"></i>Remover</a>
+											<a id="delPartida{{idPartida}}" ><i class="ri-delete-bin-line"></i>Remover</a>
 										</div>
 									</div>
 								</div>

@@ -40,7 +40,7 @@
 										<div class="painelws_Btn_text">Opções</div>
 									</button>
 									<div class="dropdown-content">
-										<a id="top{{idCampeonato}}" href="/painelws/campeonatos/{{idCampeonato}}"><i class="ri-pencil-line"></i>Editar</a>
+										<a id="edit{{idCampeonato}}" href="/painelws/campeonatos/{{idCampeonato}}"><i class="ri-pencil-line"></i>Editar</a>
 										
 										{{#if (eq status "Aguardando")}}
 											<!-- Botão Iniciar se o status for "Aguardando" -->
@@ -50,7 +50,7 @@
 											<a id="finish{{idCampeonato}}"><i class="ri-stop-line"></i>Finalizar</a>
 										{{/if}}
 										
-										<a id="bottom" href="#"><i class="ri-delete-bin-line"></i>Remover</a>
+										<a id="del{{idCampeonato}}"><i class="ri-delete-bin-line"></i>Remover</a>
 									</div>
 								</div>
 							</div>
