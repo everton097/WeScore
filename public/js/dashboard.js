@@ -23,6 +23,12 @@ userImage.addEventListener("click", function () {
 var logoutButton = document.getElementById("logoutButton");
 
 logoutButton.addEventListener("click", function () {
+	// Limpa dados do usuario do localStorage
+	localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('userMail');
+    localStorage.removeItem('userLogo');
 	// Redireciona para a página /logout
 	window.location.href = "/logout";
 });
@@ -32,7 +38,6 @@ document.getElementById("partidasContainer").addEventListener("click", async fun
 	console.log(event.target.classList);
 
 	const parentElement = event.target.parentNode;
-	console.log(parentElement);
 	// Verifique se o clique foi em um botão dentro do contêiner de partidas
 	if (parentElement.classList.contains("dropdown-content")) {
         // Obtenha a referência ao botão clicado
@@ -51,8 +56,6 @@ document.getElementById("partidasContainer").addEventListener("click", async fun
             console.log(`Botão Retomar clicado para a partida ${partidaId}`);
             // Faça sua requisição axios para retomar a partida
         }
-        /* // Adicione outras lógicas conforme necessário Exemplo: redirecione para a página de edição da partida
-        window.location.href = `/painelws/partida/${partidaId}/edit`; */
 	}
 })
 
@@ -72,7 +75,6 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 						Authorization: `Bearer ${token}`,
 					},
 				};
-
 				// Faça a requisição para alterar o status do campeonato
 				await axios.put(`${url}campeonato/status/${campeonatoId}`, config);
 
@@ -105,7 +107,6 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 					const parentElementStatus = statusAguardando.parentNode;
 					// Remova o status
 					statusAguardando.parentNode.removeChild(statusAguardando);
-
 					// Crie e adicione o botão de Finalizar
 					const finishStatus = document.createElement("span");
 					finishStatus.id = `status${campeonatoId}`;
@@ -221,13 +222,11 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 											}
 											window.location.href = `/painelws/partida/${idPartida}`;
 										})
-
 									} catch (error) {
 										console.error(error);
 									}
 								});
 							}
-							
 						});
 					}
 				})

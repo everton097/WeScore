@@ -6,9 +6,9 @@
 				<div id="campeonatosContainer" class="cardDashboard_container">
 					{{#each campeonatos}}
 						{{#if active}}
-							<div class="cardDashboard_division campeonato_active" aria-current="true"  data-campeonato-id="{{idCampeonato}}">
+							<div class="cardDashboard_division cardCampeonato campeonato_active" aria-current="true"  data-campeonato-id="{{idCampeonato}}">
 						{{else}}
-							<div class="cardDashboard_division" data-campeonato-id="{{idCampeonato}}">
+							<div class="cardDashboard_division cardCampeonato" data-campeonato-id="{{idCampeonato}}">
 						{{/if}}
 							<div class="cardDashboard_division_image">
 								<img 

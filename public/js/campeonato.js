@@ -60,9 +60,7 @@ document.querySelector('#saveCampeonatoForm').addEventListener('click', function
     };
     // Fazer uma solicitação POST para criar um novo banner
     axios.post(`${url}campeonato/create`, formData, config)
-        .then(response => {
-            console.log(response.data);
-            
+        .then(response => {            
             Swal.fire({
                 icon: 'success',
                 title: 'Campeonato criado com sucesso',
@@ -75,7 +73,6 @@ document.querySelector('#saveCampeonatoForm').addEventListener('click', function
         })
         .catch(error => {
             console.error(error);
-
             if (error.response) {
                 const { data, status } = error.response;
                 Swal.fire({
@@ -93,12 +90,6 @@ document.querySelector('#saveCampeonatoForm').addEventListener('click', function
         });
     }
 });
-
-
-
-
-
-
 
 document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
     const dropZoneElement = inputElement.closest(".drop-zone");

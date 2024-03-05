@@ -19,14 +19,12 @@
 	flex-direction: column;
 	z-index: 2000 !important;
 	cursor: pointer;
-	
 	display: flex;
     position: relative;
 	align-items: flex-end;
 	/* align-items: center; */
 	justify-content: center;
 }
-
 .user_image img {
 	max-width: 100%;
 	max-height: 100%;
@@ -43,7 +41,6 @@
 	padding: 8px 0;
 	text-align: center;
 }
-
 .user_input {
 	display: flex;
 	flex-direction: column;
@@ -70,7 +67,6 @@
 	border-bottom: 8px solid #0d1117;
 	z-index: -1 !important;
 }
-
 .user_input_value {
 	background-color: transparent;
 	border: none;
@@ -83,18 +79,15 @@
 	border-radius: 4px;
 	align-items: center;
 }
-
 .user_input_value:not(:active):hover,
 .user_input_value:focus {
 	background-color: #21262c;
 }
-
 .user_input_value:focus,
 .user_input_value:active {
 	background-color: #1a1f24;
 	outline: none;
 }
-
 .user_input_value::before {
 	content: "";
 	position: absolute;
@@ -106,12 +99,10 @@
 	border-radius: 5px;
 	opacity: 0;
 }
-
 .user_input_value:focus::before,
 .user_input_value:active::before {
 	opacity: 1;
 }
-
 .user_input_value i {
 	width: 15px;
 	font-weight: 600;
@@ -125,7 +116,6 @@
 	/* filter: blur(1px); */
 	transform: scale(0.95, 0.95);
 }
-
 .flex_main {
 	display: flex;
 	flex-direction: row;
@@ -142,7 +132,6 @@
 	width: clamp(350px, calc(100% / 3.1) + 10px, calc(100% / 3.1) + 10px);
 	height: 92vh;
 }
-
 .sectionCamp2 {
 	display: flex;
 	flex-direction: row;
@@ -151,7 +140,6 @@
 	width: clamp(350px, 100% / 3.1, 100% / 3.1);
 	height: 92vh;
 }
-
 .cardDashboard {
 	width: calc(100%);
 	height: 44vh;
@@ -162,7 +150,6 @@
 	justify-content: space-between;
 	margin: 5px;
 }
-
 .cardDashboard2 {
 	width: calc(100%);
 	height: 90vh;
@@ -184,7 +171,6 @@
     margin: 5px;
 	background-color: #fff;
 }
-
 .container__ {
 	height: calc(100%);
 	overflow-y: auto;
@@ -195,7 +181,6 @@
 .cardDashboard_more {
 	padding: 10px 15px;
 }
-
 .cardDashboard_division {
 	display: flex;
 	flex-direction: row;
@@ -204,14 +189,12 @@
 	gap: 5px;
 	padding: 10px 15px;
 }
-
 .cardDashboard_division_content {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	flex-grow: 1;
 }
-
 .cardDashboard_container {
 	display: flex;
 	flex-direction: column;
@@ -220,7 +203,6 @@
 	display: flex;
 	align-items: center;
 }
-
 .cardDashboard_title {
 	display: flex;
 	font-weight: 900;
@@ -241,14 +223,12 @@
 	flex-direction: column;
 	justify-content: flex-start;
 }
-
 .cardDashboard_division_name {
 	white-space: nowrap; 
 	width: 150; 
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
-
 .cardDashboard_division_username {
 	font-size: 0.9em;
 	color: #64696e;
@@ -316,7 +296,6 @@
 .cardDashboard_division_text_status:hover .tooltip {
   text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
 }
-
 .cardDashboard_division_status_aguardando,
 .cardDashboard_division_status_aguardando::before{
 	background-color: yellow;
@@ -329,7 +308,6 @@
 .cardDashboard_division_status_finalizado::before{
 	background-color: cyan;
 }
-
 .cardDashboard_division_image {
 	width: 60px;
 	aspect-ratio: 1 / 1;
@@ -360,12 +338,10 @@
 .cardDashboard_division:hover {
 	background-color: #b3b6b6;
 }
-
 .cardDashboard_more:hover {
 	background-color: #b3b6b6;
 	border-radius: 0px 0px 15px 15px;
 }
-
 .painelws_Btn {
 	display: flex;
 	align-items: center;
@@ -381,7 +357,6 @@
 	box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
 	background-color: black;
 }
-
 .painelws_Btn i {
 	font-size: 1.8em;
 	color: white;
@@ -390,7 +365,6 @@
 	align-items: center;
 	justify-content: center;
 }
-
 .painelws_Btn_text {
 	position: relative;
 	display: flex;
@@ -403,13 +377,11 @@
 	font-weight: 600;
 	transition-duration: 0.1s;
 }
-
 .painelws_Btn:hover {
 	width: 100px;
 	transition-duration: 0.3s;
 	background-color: #2c3136;
 }
-
 .painelws_Btn:hover i {
 	width: 30%;
 	transition-duration: 0.3s;
@@ -426,14 +398,12 @@
 .painelws_Btn:active {
 	transform: translate(2px, 2px);
 }
-
 .paste-button {
     display: flex;
 	position: relative;
 	min-width: 100px; /*remover dps para evitar pulo no canto direito no botão*/
 	justify-content: end;
 }
-
 .dropdown-content {
 	font-size: 13px;
 	position: absolute;
@@ -448,14 +418,12 @@
 	transition: opacity 0.3s ease-in-out;
 	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
-
 .dropdown-content i {
 	padding-left: 5px;
 	padding-right: 10px;
 	font-size: 1.3em;
 	color: white;
 }
-
 .dropdown-content a {
 	color: #fff;
 	padding: 8px 10px;
@@ -467,35 +435,46 @@
 .dropdown-content a:hover {
 	background-color: #2c3136;
 }
-
 .dropdown-content a:focus {
 	color: var(--nav-bar-a-color);
 }
-
 .paste-button:hover button {
 	border-radius: 13px 13px 0px 0px;
 	width: 100px;
 }
-
 .paste-button:hover button i {
 	width: 30%;
 	padding-left: 10px;
 }
-
 .paste-button:hover button .painelws_Btn_text {
 	opacity: 1;
 	width: 70%;
 	padding-right: 10px;
 }
-
 .paste-button:hover .dropdown-content {
 	display: block;
 }
-
 .paste-button:hover .dropdown-content {
 	min-width: 150px;
 	opacity: 1;
 }
-.container__ .cardDashboard_container:last-child .cardDashboard_division .cardDashboard_division_content .paste-button .dropdown-content  {
-	background-color: red;
+/* inversão do tooltip */
+.cardDashboard_division:first-child .cardDashboard_division_content .cardDashboard_division_text_status .tooltip::before{
+	transform: translate(-50%) rotate(45deg);
+	top: -3px;
+ }
+.cardDashboard_division:first-child .cardDashboard_division_content .cardDashboard_division_text_status:hover .tooltip{
+	top: 35px;
+ }
+
+/* inversão do dropdown-content */
+.cardDashboard_division:last-child.cardCampeonato:not(.cardDashboard_division:first-child.cardCampeonato) .cardDashboard_division_content .paste-button:hover .dropdown-content {
+	border-radius: 15px 15px 0px 15px;
+ }
+.cardDashboard_division:last-child.cardCampeonato:not(.cardDashboard_division:first-child.cardCampeonato) .cardDashboard_division_content .paste-button:hover button {
+	border-radius: 0px 0px 13px 13px ;
+ }
+.cardDashboard_division:last-child.cardCampeonato:not(.cardDashboard_division:first-child.cardCampeonato) .cardDashboard_division_content .paste-button:hover .dropdown-content {
+	top: 0;
+	transform: translateY(-100%);
  }

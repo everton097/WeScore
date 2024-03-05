@@ -107,6 +107,10 @@ app.use('/painelws/partida', routesPartida)
 app.get('/contato', function(req,res){
     res.render('contato')
 })
+// 404 route
+app.use(function(req,res){
+  res.render('404')
+})
 
 app.listen(port, ()=>{
     console.log(`Servidor rodando: http://localhost:${port}`)
