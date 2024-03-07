@@ -3,7 +3,7 @@
 	--header-background-color: white;
 	--box-shadow-color: rgba(191, 191, 191, 1);
 	--logo-color: #0ebeff;
-	--nav-bar-a-color: #0ebeff;
+	--nav-bar-a-color: #0ebeff; 
 	--nav-bar-a-color-border-solid: #074672;
 	--activePage: #074672;
 	--hamburger-color: #0ebeff;
@@ -12,6 +12,8 @@
 	--height-nav-bar: 57px;
 	--cor-quadra: #ff7372;
 	--input-color-transparency: #4376dd;
+	--input-cancel-color-transparency: #ff0e0e;
+	--input-cancel-color: #720707;
 	--input-icon: #aaa9a9;
 	--input-icon-hover: #636666;
 	/*

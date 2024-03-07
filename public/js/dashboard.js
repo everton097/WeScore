@@ -110,24 +110,31 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 				console.error(error);
 			}
 		}
-		// Verifica se o clique foi no botão de Finalizar
+		// Verifica se o clique foi no botão de Deletar
 		else if (event.target.id === `del${campeonatoId}`) {
+			console.log("Botão remover clicado");
 			// Fazer uma solicitação PUT para atualizar o status do campeonato para "Em Andamento"
-			var token = localStorage.getItem("token");
-			var config = {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			};
-			// Faça a requisição para remover o campeonato
-			await axios.delete(`${url}campeonato/${campeonatoId}`, config)
-			.then((response) => {
-				// Remover o campeonato
-				campeonatoElement.parentNode.removeChild(campeonatoElement);
-			})
-			.catch((error) => {
-				console.error(error);
-			});
+			
+			Swal.fire({
+				title: "Tem certeza?",
+				text: "Você não poderá reverter essa ação!",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonText: "Sim, remova-o!"
+			  }).then((result) => {
+				if (result.isConfirmed) {
+					delCampeonato(campeonatoElement, campeonatoId).then((response) => {
+						Swal.fire({
+							icon: 'success',
+							title: 'Campeonato removido com sucesso',
+							showConfirmButton: false,
+							showConfirmButton: false,
+							timer: 1500,
+						});
+						return false;
+					})
+				}
+			  });
 		}
 
 		// Verifica se o clique foi em um item de campeonato (excluindo botões de opções),
@@ -194,7 +201,6 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 
 							  </div>
 							`;
-
 							partidasContainer.appendChild(partidaElement);
 
 							// Adiciona o ouvinte de evento para o botão de "Iniciar"
@@ -263,6 +269,23 @@ function getAnchorsHTML(status, idPartida, campeonatoId) {
 		`;
 	} */
 }
+// Função para requisição para remover o campeonato
+async function delCampeonato(campeonatoElement,campeonatoId) {
+	var token = localStorage.getItem("token");
+				var config = {
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				};
+	await axios.delete(`${url}campeonato/${campeonatoId}`, config)
+	.then((response) => {
+		// Remover o campeonato
+		campeonatoElement.parentNode.removeChild(campeonatoElement);
+	})
+	.catch((error) => {
+		console.error(error);
+	});
+};
 // ouvinte para elemesntos com ID partidasContainer
 document.getElementById("partidasContainer").addEventListener("click", async function (event) {
 	const parentElement = event.target.parentNode;

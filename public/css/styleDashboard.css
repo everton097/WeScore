@@ -1,6 +1,6 @@
 .container__::-webkit-scrollbar {
 	width: 04px;
-  }
+}
 .nav-bar ul li a {
 	padding: 10px 8px;
 	margin: 0 5px;
@@ -274,7 +274,7 @@
 	opacity: 0;
 	pointer-events: none;
 	transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  }
+}
 .cardDashboard_division_text_status .tooltip::before {
 	position: absolute;
 	content: "";
@@ -285,16 +285,16 @@
 	left: 50%;
 	transform: translate(-50%) rotate(45deg);
 	transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  }
+}
 .cardDashboard_division_text_status:hover .tooltip {
 	top: -35px;
 	opacity: 1;
 	visibility: visible;
 	pointer-events: auto;
-  }
+}
 .cardDashboard_division_text_status:hover span,
 .cardDashboard_division_text_status:hover .tooltip {
-  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
+	text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
 }
 .cardDashboard_division_status_aguardando,
 .cardDashboard_division_status_aguardando::before{
@@ -325,7 +325,6 @@
 	aspect-ratio: 1 / 1;
 	object-fit: cover;
 }
-
 .cardDashboard_more {
 	display: block;
 	text-decoration: none;
@@ -431,7 +430,6 @@
 	display: block;
 	transition: 0.3s;
 }
-
 .dropdown-content a:hover {
 	background-color: #2c3136;
 }
@@ -458,23 +456,37 @@
 	min-width: 150px;
 	opacity: 1;
 }
+#partidasContainer p{
+	justify-content: center;
+}
 /* inversão do tooltip */
 .cardDashboard_division:first-child .cardDashboard_division_content .cardDashboard_division_text_status .tooltip::before{
 	transform: translate(-50%) rotate(45deg);
 	top: -3px;
- }
+}
 .cardDashboard_division:first-child .cardDashboard_division_content .cardDashboard_division_text_status:hover .tooltip{
-	top: 35px;
- }
-
+	top: 30px;
+}
 /* inversão do dropdown-content */
 .cardDashboard_division:last-child.cardCampeonato:not(.cardDashboard_division:first-child.cardCampeonato) .cardDashboard_division_content .paste-button:hover .dropdown-content {
 	border-radius: 15px 15px 0px 15px;
- }
+}
 .cardDashboard_division:last-child.cardCampeonato:not(.cardDashboard_division:first-child.cardCampeonato) .cardDashboard_division_content .paste-button:hover button {
 	border-radius: 0px 0px 13px 13px ;
- }
+}
 .cardDashboard_division:last-child.cardCampeonato:not(.cardDashboard_division:first-child.cardCampeonato) .cardDashboard_division_content .paste-button:hover .dropdown-content {
 	top: 0;
 	transform: translateY(-100%);
- }
+}
+.swal2-popup .swal2-styled.swal2-confirm{
+	background-color: var(--nav-bar-a-color-border-solid) !important;
+}
+.swal2-popup .swal2-styled.swal2-confirm:hover{
+	background-color: var(--input-color-transparency) !important;
+}
+.swal2-popup .swal2-styled.swal2-cancel{
+	background-color: var(--input-cancel-color) !important;
+}
+.swal2-popup .swal2-styled.swal2-cancel:hover{
+	background-color: var(--input-cancel-color-transparency) !important;
+}
