@@ -3,7 +3,7 @@ const api = require('../config/api')
 // Metodo para buscar todos os elementos da api
 exports.getALLDatas = async (req,res) => {
     try {
-        var partidas = {}, times = {}, jogadores = {}
+        var partidas = {}, idtimes = {}, times = {}, jogadores = {}
         // Configurar o cabeçalho com a autorização do token
         const token = await req.session.token
         const config = {
@@ -26,13 +26,16 @@ exports.getALLDatas = async (req,res) => {
 
             response = await api.get(`/partida/${idcamp}`, config)
             partidas = response.data
+
+            response = await api.get(`/partida/IDs/${idcamp}`, config)
+            idtimes = response.data.idtime
+
+            response = await api.get(`/time/${idtimes}`, config)
+            times = response.data
+
+            response = await api.get(`/time/players/${idtimes[0]}`, config)
+            jogadores = response.data
         }
-
-        response = await api.get("/time/all", config)
-        times = response.data
-
-        response = await api.get("/jogador/all", config)
-        jogadores = response.data
         const user = res.locals.user
         
         res.render('dashboard', { user, campeonatos, partidas, times, jogadores, layout : 'painelws' })
