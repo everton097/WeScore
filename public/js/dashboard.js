@@ -248,6 +248,78 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 				.catch((error) => {
 					console.error(error);
 				});
+
+				// Faça a requisição para pegar os ids dos times do campeonato clicado
+				axios.get(`${url}partida/IDs/${campeonatoId}`, config)
+				.then((response) => {
+					const idtimes = response.data.idtime;
+					// Se não houverem times, mostre mensagem informativa
+					if (!response.data.idtime || response.data.idtime.length === 0) {
+						// Renderiza as partidas no contêiner de partidas
+						const timesContainer = document.getElementById("timesContainer");
+						timesContainer.innerHTML = ""; // Limpe o conteúdo anterior
+						const noPartidaMessage = document.createElement("p");
+						noPartidaMessage.innerHTML = "Nenhum time disponível.";
+						timesContainer.appendChild(noPartidaMessage);
+					}else{
+						const idtimes = response.data.idtime
+						// Fazer uma solicitação GET para buscar os times do campeonato clicado
+						axios.get(`${url}time/${idtimes}`, config)
+						.then((response) => {
+							// Renderiza as partidas no contêiner de partidas
+							const timesContainer = document.getElementById("timesContainer");
+							timesContainer.innerHTML = ""; // Limpe o conteúdo anterior
+							var cont = 0;
+							response.data.forEach((time) => {
+								if (cont == 0){
+									time.active = true
+									cont++
+								} else{
+									time.active = false
+								}
+								const timeElement = document.createElement("div");
+								timeElement.id = `time_${time.idTime}`;
+								if (time.active) {
+									timeElement.classList.add("cardDashboard_division");
+									timeElement.classList.add("time_active");
+									timeElement.setAttribute("aria-current", "true");
+									timeElement.dataset.campeonatoId = time.idTime;
+								} else {
+									timeElement.classList.add("cardDashboard_division");
+								}
+								timeElement.innerHTML = `
+									<div class="cardDashboard_division_image">
+										<img
+											src="http://localhost:3001/public/upload/img/time/${time.logoTime}"
+											alt="logo do time"
+										/>
+									</div>
+									<div class="cardDashboard_division_content">
+										<div class="cardDashboard_division_text">
+											<span class="cardDashboard_division_name">time: ${time.nomeTime}</span>
+											<p class="cardDashboard_division_username">ID time:${time.idTime}</p>
+										</div>
+		
+										<div class="paste-button">
+												<button class="painelws_Btn">
+													<i class="ri-more-2-fill"></i>
+													<div class="painelws_Btn_text">Opções</div>
+												</button>
+												<div class="dropdown-content">
+													<a id="editTime{{idTime}}" href="/painelws/times/{{idTime}}"><i class="ri-pencil-line"></i>Editar</a>
+													<a id="delTime{{idTime}}" ><i class="ri-delete-bin-line"></i>Remover</a>
+												</div>
+										</div>
+									</div>
+								`;
+								timesContainer.appendChild(timeElement);
+							});
+						})
+						.catch((error) => {
+							console.error(error);
+						});
+					}
+				})
 		}
 });
 
@@ -261,13 +333,7 @@ function getAnchorsHTML(status, idPartida, campeonatoId) {
 		return `
 			<a id="turnBackPartida${idPartida}" href="/painelws/partida/${idPartida}"><i class="ri-arrow-turn-back-line"></i></i>Retomar</a>
 		`;
-	}/*  else {
-		return `
-			<a id="del">
-			<i class="ri-delete-bin-line"></i>Remover
-			</a>
-		`;
-	} */
+	}
 }
 // Função para requisição para remover o campeonato
 async function delCampeonato(campeonatoElement,campeonatoId) {

@@ -23,7 +23,8 @@ exports.getALLDatas = async (req,res) => {
                     element.active = false
                 }
             })
-
+            cont = 0;
+            
             response = await api.get(`/partida/${idcamp}`, config)
             partidas = response.data
 
@@ -32,7 +33,15 @@ exports.getALLDatas = async (req,res) => {
 
             response = await api.get(`/time/${idtimes}`, config)
             times = response.data
-
+            times.forEach(function (element){
+                if (cont == 0){
+                    element.active = true
+                    cont++
+                } else{
+                    element.active = false
+                }
+            })
+            console.log(times);
             response = await api.get(`/time/players/${idtimes[0]}`, config)
             jogadores = response.data
         }

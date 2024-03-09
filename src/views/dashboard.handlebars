@@ -113,9 +113,13 @@
 		<div class="cardDashboard2">
 			<p class="cardDashboard_title">Times <a href="/painelws/time/add"><i class="ri-add-fill"></i>{{!-- <i class="ri-add-circle-line"></i> --}}</a></p>
 			<div class="container__">
-				<div class="cardDashboard_container">
+				<div id="timesContainer" class="cardDashboard_container">
 					{{#each times}}
-						<div class="cardDashboard_division">
+						{{#if active}}
+							<div class="cardDashboard_division time_active" aria-current="true"  data-campeonato-id="{{idTime}}">
+						{{else}}
+							<div class="cardDashboard_division" aria-current="true"  data-campeonato-id="{{idTime}}">
+						{{/if}}
 							<div class="cardDashboard_division_image">
 								<img
 									src="http://localhost:3001/public/upload/img/time/{{logoTime}}"
@@ -128,10 +132,16 @@
 									<p class="cardDashboard_division_username">ID time:
 										{{idTime}}</p>
 								</div>
-								<button class="painelws_Btn">
+								<div class="paste-button">
+									<button class="painelws_Btn">
 										<i class="ri-more-2-fill"></i>
 										<div class="painelws_Btn_text">Opções</div>
 									</button>
+									<div class="dropdown-content">
+										<a id="editTime{{idTime}}" href="/painelws/times/{{idTime}}"><i class="ri-pencil-line"></i>Editar</a>
+										<a id="delTime{{idTime}}" ><i class="ri-delete-bin-line"></i>Remover</a>
+									</div>
+								</div>
 							</div>
 						</div>
 					{{/each}}

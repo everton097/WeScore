@@ -331,7 +331,7 @@
 	color: rgb(29, 155, 240);
 	font-weight: 800;
 }
-.campeonato_active{
+.campeonato_active, .time_active{
 	background-color: #c8cbcb
 }
 .cardDashboard_division:hover {
@@ -456,7 +456,7 @@
 	min-width: 150px;
 	opacity: 1;
 }
-#partidasContainer p{
+#partidasContainer p, #timesContainer p{
 	justify-content: center;
 }
 /* inversão do tooltip */
