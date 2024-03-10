@@ -32,8 +32,7 @@ logoutButton.addEventListener("click", function () {
 	window.location.href = "/logout";
 });
 
-
-// Adicione um ouvinte de evento para os itens de campeonato
+// Adicione um ouvinte de evento para os itens de campeonato, renderizado pelo handlebars
 document.getElementById("campeonatosContainer").addEventListener("click", async function (event) {
 		// Obtenha o ID do campeonato clicado
 		const campeonatoId = event.target.closest(".cardDashboard_division").dataset.campeonatoId;
@@ -112,9 +111,7 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 		}
 		// Verifica se o clique foi no botão de Deletar
 		else if (event.target.id === `del${campeonatoId}`) {
-			console.log("Botão remover clicado");
 			// Fazer uma solicitação PUT para atualizar o status do campeonato para "Em Andamento"
-			
 			Swal.fire({
 				title: "Tem certeza?",
 				text: "Você não poderá reverter essa ação!",
@@ -261,6 +258,12 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 						const noPartidaMessage = document.createElement("p");
 						noPartidaMessage.innerHTML = "Nenhum time disponível.";
 						timesContainer.appendChild(noPartidaMessage);
+						// Renderiza aviso de 'nenhum jogadore' no contêiner de jogadores
+						const jogadoresContainer = document.getElementById("jogadoresContainer");
+						jogadoresContainer.innerHTML = ""; // Limpe o conteúdo anterior
+						const nojogadoreMessage = document.createElement("p");
+						nojogadoreMessage.innerHTML = "Nenhum jogador disponível.";
+						jogadoresContainer.appendChild(nojogadoreMessage);
 					}else{
 						const idtimes = response.data.idtime
 						// Fazer uma solicitação GET para buscar os times do campeonato clicado
@@ -283,9 +286,11 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 									timeElement.classList.add("cardDashboard_division");
 									timeElement.classList.add("time_active");
 									timeElement.setAttribute("aria-current", "true");
-									timeElement.dataset.campeonatoId = time.idTime;
+									timeElement.dataset.timeId = time.idTime;
 								} else {
 									timeElement.classList.add("cardDashboard_division");
+									timeElement.setAttribute("aria-current", "true");
+									timeElement.dataset.timeId = time.idTime;
 								}
 								timeElement.innerHTML = `
 									<div class="cardDashboard_division_image">
@@ -306,14 +311,17 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 													<div class="painelws_Btn_text">Opções</div>
 												</button>
 												<div class="dropdown-content">
-													<a id="editTime{{idTime}}" href="/painelws/times/{{idTime}}"><i class="ri-pencil-line"></i>Editar</a>
-													<a id="delTime{{idTime}}" ><i class="ri-delete-bin-line"></i>Remover</a>
+													<a id="editTime${time.idTime}" href="/painelws/times/${time.idTime}"><i class="ri-pencil-line"></i>Editar</a>
+													<a id="delTime${time.idTime}" ><i class="ri-delete-bin-line"></i>Remover</a>
 												</div>
 										</div>
 									</div>
 								`;
 								timesContainer.appendChild(timeElement);
 							});
+							// Adiciona ouvintes de eventos após renderizar os elementos
+							addEventListenersToTimesContainer();
+							renderJogadores(response.data[0].idTime);
 						})
 						.catch((error) => {
 							console.error(error);
@@ -322,37 +330,7 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 				})
 		}
 });
-
-// Função para obter o HTML das âncoras com base no status
-function getAnchorsHTML(status, idPartida, campeonatoId) {
-	if (status === "Aguardando") {
-		return `
-			<a id="startPartida${idPartida}"><i class="ri-play-line"></i>Iniciar</a>
-		`;
-	} else if (status === "Em Andamento") {
-		return `
-			<a id="turnBackPartida${idPartida}" href="/painelws/partida/${idPartida}"><i class="ri-arrow-turn-back-line"></i></i>Retomar</a>
-		`;
-	}
-}
-// Função para requisição para remover o campeonato
-async function delCampeonato(campeonatoElement,campeonatoId) {
-	var token = localStorage.getItem("token");
-				var config = {
-					headers: {
-						Authorization: `Bearer ${token}`,
-					},
-				};
-	await axios.delete(`${url}campeonato/${campeonatoId}`, config)
-	.then((response) => {
-		// Remover o campeonato
-		campeonatoElement.parentNode.removeChild(campeonatoElement);
-	})
-	.catch((error) => {
-		console.error(error);
-	});
-};
-// ouvinte para elemesntos com ID partidasContainer
+// ouvinte para elemesntos com ID partidasContainer, renderizado pelo handlebars
 document.getElementById("partidasContainer").addEventListener("click", async function (event) {
 	const parentElement = event.target.parentNode;
 	// Verifique se o clique foi em um botão dentro do contêiner de partidas
@@ -374,3 +352,286 @@ document.getElementById("partidasContainer").addEventListener("click", async fun
         }
 	}
 })
+// Adicione um ouvinte de evento para os itens de times, renderizado pelo handlebars
+document.getElementById("timesContainer").addEventListener("click", async function (event) {
+	// Obtenha o ID do campeonato clicado
+	const timeId = event.target.closest(".cardDashboard_division").dataset.timeId;
+	const timeElement = event.target.closest(".cardDashboard_division");
+	
+	// Verifica se o clique foi no botão de Deletar
+	if (event.target.id === `delTime${timeId}`) {
+		// Fazer uma solicitação PUT para atualizar o status do time para "Em Andamento"
+		Swal.fire({
+			title: "Tem certeza?",
+			text: "Você não poderá reverter essa ação!",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonText: "Sim, remova-o!"
+		  }).then((result) => {
+			if (result.isConfirmed) {
+				delTime(timeElement, timeId).then((response) => {
+					Swal.fire({
+						icon: 'success',
+						title: 'Time removido com sucesso',
+						showConfirmButton: false,
+						showConfirmButton: false,
+						timer: 1500,
+					});
+					return false;
+				})
+			}
+		  });
+	}
+
+	// Verifica se o clique foi em um item de campeonato (excluindo botões de opções),
+	// para remover a classe time_active e renderizar as partidas
+	const timeDivision = event.target.closest(".cardDashboard_division");
+	if (timeDivision && !event.target.closest(".dropdown-content")) {
+		// Remova a classe time_active do campeonato antigo
+		const timeAtivo = document.querySelector(".time_active");
+		if (timeAtivo) {
+			timeAtivo.classList.remove("time_active");
+		}
+		// Adicione a classe time_active ao campeonato clicado
+		timeElement.classList.add("time_active");
+
+		renderJogadores(timeId);
+	}
+
+});
+// Adicione um ouvinte de evento para os jogadores, renderizado pelo handlebars
+document.getElementById("jogadoresContainer").addEventListener("click", async function (event) {
+	// Obtenha o ID do jogador clicado
+	const jogadorId = event.target.closest(".cardDashboard_division").dataset.jogadorId;
+	const jogadorElement = event.target.closest(".cardDashboard_division");
+	// Verifica se o clique foi no botão de Deletar
+	if (event.target.id === `delJogador${jogadorId}`) {
+		// Fazer uma solicitação PUT para atualizar o status do jogador para "Em Andamento"
+		Swal.fire({
+			title: "Tem certeza?",
+			text: "Você não poderá reverter essa ação!",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonText: "Sim, remova-o!"
+		  }).then((result) => {
+			if (result.isConfirmed) {
+				deljogador(jogadorElement, jogadorId).then((response) => {
+					Swal.fire({
+						icon: 'success',
+						title: 'Jogador removido com sucesso',
+						showConfirmButton: false,
+						showConfirmButton: false,
+						timer: 1500,
+					});
+					return false;
+				})
+			}
+		  });
+	}
+});
+
+// Função para adicionar ouvintes de eventos ao timesContainer, renderizado pelo JS - Front
+function addEventListenersToTimesContainer() {
+	document.getElementById("timesContainer").addEventListener("click", async function (event) {
+		// Obtenha o ID do campeonato clicado
+		const timeId = event.target.closest(".cardDashboard_division").dataset.timeId;
+		const timeElement = event.target.closest(".cardDashboard_division");
+		
+		// Verifica se o clique foi no botão de Deletar
+		if (event.target.id === `delTime${timeId}`) {
+			// Fazer uma solicitação PUT para atualizar o status do time para "Em Andamento"
+			Swal.fire({
+				title: "Tem certeza?",
+				text: "Você não poderá reverter essa ação!",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonText: "Sim, remova-o!"
+			  }).then((result) => {
+				if (result.isConfirmed) {
+					delTime(timeElement, timeId).then((response) => {
+						Swal.fire({
+							icon: 'success',
+							title: 'Time removido com sucesso',
+							showConfirmButton: false,
+							showConfirmButton: false,
+							timer: 1500,
+						});
+						return false;
+					})
+				}
+			  });
+		}
+	
+		// Verifica se o clique foi em um item de campeonato (excluindo botões de opções),
+		// para remover a classe time_active e renderizar as partidas
+		const timeDivision = event.target.closest(".cardDashboard_division");
+		if (timeDivision && !event.target.closest(".dropdown-content")) {
+			// Remova a classe time_active do campeonato antigo
+			const timeAtivo = document.querySelector(".time_active");
+			if (timeAtivo) {
+				timeAtivo.classList.remove("time_active");
+			}
+			// Adicione a classe time_active ao campeonato clicado
+			timeElement.classList.add("time_active");
+
+			renderJogadores(timeId);
+		}
+
+	});
+}
+// Função para adicionar ouvintes de eventos ao jogadoresContainer, renderizado pelo JS - Front
+function addEventListenersTojogadoresContainer() {
+	document.getElementById("jogadoresContainer").addEventListener("click", async function (event) {
+		// Obtenha o ID do jogador clicado
+		const jogadorId = event.target.closest(".cardDashboard_division").dataset.jogadorId;
+		const jogadorElement = event.target.closest(".cardDashboard_division");
+	
+		// Verifica se o clique foi no botão de Deletar
+		if (event.target.id === `delJogador${jogadorId}`) {
+			// Fazer uma solicitação PUT para atualizar o status do jogador para "Em Andamento"
+			Swal.fire({
+				title: "Tem certeza?",
+				text: "Você não poderá reverter essa ação!",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonText: "Sim, remova-o!"
+			  }).then((result) => {
+				if (result.isConfirmed) {
+					deljogador(jogadorElement, jogadorId).then((response) => {
+						Swal.fire({
+							icon: 'success',
+							title: 'Jogador removido com sucesso',
+							showConfirmButton: false,
+							showConfirmButton: false,
+							timer: 1500,
+						});
+						return false;
+					})
+				}
+			  });
+		}
+	});
+}
+// Função para obter o HTML das âncoras com base no status
+function getAnchorsHTML(status, idPartida, campeonatoId) {
+	if (status === "Aguardando") {
+		return `
+			<a id="startPartida${idPartida}"><i class="ri-play-line"></i>Iniciar</a>
+		`;
+	} else if (status === "Em Andamento") {
+		return `
+			<a id="turnBackPartida${idPartida}" href="/painelws/partida/${idPartida}"><i class="ri-arrow-turn-back-line"></i></i>Retomar</a>
+		`;
+	}
+}
+// Função para renderizar para jogadores do time selecionado.
+async function renderJogadores(timeId) {
+	//busca o token armazenado no login
+	var token = localStorage.getItem("token");
+
+	// Configurar o cabeçalho com a autorizção do token
+	var config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	};
+
+	// Faça a requisição para pegar os jogadores do time clicado
+	axios.get(`${url}time/players/${timeId}`, config)
+	.then((response) => {
+		// Se não houverem times, mostre mensagem informativa
+		if (response.data.length === 0) {
+			// Renderiza as jogadores no contêiner de jogadores
+			const jogadoresContainer = document.getElementById("jogadoresContainer");
+			jogadoresContainer.innerHTML = ""; // Limpe o conteúdo anterior
+			const nojogadoreMessage = document.createElement("p");
+			nojogadoreMessage.innerHTML = "Nenhum jogador disponível.";
+			jogadoresContainer.appendChild(nojogadoreMessage);
+		}else{
+			// Renderiza as jogadores no contêiner de jogadores
+			const jogadoresContainer = document.getElementById("jogadoresContainer");
+			jogadoresContainer.innerHTML = ""; // Limpe o conteúdo anterior
+			response.data.forEach((jogador) => {
+				const jogadorElement = document.createElement("div");
+				jogadorElement.id = `jogador_${jogador.idJogador}`;
+				jogadorElement.classList.add("cardDashboard_division");
+				jogadorElement.setAttribute("aria-current", "true");
+				jogadorElement.dataset.jogadorId = jogador.idJogador;
+				jogadorElement.innerHTML = `
+					<div class="cardDashboard_division_content">
+					<div class="cardDashboard_division_text">
+						<span class="cardDashboard_division_name">${jogador.nomeJogador} ${jogador.sobrenome}</span>
+						<p class="cardDashboard_division_username">Nº Camiseta:${jogador.numeroCamiseta}</p>
+					</div>
+
+						<div class="paste-button">
+							<button class="painelws_Btn">
+								<i class="ri-more-2-fill"></i>
+								<div class="painelws_Btn_text">Opções</div>
+							</button>
+							<div class="dropdown-content">
+								<a id="editJogador${jogador.idJogador}" href="/painelws/jogador/${jogador.idJogador}"><i class="ri-pencil-line"></i>Editar</a>
+								<a id="delJogador${jogador.idJogador}" ><i class="ri-delete-bin-line"></i>Remover</a>
+							</div>
+						</div>
+					</div>
+				`;
+				jogadoresContainer.appendChild(jogadorElement);
+			});
+			// Adiciona ouvintes de eventos após renderizar os elementos
+			addEventListenersTojogadoresContainer();
+		}
+	})
+}
+// Função para requisição para remover o campeonato
+async function delCampeonato(campeonatoElement,campeonatoId) {
+	var token = localStorage.getItem("token");
+				var config = {
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				};
+	await axios.delete(`${url}campeonato/${campeonatoId}`, config)
+	.then((response) => {
+		// Remover o campeonato
+		campeonatoElement.parentNode.removeChild(campeonatoElement);
+	})
+	.catch((error) => {
+		console.error(error);
+	});
+};
+// Função para requisição para remover o campeonato
+async function delTime(timeElement,timeId) {
+	var token = localStorage.getItem("token");
+				var config = {
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				};
+	await axios.delete(`${url}time/${timeId}`, config)
+	.then((response) => {
+		// Remover o time
+		timeElement.parentNode.removeChild(timeElement);
+	})
+	.catch((error) => {
+		console.error(error);
+	});
+};
+// Função para requisição para remover o jogador
+async function deljogador(jogadorElement,jogadorId) {
+console.log("entrou no deljogador");
+	var token = localStorage.getItem("token");
+				var config = {
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				};
+	await axios.delete(`${url}jogador/${jogadorId}`, config)
+	.then((response) => {
+		// Remover o jogador
+		jogadorElement.parentNode.removeChild(jogadorElement);
+	})
+	.catch((error) => {
+		console.error(error);
+	});
+};
