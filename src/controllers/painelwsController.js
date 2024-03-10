@@ -30,24 +30,26 @@ exports.getALLDatas = async (req,res) => {
 
             response = await api.get(`/partida/IDs/${idcamp}`, config)
             idtimes = response.data.idtime
-
-            response = await api.get(`/time/${idtimes}`, config)
-            times = response.data
-            times.forEach(function (element){
-                if (cont == 0){
-                    element.active = true
-                    cont++
-                } else{
-                    element.active = false
-                }
-            })
-            console.log(times);
-            response = await api.get(`/time/players/${idtimes[0]}`, config)
-            jogadores = response.data
+            console.log(idtimes.length);
+            if (idtimes.length != 0) {
+                response = await api.get(`/time/${idtimes}`, config)
+                times = response.data
+                times.forEach(function (element){
+                    if (cont == 0){
+                        element.active = true
+                        cont++
+                    } else{
+                        element.active = false
+                    }
+                })
+                console.log(times);
+                response = await api.get(`/time/players/${idtimes[0]}`, config)
+                jogadores = response.data
+            }
         }
         const user = res.locals.user
         
-        res.render('dashboard', { user, campeonatos, partidas, times, jogadores, layout : 'painelws' })
+        res.render('dashboard', { user,campeonatos, partidas, times, jogadores, layout : 'painelws' })
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Erro ao buscar datas.' });

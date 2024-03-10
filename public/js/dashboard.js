@@ -32,6 +32,23 @@ logoutButton.addEventListener("click", function () {
 	window.location.href = "/logout";
 });
 
+document.getElementById("buttonTimeAdd").addEventListener("click", async function (event) {
+	// Impede o comportamento padrão do link
+    event.preventDefault();
+	// Obtenha o ID do campeonato clicado
+	const buttonTimeAddId = this.dataset.campeonatoId;
+	if (buttonTimeAddId == 0) {
+		Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Nenhum campeonato selecionado!',
+        });
+        return false;
+	}else{
+		window.location.href = this.href
+	}}
+);
+
 // Adicione um ouvinte de evento para os itens de campeonato, renderizado pelo handlebars
 document.getElementById("campeonatosContainer").addEventListener("click", async function (event) {
 		// Obtenha o ID do campeonato clicado
@@ -127,8 +144,10 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 							showConfirmButton: false,
 							showConfirmButton: false,
 							timer: 1500,
+						}).then(() => {
+							// Redireciona para a página inicial do cms após o tempo definido
+							window.location.href = `/painelws`;
 						});
-						return false;
 					})
 				}
 			  });
@@ -145,6 +164,13 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 			}
 			// Adicione a classe campeonato_active ao campeonato clicado
 			campeonatoElement.classList.add("campeonato_active");
+			// Obtém uma referência ao elemento
+			const timeLinkElement = document.getElementById("buttonTimeAdd");
+			const partidaLinkElement = document.getElementById("buttonPartidaAdd");
+
+			// Modifica o atributo href
+			timeLinkElement.href = `/painelws/campeonato/${campeonatoId}/time/add`;
+			partidaLinkElement.href = `/painelws/campeonato/${campeonatoId}/time/add`;
 
 			//busca o token armazenado no login
 			var token = localStorage.getItem("token");
@@ -394,6 +420,10 @@ document.getElementById("timesContainer").addEventListener("click", async functi
 		}
 		// Adicione a classe time_active ao campeonato clicado
 		timeElement.classList.add("time_active");
+		const jogadorLinkElement = document.getElementById("buttonJogadorAdd");
+
+		// Modifica o atributo href
+		jogadorLinkElement.href = `/painelws/time/${timeId}/jogador/add`;
 
 		renderJogadores(timeId);
 	}
@@ -473,6 +503,10 @@ function addEventListenersToTimesContainer() {
 			}
 			// Adicione a classe time_active ao campeonato clicado
 			timeElement.classList.add("time_active");
+			const jogadorLinkElement = document.getElementById("buttonJogadorAdd");
+
+			// Modifica o atributo href
+			jogadorLinkElement.href = `/painelws/time/${timeId}/jogador/add`;
 
 			renderJogadores(timeId);
 		}
@@ -526,6 +560,11 @@ function getAnchorsHTML(status, idPartida, campeonatoId) {
 }
 // Função para renderizar para jogadores do time selecionado.
 async function renderJogadores(timeId) {
+	// Obtém uma referência ao elemento
+	const jogadorLinkElement = document.getElementById("buttonJogadorAdd");
+
+	// Modifica o atributo href
+	jogadorLinkElement.href = `/painelws/time/${timeId}/jogador/add`;
 	//busca o token armazenado no login
 	var token = localStorage.getItem("token");
 

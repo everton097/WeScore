@@ -456,7 +456,7 @@
 	min-width: 150px;
 	opacity: 1;
 }
-#partidasContainer p, #timesContainer p, #jogadoresContainer p{
+#campeonatosContainer p, #partidasContainer p, #timesContainer p, #jogadoresContainer p{
 	justify-content: center;
 }
 /* inversão do tooltip */

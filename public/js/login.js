@@ -87,7 +87,7 @@ function loginClick(event) {
         const token = localStorage.getItem('token');
         console.log("Token: "+ token);
         // Redireciona para a página inicial do cms
-        window.location.href = `../painelws`;
+        window.location.href = `/painelws`;
       })
       .catch(error => {
         // Caso o SPA retorne algum erro, mostra a mensagem para o susuário usando o sweet alert.

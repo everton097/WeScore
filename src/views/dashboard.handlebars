@@ -4,68 +4,75 @@
 			<p class="cardDashboard_title">Campeonatos <a href="/painelws/campeonato/add"><i class="ri-add-fill"></i>{{!-- <i class="ri-add-circle-line"></i> --}}</a></p>
 			<div class="container__">
 				<div id="campeonatosContainer" class="cardDashboard_container">
-					{{#each campeonatos}}
-						{{#if active}}
-							<div class="cardDashboard_division cardCampeonato campeonato_active" aria-current="true"  data-campeonato-id="{{idCampeonato}}">
-						{{else}}
-							<div class="cardDashboard_division cardCampeonato" data-campeonato-id="{{idCampeonato}}">
-						{{/if}}
-							<div class="cardDashboard_division_image">
-								<img 
-									src="http://localhost:3001/public/upload/img/campeonato/{{logoCampeonato}}"
-									alt="logo do campeonato"
-								/></div>
-							<div class="cardDashboard_division_content">
-								<div class="cardDashboard_division_text">
-									<span
-										class="cardDashboard_division_name"
-									>{{nomeCampeonato}}</span>
-									<p class="cardDashboard_division_username">
-										{{Usuario.nomeUsuario}}</p>
-								</div>
+					{{#if campeonatos.length}}
+						{{#each campeonatos}}
+							{{#if active}}
+								<div class="cardDashboard_division cardCampeonato campeonato_active" aria-current="true"  data-campeonato-id="{{idCampeonato}}">
+							{{else}}
+								<div class="cardDashboard_division cardCampeonato" data-campeonato-id="{{idCampeonato}}">
+							{{/if}}
+								<div class="cardDashboard_division_image">
+									<img 
+										src="http://localhost:3001/public/upload/img/campeonato/{{logoCampeonato}}"
+										alt="logo do campeonato"
+									/></div>
+								<div class="cardDashboard_division_content">
+									<div class="cardDashboard_division_text">
+										<span
+											class="cardDashboard_division_name"
+										>{{nomeCampeonato}}</span>
+										<p class="cardDashboard_division_username">
+											{{Usuario.nomeUsuario}}</p>
+									</div>
 
-							<div class="cardDashboard_division_text_status">
-									{{#if (eq status "Aguardando")}}
-										<span id="tooltip{{idCampeonato}}" class="tooltip cardDashboard_division_status_aguardando">Aguardando</span>
-											<span id="status{{idCampeonato}}" class="cardDashboard_division_status_min cardDashboard_division_status_aguardando"></span>
-										{{else if (eq status "Em Andamento")}}
-											<span class="tooltip cardDashboard_division_status_andamento">Em Andamento</span>
-											<span id="status{{idCampeonato}}" class="cardDashboard_division_status_min cardDashboard_division_status_andamento"></span>
-										{{else if (eq status "Finalizado")}}
-											<span class="tooltip cardDashboard_division_status_finalizado">Finalizado</span>
-											<span id="status{{idCampeonato}}" class="cardDashboard_division_status_min cardDashboard_division_status_finalizado"></span>
-									{{/if}}
-								</div>
-
-								<div class="paste-button">
-									<button class="painelws_Btn">
-										<i class="ri-more-2-fill"></i>
-										<div class="painelws_Btn_text">Opções</div>
-									</button>
-									<div class="dropdown-content">
-										<a id="edit{{idCampeonato}}" href="/painelws/campeonatos/{{idCampeonato}}"><i class="ri-pencil-line"></i>Editar</a>
-										
+								<div class="cardDashboard_division_text_status">
 										{{#if (eq status "Aguardando")}}
-											<!-- Botão Iniciar se o status for "Aguardando" -->
-											<a id="start{{idCampeonato}}"><i class="ri-play-line"></i>Iniciar</a>
-										{{else if (eq status "Em Andamento")}}
-											<!-- Botão Finalizar se o status for "Em Andamento" -->
-											<a id="finish{{idCampeonato}}"><i class="ri-stop-line"></i>Finalizar</a>
+											<span id="tooltip{{idCampeonato}}" class="tooltip cardDashboard_division_status_aguardando">Aguardando</span>
+												<span id="status{{idCampeonato}}" class="cardDashboard_division_status_min cardDashboard_division_status_aguardando"></span>
+											{{else if (eq status "Em Andamento")}}
+												<span class="tooltip cardDashboard_division_status_andamento">Em Andamento</span>
+												<span id="status{{idCampeonato}}" class="cardDashboard_division_status_min cardDashboard_division_status_andamento"></span>
+											{{else if (eq status "Finalizado")}}
+												<span class="tooltip cardDashboard_division_status_finalizado">Finalizado</span>
+												<span id="status{{idCampeonato}}" class="cardDashboard_division_status_min cardDashboard_division_status_finalizado"></span>
 										{{/if}}
-										
-										<a id="del{{idCampeonato}}"><i class="ri-delete-bin-line"></i>Remover</a>
+									</div>
+
+									<div class="paste-button">
+										<button class="painelws_Btn">
+											<i class="ri-more-2-fill"></i>
+											<div class="painelws_Btn_text">Opções</div>
+										</button>
+										<div class="dropdown-content">
+											<a id="edit{{idCampeonato}}" href="/painelws/campeonatos/{{idCampeonato}}"><i class="ri-pencil-line"></i>Editar</a>
+											
+											{{#if (eq status "Aguardando")}}
+												<!-- Botão Iniciar se o status for "Aguardando" -->
+												<a id="start{{idCampeonato}}"><i class="ri-play-line"></i>Iniciar</a>
+											{{else if (eq status "Em Andamento")}}
+												<!-- Botão Finalizar se o status for "Em Andamento" -->
+												<a id="finish{{idCampeonato}}"><i class="ri-stop-line"></i>Finalizar</a>
+											{{/if}}
+											
+											<a id="del{{idCampeonato}}"><i class="ri-delete-bin-line"></i>Remover</a>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					{{/each}}
-
+						{{/each}}
+					{{else}}
+						<p>Nenhum campeonato disponível.</p>
+					{{/if}}
 				</div>
 			</div>
 			<a class="cardDashboard_more" href="/painelws/campeonato">Ver mais</a>
 		</div>
 		<div class="cardDashboard">
-			<p class="cardDashboard_title">Partidas <a href="/painelws/partida/add"><i class="ri-add-fill"></i>{{!-- <i class="ri-add-circle-line"></i> --}}</a></p>
+			{{#if partidas.length}}
+				<p class="cardDashboard_title">Partidas <a id="buttonPartidaAdd" href="/painelws/campeonato/{{campeonatos.[0].idCampeonato}}/partida/add" data-partida-id="{{partidas.[0].idPartida}}"><i class="ri-add-fill"></i></a></p>
+			{{else}}
+				<p class="cardDashboard_title">Partidas <a id="buttonPartidaAdd" href="/painelws/campeonato/0/partida/add" data-partida-id="0"><i class="ri-add-fill"></i></a></p>
+			{{/if}}
 			<div class="container__">
 				<div id="partidasContainer" class="cardDashboard_container">
 					{{#if partidas.length}}
@@ -111,41 +118,48 @@
 	</section>
 	<section2 class="sectionCamp2">
 		<div class="cardDashboard2">
-			<p class="cardDashboard_title">Times <a href="/painelws/time/add"><i class="ri-add-fill"></i>{{!-- <i class="ri-add-circle-line"></i> --}}</a></p>
+			{{#if campeonatos.length}}
+				<p class="cardDashboard_title">Times <a id="buttonTimeAdd" href="/painelws/campeonato/{{campeonatos.[0].idCampeonato}}/time/add" data-campeonato-id="{{campeonatos.[0].idCampeonato}}"><i class="ri-add-fill"></i></a></p>
+			{{else}}
+				<p class="cardDashboard_title">Times <a id="buttonTimeAdd" href="/painelws/campeonato/0/time/add" data-campeonato-id="0"><i class="ri-add-fill"></i></a></p>
+			{{/if}}
 			<div class="container__">
 				<div id="timesContainer" class="cardDashboard_container">
-					{{#each times}}
-						{{#if active}}
-							<div class="cardDashboard_division time_active" aria-current="true" data-time-id="{{idTime}}">
-						{{else}}
-							<div class="cardDashboard_division" aria-current="true" data-time-id="{{idTime}}">
-						{{/if}}
-							<div class="cardDashboard_division_image">
-								<img
-									src="http://localhost:3001/public/upload/img/time/{{logoTime}}"
-									alt="logo do time"
-								/>
-							</div>
-							<div class="cardDashboard_division_content">
-								<div class="cardDashboard_division_text">
-									<span class="cardDashboard_division_name">{{nomeTime}} </span>
-									<p class="cardDashboard_division_username">ID time:
-										{{idTime}}</p>
+					{{#if times.length}}
+						{{#each times}}
+							{{#if active}}
+								<div class="cardDashboard_division time_active" aria-current="true" data-time-id="{{idTime}}">
+							{{else}}
+								<div class="cardDashboard_division" aria-current="true" data-time-id="{{idTime}}">
+							{{/if}}
+								<div class="cardDashboard_division_image">
+									<img
+										src="http://localhost:3001/public/upload/img/time/{{logoTime}}"
+										alt="logo do time"
+									/>
 								</div>
-								<div class="paste-button">
-									<button class="painelws_Btn">
-										<i class="ri-more-2-fill"></i>
-										<div class="painelws_Btn_text">Opções</div>
-									</button>
-									<div class="dropdown-content">
-										<a id="editTime{{idTime}}" href="/painelws/times/{{idTime}}"><i class="ri-pencil-line"></i>Editar</a>
-										<a id="delTime{{idTime}}" ><i class="ri-delete-bin-line"></i>Remover</a>
+								<div class="cardDashboard_division_content">
+									<div class="cardDashboard_division_text">
+										<span class="cardDashboard_division_name">{{nomeTime}} </span>
+										<p class="cardDashboard_division_username">ID time:
+											{{idTime}}</p>
+									</div>
+									<div class="paste-button">
+										<button class="painelws_Btn">
+											<i class="ri-more-2-fill"></i>
+											<div class="painelws_Btn_text">Opções</div>
+										</button>
+										<div class="dropdown-content">
+											<a id="editTime{{idTime}}" href="/painelws/times/{{idTime}}"><i class="ri-pencil-line"></i>Editar</a>
+											<a id="delTime{{idTime}}" ><i class="ri-delete-bin-line"></i>Remover</a>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					{{/each}}
-
+						{{/each}}
+					{{else}}
+						<p>Nenhum Time disponível.</p>
+					{{/if}}
 				</div>
 			</div>
 			<a class="cardDashboard_more" href="#">Ver mais</a>
@@ -153,29 +167,37 @@
 	</section2>
 	<section2 class="sectionCamp2">
 		<div class="cardDashboard2">
-			<p class="cardDashboard_title">Jogadores <a href="/painelws/jogador/add"><i class="ri-add-fill"></i>{{!-- <i class="ri-add-circle-line"></i> --}}</a></p>
+			{{#if campeonatos.length}}
+				<p class="cardDashboard_title">Jogadores <a id="buttonJogadorAdd" href="/painelws/time/{{times.[0].idTime}}/time/add" data-time-id="{{times.[0].idTime}}"><i class="ri-add-fill"></i></a></p>
+			{{else}}
+				<p class="cardDashboard_title">Jogadores <a id="buttonJogadorAdd" href="/painelws/time/0/jogador/add" data-time-id="0"><i class="ri-add-fill"></i></a></p>
+			{{/if}}
 			<div class="container__">
 				<div id="jogadoresContainer" class="cardDashboard_container">
-					{{#each jogadores}}
-						<div class="cardDashboard_division" aria-current="true" data-jogador-id={{idJogador}}>
-							<div class="cardDashboard_division_content">
-								<div class="cardDashboard_division_text">
-									<span class="cardDashboard_division_name">{{nomeJogador}} {{sobrenome}}</span>
-									<p class="cardDashboard_division_username">Nº Camiseta:{{numeroCamiseta}}</p>
-								</div>
-								<div class="paste-button">
-									<button class="painelws_Btn">
-										<i class="ri-more-2-fill"></i>
-										<div class="painelws_Btn_text">Opções</div>
-									</button>
-									<div class="dropdown-content">
-										<a id="editJogador{{idJogador}}" href="/painelws/jogador/{{idJogador}}"><i class="ri-pencil-line"></i>Editar</a>
-										<a id="delJogador{{idJogador}}" ><i class="ri-delete-bin-line"></i>Remover</a>
+					{{#if jogadores.length}}
+						{{#each jogadores}}
+							<div class="cardDashboard_division" aria-current="true" data-jogador-id={{idJogador}}>
+								<div class="cardDashboard_division_content">
+									<div class="cardDashboard_division_text">
+										<span class="cardDashboard_division_name">{{nomeJogador}} {{sobrenome}}</span>
+										<p class="cardDashboard_division_username">Nº Camiseta:{{numeroCamiseta}}</p>
+									</div>
+									<div class="paste-button">
+										<button class="painelws_Btn">
+											<i class="ri-more-2-fill"></i>
+											<div class="painelws_Btn_text">Opções</div>
+										</button>
+										<div class="dropdown-content">
+											<a id="editJogador{{idJogador}}" href="/painelws/jogador/{{idJogador}}"><i class="ri-pencil-line"></i>Editar</a>
+											<a id="delJogador{{idJogador}}" ><i class="ri-delete-bin-line"></i>Remover</a>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					{{/each}}
+						{{/each}}
+					{{else}}
+						<p>Nenhum jogador disponível.</p>
+					{{/if}}
 
 				</div>
 			</div>
