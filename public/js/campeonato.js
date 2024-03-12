@@ -55,7 +55,7 @@ document.querySelector('#saveCampeonatoForm').addEventListener('click', function
         },
     };
     // Fazer uma solicitação POST para criar um novo banner
-    axios.post(`${urlSPA}campeonato/create`, formData, config)
+    axios.post(`${url}campeonato/create`, formData, config)
         .then(response => {            
             Swal.fire({
                 icon: 'success',

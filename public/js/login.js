@@ -69,7 +69,7 @@ function loginClick(event) {
     };
 
     // Faz uma solicitação POST para fazer o login do usuário
-    axios.post(`${urlSPA}login/`, serializedData, config)
+    axios.post(`${url}login/`, serializedData, config)
       .then(response => {
         //console.log(response.data);
         // Armazena o token e dados de usuario de resposta no localStorage

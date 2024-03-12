@@ -3,6 +3,8 @@ const api = require('../config/api')
 // Metodo para buscar todos os elementos da api
 exports.getALLDatas = async (req,res) => {
     try {
+        const apiUrl = "http://localhost:3001/"
+        const spaUrl = "http://localhost:3002/"
         var partidas = {}, idtimes = {}, times = {}, jogadores = {}
         // Configurar o cabeçalho com a autorização do token
         const token = await req.session.token
@@ -49,7 +51,7 @@ exports.getALLDatas = async (req,res) => {
         }
         const user = res.locals.user
         
-        res.render('dashboard', { user, campeonatos, partidas, times, jogadores, layout : 'painelws' })
+        res.render('dashboard', { user, campeonatos, partidas, times, jogadores, spaUrl, apiUrl, layout : 'painelws' })
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Erro ao buscar datas.' });

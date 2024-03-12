@@ -1,3 +1,5 @@
+console.log(urlSPA);
+console.log(urlSPA);
 // Exemplo de JavaScript para adicionar/remover a classe
 var userImage = document.getElementById("user_img");
 var userInput = document.getElementById("user_input");
@@ -64,7 +66,7 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 					},
 				};
 				// Faça a requisição para alterar o status do campeonato
-				await axios.put(`${urlSPA}campeonato/status/${campeonatoId}`, config);
+				await axios.put(`${url}campeonato/status/${campeonatoId}`, config);
 
 				// Remover o botão de Iniciar
 				const startButton = document.getElementById(`start${campeonatoId}`);
@@ -168,7 +170,7 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 
 			// Modifica o atributo href
 			timeLinkElement.href = `/painelws/campeonato/${campeonatoId}/time/add`;
-			partidaLinkElement.href = `/painelws/campeonato/${campeonatoId}/time/add`;
+			partidaLinkElement.href = `/painelws/campeonato/${campeonatoId}/partida/add`;
 
 			//busca o token armazenado no login
 			var token = localStorage.getItem("token");
@@ -180,8 +182,10 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 				},
 			};
 			// Fazer uma solicitação GET para buscar as partidas do campeonato clicado
-			axios.get(`${urlSPA}partida/${campeonatoId}`, config)
+			console.log(urlSPA);
+			axios.get(`${url}partida/${campeonatoId}`, config)
 				.then((response) => {
+					console.log(response.data);
 					// Renderiza as partidas no contêiner de partidas
 					const partidasContainer = document.getElementById("partidasContainer");
 					partidasContainer.innerHTML = ""; // Limpe o conteúdo anterior
@@ -232,7 +236,7 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 										
 										// Faça a requisição para alterar o status da partida para "Em Andamento"
 										const idPartida = partida.idPartida
-										axios.get(`${urlSPA}partida/status/${idPartida}`, config)
+										axios.get(`${url}partida/status/${idPartida}`, config)
 										.then((response) => {
 											// Remova o botão de Iniciar da partida
 											const startButtonPartida = document.getElementById(`startPartida${idPartida}`);
@@ -271,7 +275,7 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 				});
 
 				// Faça a requisição para pegar os ids dos times do campeonato clicado
-				axios.get(`${urlSPA}partida/IDs/${campeonatoId}`, config)
+				axios.get(`${url}partida/IDs/${campeonatoId}`, config)
 				.then((response) => {
 					const idtimes = response.data.idtime;
 					// Se não houverem times, mostre mensagem informativa
@@ -291,7 +295,7 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 					}else{
 						const idtimes = response.data.idtime
 						// Fazer uma solicitação GET para buscar os times do campeonato clicado
-						axios.get(`${urlSPA}time/${idtimes}`, config)
+						axios.get(`${url}time/${idtimes}`, config)
 						.then((response) => {
 							// Renderiza as partidas no contêiner de partidas
 							const timesContainer = document.getElementById("timesContainer");
@@ -574,7 +578,7 @@ async function renderJogadores(timeId) {
 	};
 
 	// Faça a requisição para pegar os jogadores do time clicado
-	axios.get(`${urlSPA}time/players/${timeId}`, config)
+	axios.get(`${url}time/players/${timeId}`, config)
 	.then((response) => {
 		// Se não houverem times, mostre mensagem informativa
 		if (response.data.length === 0) {
@@ -628,7 +632,7 @@ async function delCampeonato(campeonatoElement,campeonatoId) {
 						Authorization: `Bearer ${token}`,
 					},
 				};
-	await axios.delete(`${urlSPA}campeonato/${campeonatoId}`, config)
+	await axios.delete(`${url}campeonato/${campeonatoId}`, config)
 	.then((response) => {
 		// Remover o campeonato
 		campeonatoElement.parentNode.removeChild(campeonatoElement);
@@ -645,7 +649,7 @@ async function delTime(timeElement,timeId) {
 						Authorization: `Bearer ${token}`,
 					},
 				};
-	await axios.delete(`${urlSPA}time/${timeId}`, config)
+	await axios.delete(`${url}time/${timeId}`, config)
 	.then((response) => {
 		// Remover o time
 		timeElement.parentNode.removeChild(timeElement);
@@ -663,7 +667,7 @@ console.log("entrou no deljogador");
 						Authorization: `Bearer ${token}`,
 					},
 				};
-	await axios.delete(`${urlSPA}jogador/${jogadorId}`, config)
+	await axios.delete(`${url}jogador/${jogadorId}`, config)
 	.then((response) => {
 		// Remover o jogador
 		jogadorElement.parentNode.removeChild(jogadorElement);

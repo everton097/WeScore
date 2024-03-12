@@ -10,7 +10,7 @@ function token() {
         }
     }
     // Fazer uma solicitação POST para criar o usuario
-    axios.get(`${urlSPA}usuario/checkUser/`, config)
+    axios.get(`${url}usuario/checkUser/`, config)
         .then(response => {
             if (response.status != 200){
                 window.location.href = `/login`;
