@@ -1,7 +1,3 @@
-
-const url = "http://localhost:3001/"
-const urlSPA = "http://localhost:3002/"
-
 const registerButton = document.getElementById("register");
 const loginButton = document.getElementById("login");
 const container = document.getElementById("logincontainer");
@@ -52,8 +48,6 @@ function showErrorAlert(message) {
   const divErro = document.getElementById('erro');
   divErro.textContent = '! ' + message;
 }
-
-
 
 // Função chamada quando o botão "Salvar" do formulário de login é clicado
 function loginClick(event) {

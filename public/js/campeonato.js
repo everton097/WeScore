@@ -1,8 +1,3 @@
-const url = "http://localhost:3001/";
-
-
-///     FUNÇÕES DO CADASTRO DE CAMPEONATO     ///
-
 // Função de validação do formulário
 function validateForm(formData) {
     const name = formData.get('nomeCampeonato');
@@ -40,6 +35,7 @@ function obterIdUsuarioLocalStorage() {
 
 // Evento quando o botão "Salvar" de criação é clicado
 document.querySelector('#saveCampeonatoForm').addEventListener('click', function () {
+
     // Obter os dados do formulário de criação
     const formData = new FormData(document.querySelector('#createCampeonatoForm'));
     // Adicionar o idUsuario ao formData aqui
@@ -59,7 +55,7 @@ document.querySelector('#saveCampeonatoForm').addEventListener('click', function
         },
     };
     // Fazer uma solicitação POST para criar um novo banner
-    axios.post(`${url}campeonato/create`, formData, config)
+    axios.post(`${urlSPA}campeonato/create`, formData, config)
         .then(response => {            
             Swal.fire({
                 icon: 'success',

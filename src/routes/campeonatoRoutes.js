@@ -11,6 +11,6 @@ routesCampeonato.use(getUser);
 
 routesCampeonato.get('/', campeonatoController.getALLDatas)
 routesCampeonato.get('/add', campeonatoController.addCampeonato)
-routesCampeonato.get('/:idCampeonato/time/add', campeonatoController.addCampeonato)
+routesCampeonato.get('/:idCampeonato/time/add', campeonatoController.timeAddCampeonato)
 
 module.exports = routesCampeonato

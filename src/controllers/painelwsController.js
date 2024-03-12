@@ -49,7 +49,7 @@ exports.getALLDatas = async (req,res) => {
         }
         const user = res.locals.user
         
-        res.render('dashboard', { user,campeonatos, partidas, times, jogadores, layout : 'painelws' })
+        res.render('dashboard', { user, campeonatos, partidas, times, jogadores, layout : 'painelws' })
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Erro ao buscar datas.' });
