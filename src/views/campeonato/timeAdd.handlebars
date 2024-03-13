@@ -8,7 +8,7 @@
                     <label for="timesCadastrados">Times cadastrados para inclusão</label>
 					{{#if time.length}}
 						{{#each time}}
-								<div class="timeselector cardTimeSelect" data-time-id="{{idTime}}">
+								<div id="{{idTime}}" class="timeselector cardTimeSelect" data-time-id="{{idTime}}">
 								<div class="timeselector_image">
 									<img 
 										src="http://localhost:3001/public/upload/img/time/{{logoTime}}"
@@ -64,4 +64,4 @@
 </section>
 
 <!-- Scripts do formulário curso -->
-<script src="/js/campeonato.js"></script>
+<script src="/js/campeonatoTimeAdd.js"></script>

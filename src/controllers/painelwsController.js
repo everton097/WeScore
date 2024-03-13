@@ -1,10 +1,9 @@
 const api = require('../config/api')
-
+const apiUrl = "http://localhost:3001/"
+const spaUrl = "http://localhost:3002/"
 // Metodo para buscar todos os elementos da api
 exports.getALLDatas = async (req,res) => {
     try {
-        const apiUrl = "http://localhost:3001/"
-        const spaUrl = "http://localhost:3002/"
         var partidas = {}, idtimes = {}, times = {}, jogadores = {}
         // Configurar o cabeçalho com a autorização do token
         const token = await req.session.token

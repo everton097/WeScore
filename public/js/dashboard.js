@@ -1,5 +1,3 @@
-console.log(urlSPA);
-console.log(urlSPA);
 // Exemplo de JavaScript para adicionar/remover a classe
 var userImage = document.getElementById("user_img");
 var userInput = document.getElementById("user_input");
@@ -182,10 +180,8 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 				},
 			};
 			// Fazer uma solicitação GET para buscar as partidas do campeonato clicado
-			console.log(urlSPA);
 			axios.get(`${url}partida/${campeonatoId}`, config)
 				.then((response) => {
-					console.log(response.data);
 					// Renderiza as partidas no contêiner de partidas
 					const partidasContainer = document.getElementById("partidasContainer");
 					partidasContainer.innerHTML = ""; // Limpe o conteúdo anterior
@@ -233,7 +229,6 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 							if (startButton) {
 								startButton.addEventListener("click", async () => {
 									try {
-										
 										// Faça a requisição para alterar o status da partida para "Em Andamento"
 										const idPartida = partida.idPartida
 										axios.get(`${url}partida/status/${idPartida}`, config)
