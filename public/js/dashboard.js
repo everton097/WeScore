@@ -168,7 +168,9 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 
 			// Modifica o atributo href
 			timeLinkElement.href = `/painelws/campeonato/${campeonatoId}/time/add`;
+			timeLinkElement.dataset.campeonatoId = campeonatoId;
 			partidaLinkElement.href = `/painelws/campeonato/${campeonatoId}/partida/add`;
+			partidaLinkElement.dataset.campeonatoId = campeonatoId;
 
 			//busca o token armazenado no login
 			var token = localStorage.getItem("token");
@@ -270,7 +272,7 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 				});
 
 				// Faça a requisição para pegar os ids dos times do campeonato clicado
-				axios.get(`${url}partida/IDs/${campeonatoId}`, config)
+				axios.get(`${url}time_campeonato/${campeonatoId}`, config)
 				.then((response) => {
 					const idtimes = response.data.idtime;
 					// Se não houverem times, mostre mensagem informativa
@@ -393,14 +395,6 @@ document.getElementById("timesContainer").addEventListener("click", async functi
 		  }).then((result) => {
 			if (result.isConfirmed) {
 				delTime(timeElement, timeId).then((response) => {
-					Swal.fire({
-						icon: 'success',
-						title: 'Time removido com sucesso',
-						showConfirmButton: false,
-						showConfirmButton: false,
-						timer: 1500,
-					});
-					return false;
 				})
 			}
 		  });
@@ -460,7 +454,6 @@ document.getElementById("jogadoresContainer").addEventListener("click", async fu
 // Função para adicionar ouvintes de eventos ao timesContainer, renderizado pelo JS - Front
 function addEventListenersToTimesContainer() {
 	document.getElementById("timesContainer").addEventListener("click", async function (event) {
-		// Obtenha o ID do campeonato clicado
 		const timeId = event.target.closest(".cardDashboard_division").dataset.timeId;
 		const timeElement = event.target.closest(".cardDashboard_division");
 		
@@ -476,14 +469,6 @@ function addEventListenersToTimesContainer() {
 			  }).then((result) => {
 				if (result.isConfirmed) {
 					delTime(timeElement, timeId).then((response) => {
-						Swal.fire({
-							icon: 'success',
-							title: 'Time removido com sucesso',
-							showConfirmButton: false,
-							showConfirmButton: false,
-							timer: 1500,
-						});
-						return false;
 					})
 				}
 			  });
@@ -638,19 +623,43 @@ async function delCampeonato(campeonatoElement,campeonatoId) {
 };
 // Função para requisição para remover o campeonato
 async function delTime(timeElement,timeId) {
+	// Obtenha o ID do campeonato clicado
+	const campeonatoId = document.getElementById("buttonTimeAdd").dataset.campeonatoId;
+	console.log( timeId, campeonatoId);
 	var token = localStorage.getItem("token");
 				var config = {
 					headers: {
 						Authorization: `Bearer ${token}`,
 					},
 				};
-	await axios.delete(`${url}time/${timeId}`, config)
+	await axios.delete(`${url}time_campeonato/${campeonatoId}/time/${timeId}`, config)
 	.then((response) => {
+		Swal.fire({
+			icon: 'success',
+			title: 'Time removido com sucesso',
+			showConfirmButton: false,
+			showConfirmButton: false,
+			timer: 1500,
+		});
 		// Remover o time
 		timeElement.parentNode.removeChild(timeElement);
 	})
 	.catch((error) => {
 		console.error(error);
+		if (error.response) {
+            const { data, status } = error.response;
+            Swal.fire({
+                icon: 'error',
+                title: `${data.message}`,
+                text: `Erro ${status} ` || 'Erro desconhecido',
+            });
+        } else if (error.request) {
+            // A solicitação foi feita, mas não houve resposta do servidor
+            console.error('Sem resposta do servidor');
+        } else {
+            // Algo aconteceu durante a configuração da solicitação que acionou um erro
+            console.error('Erro na configuração da solicitação', error.message);
+        }
 	});
 };
 // Função para requisição para remover o jogador

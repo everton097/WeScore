@@ -53,53 +53,72 @@ document.getElementById("timeSelectorContainer").addEventListener("click", async
   const timeActiveElements = document.querySelectorAll('.time_active');
   // Verifica se tem algum time selecionado e impede a interação com o formulário de novo time
   timeActiveElements.length > 0 ?  formCadastroNovoTime.style.pointerEvents = 'none' : formCadastroNovoTime.style.pointerEvents = 'auto'
-
-
-  /* // Fazer uma solicitação POST para criar um novo banner
-  axios.post(`${url}campeonato/create`, formData, config)
-  .then(response => {            
-      Swal.fire({
-          icon: 'success',
-          title: 'Campeonato criado com sucesso',
-          showConfirmButton: false,
-          timer: 1500
-      }).then(() => {
-          // Após o tempo definido (1500 ms), redirecione para a página cursos
-          window.location.href = `../campeonato/`;
-      });
-  })
-  .catch(error => {
-      console.error(error);
-      if (error.response) {
-          const { data, status } = error.response;
-          Swal.fire({
-              icon: 'error',
-              title: `${data.message}`,
-              text: `Erro ${status} ` || 'Erro desconhecido',
-          });
-      } else if (error.request) {
-          // A solicitação foi feita, mas não houve resposta do servidor
-          console.error('Sem resposta do servidor');
-      } else {
-          // Algo aconteceu durante a configuração da solicitação que acionou um erro
-          console.error('Erro na configuração da solicitação', error.message);
-      }
-  }); */
 });
 
 // Evento quando o botão "Salvar" de criação é clicado
 document.querySelector('#saveCampeonatoForm').addEventListener('click', function () {
+  //busca o token armazenado no login
+  var token = localStorage.getItem("token");
+  // Configurar o cabeçalho com a autorizção do token
+  var config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
   // Obter todos os elementos com a classe time_active
   const timeActiveElements = document.querySelectorAll('.time_active');
   // Criar um array para armazenar os valores de dataset.timeId
-  const timeIds = [];
-  // Iterar sobre os elementos e recuperar os valores de dataset.timeId
-  timeActiveElements.forEach((element) => {
-    const timeId = element.dataset.timeId;
-    timeIds.push(timeId);
-  });
+  if (timeActiveElements.length>0) {
+    const idTime = [];
+    // Iterar sobre os elementos e recuperar os valores de dataset.timeId
+    timeActiveElements.forEach((element) => {
+      const timeId = element.dataset.timeId;
+      idTime.push(timeId);
+    });
+    // Obtenha o ID do campeonato clicado
+    const idCampeonato = document.getElementById("AdicionarTimeCamp").dataset.campeonatoId;
+    const keys ={
+     idCampeonato: idCampeonato,
+     idTimes: idTime
+    }
+    // Fazer uma solicitação POST para vincular um novo time
+    console.log(idCampeonato);
+    console.log(idTime);
+    axios.post(`${url}time_campeonato/enroll`, keys, config)
+    .then(response => {            
+        Swal.fire({
+            icon: 'success',
+            title: 'Time vinculado com sucesso',
+            showConfirmButton: false,
+            timer: 1500
+        }).then(() => {
+            // Após o tempo definido (1500 ms), redirecione para a página cursos
+            window.location.href = `/painelws/`;
+        });
+    })
+    .catch(error => {
+        console.error(error);
+        if (error.response) {
+            const { data, status } = error.response;
+            Swal.fire({
+                icon: 'error',
+                title: `${data.message}`,
+                text: `Erro ${status} ` || 'Erro desconhecido',
+            });
+        } else if (error.request) {
+            // A solicitação foi feita, mas não houve resposta do servidor
+            console.error('Sem resposta do servidor');
+        } else {
+            // Algo aconteceu durante a configuração da solicitação que acionou um erro
+            console.error('Erro na configuração da solicitação', error.message);
+        }
+    });
 
-  console.log(timeIds);
+  } else {
+    
+  }
+
  
 /*   // Fazer uma solicitação POST para criar um novo banner
   axios.post(`${url}campeonato/create`, formData, config)

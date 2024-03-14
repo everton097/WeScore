@@ -25,13 +25,11 @@ exports.getALLDatas = async (req,res) => {
                 }
             })
             cont = 0;
-            
             response = await api.get(`/partida/${idcamp}`, config)
             partidas = response.data
 
-            response = await api.get(`/partida/IDs/${idcamp}`, config)
+            response = await api.get(`/time_campeonato/${idcamp}`, config)
             idtimes = response.data.idtime
-            console.log(idtimes.length);
             if (idtimes.length != 0) {
                 response = await api.get(`/time/${idtimes}`, config)
                 times = response.data
@@ -43,7 +41,6 @@ exports.getALLDatas = async (req,res) => {
                         element.active = false
                     }
                 })
-                console.log(times);
                 response = await api.get(`/time/players/${idtimes[0]}`, config)
                 jogadores = response.data
             }

@@ -69,9 +69,9 @@
 		</div>
 		<div class="cardDashboard">
 			{{#if partidas.length}}
-				<p class="cardDashboard_title">Partidas <a id="buttonPartidaAdd" href="/painelws/campeonato/{{campeonatos.[0].idCampeonato}}/partida/add" data-partida-id="{{partidas.[0].idPartida}}"><i class="ri-add-fill"></i></a></p>
+				<p class="cardDashboard_title">Partidas <a id="buttonPartidaAdd" href="/painelws/campeonato/{{campeonatos.[0].idCampeonato}}/partida/add" data-campeonato-id="{{campeonatos.[0].idCampeonato}}"><i class="ri-add-fill"></i></a></p>
 			{{else}}
-				<p class="cardDashboard_title">Partidas <a id="buttonPartidaAdd" href="/painelws/campeonato/0/partida/add" data-partida-id="0"><i class="ri-add-fill"></i></a></p>
+				<p class="cardDashboard_title">Partidas <a id="buttonPartidaAdd" href="/painelws/campeonato/0/partida/add" data-campeonato-id="0"><i class="ri-add-fill"></i></a></p>
 			{{/if}}
 			<div class="container__">
 				<div id="partidasContainer" class="cardDashboard_container">

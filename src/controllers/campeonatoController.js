@@ -47,7 +47,7 @@ exports.timeAddCampeonato = async (req,res) => {
         let response = await api.get(`/campeonato/${idCampeonato}`, config)
         const campeonato = response.data
         // Requisição para retorno dos IDs times do campeonato.
-        response = await api.get(`/partida/IDs/${idCampeonato}`, config)
+        response = await api.get(`/time_campeonato/${idCampeonato}`, config)
         const idtimes = response.data.idtime
         // Requisição para retorno dos times do usuário logado.
         response = await api.get(`/time/all/${user.userId}`, config)
