@@ -1,8 +1,8 @@
 
 console.log("entrou no campeonatoTimeAdd.js");// Função de validação do formulário
 function validateForm(formData) {
-    const name = formData.get('nomeCampeonato');
-    const file = formData.get('logoCampeonato');
+    const name = formData.get('nomeTime');
+    const file = formData.get('logoTime');
 
     // Validar campos preenchidos. Se algum campo estiver vazio, exibir mensagem de erro
     if (!name || !file) {
@@ -65,7 +65,9 @@ document.querySelector('#saveCampeonatoForm').addEventListener('click', function
       Authorization: `Bearer ${token}`,
     },
   };
-
+  
+  // Obtenha o ID do campeonato clicado
+  const idCampeonato = document.getElementById("AdicionarTimeCamp").dataset.campeonatoId;
   // Obter todos os elementos com a classe time_active
   const timeActiveElements = document.querySelectorAll('.time_active');
   // Criar um array para armazenar os valores de dataset.timeId
@@ -76,15 +78,11 @@ document.querySelector('#saveCampeonatoForm').addEventListener('click', function
       const timeId = element.dataset.timeId;
       idTime.push(timeId);
     });
-    // Obtenha o ID do campeonato clicado
-    const idCampeonato = document.getElementById("AdicionarTimeCamp").dataset.campeonatoId;
     const keys ={
      idCampeonato: idCampeonato,
      idTimes: idTime
     }
     // Fazer uma solicitação POST para vincular um novo time
-    console.log(idCampeonato);
-    console.log(idTime);
     axios.post(`${url}time_campeonato/enroll`, keys, config)
     .then(response => {            
         Swal.fire({
@@ -116,7 +114,90 @@ document.querySelector('#saveCampeonatoForm').addEventListener('click', function
     });
 
   } else {
-    
+    // Obter os dados do formulário de criação
+    const formData = new FormData(document.querySelector('#createCampeonatoForm'));
+    // Adicionar o idUsuario ao formData aqui
+    const idUsuario = obterIdUsuarioLocalStorage();
+    formData.append('idUsuario', idUsuario);
+
+    // Chama a função de validação antes de enviar a solicitação POST
+    if (validateForm(formData)) {
+
+    //busca o token armazenado no login
+    const token = localStorage.getItem('token');
+
+    // Configurar o cabeçalho com a autorizção do token
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+    };
+    // Fazer uma solicitação POST para criar um novo banner
+    axios.post(`${url}time/create`, formData, config)
+        .then(response => {            
+            Swal.fire({
+                icon: 'success',
+                title: 'Time criado com sucesso',
+                showConfirmButton: false,
+                timer: 1500
+            }).then(() => {
+              console.log(response.data);
+              console.log(response.data.idTime);
+              const keys ={
+                idCampeonato: idCampeonato,
+                idTimes: response.data.idTime
+              }
+              console.log(keys);
+              // Após o time ser cadastrado ele é vinculado ao campeonato atual e redireciona para o painelws
+              axios.post(`${url}time_campeonato/enroll`, keys, config)
+              .then(response => {            
+                  Swal.fire({
+                      icon: 'success',
+                      title: 'Time vinculado com sucesso',
+                      showConfirmButton: false,
+                      timer: 1500
+                  }).then(() => {
+                      // Após o tempo definido (1500 ms), redirecione para a página cursos
+                      window.location.href = `/painelws/`;
+                  });
+              })
+              .catch(error => {
+                  console.error(error);
+                  if (error.response) {
+                      const { data, status } = error.response;
+                      Swal.fire({
+                          icon: 'error',
+                          title: `${data.message}`,
+                          text: `Erro ${status} ` || 'Erro desconhecido',
+                      });
+                  } else if (error.request) {
+                      // A solicitação foi feita, mas não houve resposta do servidor
+                      console.error('Sem resposta do servidor');
+                  } else {
+                      // Algo aconteceu durante a configuração da solicitação que acionou um erro
+                      console.error('Erro na configuração da solicitação', error.message);
+                  }
+              });
+            });
+        })
+        .catch(error => {
+            console.error(error);
+            if (error.response) {
+                const { data, status } = error.response;
+                Swal.fire({
+                    icon: 'error',
+                    title: `${data.message}`,
+                    text: `Erro ${status} ` || 'Erro desconhecido',
+                });
+            } else if (error.request) {
+                // A solicitação foi feita, mas não houve resposta do servidor
+                console.error('Sem resposta do servidor');
+            } else {
+                // Algo aconteceu durante a configuração da solicitação que acionou um erro
+                console.error('Erro na configuração da solicitação', error.message);
+            }
+        });
+    }
   }
 
  

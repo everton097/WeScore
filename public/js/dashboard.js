@@ -326,8 +326,8 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 									</div>
 									<div class="cardDashboard_division_content">
 										<div class="cardDashboard_division_text">
-											<span class="cardDashboard_division_name">time: ${time.nomeTime}</span>
-											<p class="cardDashboard_division_username">ID time:${time.idTime}</p>
+											<span class="cardDashboard_division_name">${time.nomeTime}</span>
+											<p class="cardDashboard_division_username">ID time: ${time.idTime}</p>
 										</div>
 		
 										<div class="paste-button">

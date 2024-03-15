@@ -275,7 +275,7 @@
   }
   .timeselector_name {
     white-space: nowrap; 
-    width: 100; 
+    width: 110; 
     overflow: hidden;
     text-overflow: ellipsis;
   }
