@@ -70,6 +70,11 @@
   top: 10px;
   background-color: transparent;
 }
+.form .group .groupPartidaForm #partidaLabel label{
+  position: relative;
+  top: 7px;
+  transition: all .3s ease-in;
+}
 
 .form .group input:focus,
 .form .group textarea:focus, .form .group .custum-file-upload:focus {
@@ -101,7 +106,8 @@
   font-weight: 600;
   font-size: 14px;
 }
-.form .group .timeselector_container:hover label:not(.form .group .timeselector_container .group label){
+.form .group .timeselector_container:hover label:not(.form .group .timeselector_container .group label),
+.form .group .groupPartidaForm #partidaLabel:hover label{
   background-color: #fff;
   color: var(--input-color-transparency);
   font-weight: 600;
@@ -215,11 +221,22 @@
   .timeselector_container{
     display: flex;
     gap: 5px;
-    justify-content: center;
     overflow-y: auto;
   }
   #cadrastroNovoTime.timeselector_container{
     flex-direction: column;
+  }
+  #cadrastroNovoPartida.timeselector_container{
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+  }
+  #TimesNewPartida{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
   }
   #cadrastroNovoTime.timeselector_container .group input,
   #cadrastroNovoTime.timeselector_container .group .custum-file-upload{

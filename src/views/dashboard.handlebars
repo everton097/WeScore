@@ -1,7 +1,7 @@
 <main class="flex_main">
 	<section class="sectionCamp">
 		<div class="cardDashboard">
-			<p class="cardDashboard_title">Campeonatos <a href="/painelws/campeonato/add"><i class="ri-add-fill"></i>{{!-- <i class="ri-add-circle-line"></i> --}}</a></p>
+			<p class="cardDashboard_title">Campeonato <a href="/painelws/campeonato/add"><i class="ri-add-fill"></i>{{!-- <i class="ri-add-circle-line"></i> --}}</a></p>
 			<div class="container__">
 				<div id="campeonatosContainer" class="cardDashboard_container">
 					{{#if campeonatos.length}}
@@ -69,9 +69,9 @@
 		</div>
 		<div class="cardDashboard">
 			{{#if partidas.length}}
-				<p class="cardDashboard_title">Partidas <a id="buttonPartidaAdd" href="/painelws/campeonato/{{campeonatos.[0].idCampeonato}}/partida/add" data-campeonato-id="{{campeonatos.[0].idCampeonato}}"><i class="ri-add-fill"></i></a></p>
+				<p class="cardDashboard_title">Partida <a id="buttonPartidaAdd" href="/painelws/campeonato/{{campeonatos.[0].idCampeonato}}/partida/add" data-campeonato-id="{{campeonatos.[0].idCampeonato}}"><i class="ri-add-fill"></i></a></p>
 			{{else}}
-				<p class="cardDashboard_title">Partidas <a id="buttonPartidaAdd" href="/painelws/campeonato/0/partida/add" data-campeonato-id="0"><i class="ri-add-fill"></i></a></p>
+				<p class="cardDashboard_title">Partida <a id="buttonPartidaAdd" href="/painelws/campeonato/0/partida/add" data-campeonato-id="0"><i class="ri-add-fill"></i></a></p>
 			{{/if}}
 			<div class="container__">
 				<div id="partidasContainer" class="cardDashboard_container">
@@ -119,9 +119,9 @@
 	<section2 class="sectionCamp2">
 		<div class="cardDashboard2">
 			{{#if campeonatos.length}}
-				<p class="cardDashboard_title">Times <a id="buttonTimeAdd" href="/painelws/campeonato/{{campeonatos.[0].idCampeonato}}/time/add" data-campeonato-id="{{campeonatos.[0].idCampeonato}}"><i class="ri-add-fill"></i></a></p>
+				<p class="cardDashboard_title">Time <a id="buttonTimeAdd" href="/painelws/campeonato/{{campeonatos.[0].idCampeonato}}/time/add" data-campeonato-id="{{campeonatos.[0].idCampeonato}}"><i class="ri-add-fill"></i></a></p>
 			{{else}}
-				<p class="cardDashboard_title">Times <a id="buttonTimeAdd" href="/painelws/campeonato/0/time/add" data-campeonato-id="0"><i class="ri-add-fill"></i></a></p>
+				<p class="cardDashboard_title">Time <a id="buttonTimeAdd" href="/painelws/campeonato/0/time/add" data-campeonato-id="0"><i class="ri-add-fill"></i></a></p>
 			{{/if}}
 			<div class="container__">
 				<div id="timesContainer" class="cardDashboard_container">
@@ -168,9 +168,9 @@
 	<section2 class="sectionCamp2">
 		<div class="cardDashboard2">
 			{{#if campeonatos.length}}
-				<p class="cardDashboard_title">Jogadores <a id="buttonJogadorAdd" href="/painelws/time/{{times.[0].idTime}}/time/add" data-time-id="{{times.[0].idTime}}"><i class="ri-add-fill"></i></a></p>
+				<p class="cardDashboard_title">Jogador <a id="buttonJogadorAdd" href="/painelws/time/{{times.[0].idTime}}/time/add" data-time-id="{{times.[0].idTime}}"><i class="ri-add-fill"></i></a></p>
 			{{else}}
-				<p class="cardDashboard_title">Jogadores <a id="buttonJogadorAdd" href="/painelws/time/0/jogador/add" data-time-id="0"><i class="ri-add-fill"></i></a></p>
+				<p class="cardDashboard_title">Jogador <a id="buttonJogadorAdd" href="/painelws/time/0/jogador/add" data-time-id="0"><i class="ri-add-fill"></i></a></p>
 			{{/if}}
 			<div class="container__">
 				<div id="jogadoresContainer" class="cardDashboard_container">

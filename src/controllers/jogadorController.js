@@ -12,19 +12,11 @@ exports.getALLDatas = async (req,res) => {
             headers: { Authorization: `Bearer ${token}` }
         }
         // Fazer a requisição para a API
-        let response = await api.get("/campeonato/all", config)
-        const campeonatos = response.data
-        const idcamp = campeonatos[0].idCampeonato
-        let cont = 0;
-        campeonatos.forEach(function (element){
-            if (cont == 0){
-                element.active = true
-                cont++
-            } else{
-                element.active = false
-            }
-        })
-        res.render('campeonato/', { campeonatos, user, spaUrl, apiUrl, layout : 'painelws' })
+        let response = await api.get("/jogador/all", config)
+        const jogador = response.data
+        console.log(jogador)
+        
+        res.render('jogador/', { jogador, user, spaUrl, apiUrl, layout : 'painelws' })
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Erro ao buscar datas.' });
@@ -32,7 +24,7 @@ exports.getALLDatas = async (req,res) => {
 }
 exports.addCampeonato = async (req,res) => {
     const user = res.locals.user
-    res.render('campeonato/add', { user, spaUrl, apiUrl, layout : 'painelws'})
+    res.render('jogador/add', { user, spaUrl, apiUrl, layout : 'painelws'})
 }
 exports.timeAddCampeonato = async (req,res) => {
     try {
@@ -55,7 +47,7 @@ exports.timeAddCampeonato = async (req,res) => {
 
         // Filtrar os times que não estão presentes nos IDs da partida
         const time = todosTimes.filter(time => !idtimes.includes(time.idTime));
-        res.render('campeonato/timeAdd', { campeonato, time, user, spaUrl, apiUrl, layout : 'painelws' })
+        res.render('jogador/timeAdd', { campeonato, time, user, spaUrl, apiUrl, layout : 'painelws' })
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Erro ao buscar datas.' });
@@ -88,7 +80,7 @@ exports.partidaAddCampeonato = async (req,res) => {
         // Filtrar os times que não estão presentes nos IDs da partida
         const time = timelist.filter(time => !partidasIDtimes.includes(time.idTime));
 
-        res.render('campeonato/partidaAdd', { campeonato, time, user, spaUrl, apiUrl, layout : 'painelws' })
+        res.render('jogador/partidaAdd', { campeonato, time, user, spaUrl, apiUrl, layout : 'painelws' })
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Erro ao buscar datas.' });
