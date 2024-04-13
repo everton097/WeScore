@@ -143,7 +143,7 @@ document.querySelector("#savePartidaForm").addEventListener("click", function ()
 						const { data, status } = error.response;
 						Swal.fire({
 							icon: "error",
-							title: `${data.message}`,
+							title: `${data.error}`,
 							text: `Erro ${status} ` || "Erro desconhecido",
 						});
 					} else if (error.request) {

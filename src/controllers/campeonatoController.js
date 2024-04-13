@@ -73,20 +73,23 @@ exports.partidaAddCampeonato = async (req,res) => {
         // Requisição para retorno do campeonato a ser inserido a Partida.
         let response = await api.get(`/campeonato/${idCampeonato}`, config)
         const campeonato = response.data
-        // Requisição para retorno dos IDs times vinculado ao campeonato.
-        response = await api.get(`/time_campeonato/${idCampeonato}`, config)
-        const idtimes = response.data.idtime
-        // Requisição para retorno dos IDs times das partidas do campeonato.
-        response = await api.get(`/partida/IDs/${idCampeonato}`, config)
-        const partidasIDtimes = response.data.idtime
         // Requisição para retorno dos times do usuário logado.
         response = await api.get(`/time/all/${user.userId}`, config)
         const todosTimes = response.data
+        // Requisição para retorno dos IDs times vinculado ao campeonato.
+        response = await api.get(`/time_campeonato/${idCampeonato}`, config)
+        const idtimes = response.data.idtime
 
+        // Requisição para retorno dos IDs times das partidas do campeonato.
+        response = await api.get(`/partida/IDs/${idCampeonato}`, config)
+        const partidasIDtimes = response.data.idtime
+        
         // Filtrar os times que não estão presentes nos IDs da partida
         const timelist = todosTimes.filter(time => idtimes.includes(time.idTime));
-        // Filtrar os times que não estão presentes nos IDs da partida
-        const time = timelist.filter(time => !partidasIDtimes.includes(time.idTime));
+
+        /* // Filtrar os times que estão presentes em partida
+        const time = timelist.filter(time => !partidasIDtimes.includes(time.idTime)); */
+        const time = timelist
 
         res.render('campeonato/partidaAdd', { campeonato, time, user, spaUrl, apiUrl, layout : 'painelws' })
     } catch (error) {
