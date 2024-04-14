@@ -225,42 +225,9 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 							  </div>
 							`;
 							partidasContainer.appendChild(partidaElement);
-
-							// Adiciona o ouvinte de evento para o botão de "Iniciar"
-							const startButton = partidaElement.querySelector(`#startPartida${partida.idPartida}`);
-							if (startButton) {
-								startButton.addEventListener("click", async () => {
-									try {
-										// Faça a requisição para alterar o status da partida para "Em Andamento"
-										const idPartida = partida.idPartida
-										axios.get(`${url}partida/status/${idPartida}`, config)
-										.then((response) => {
-											// Remova o botão de Iniciar da partida
-											const startButtonPartida = document.getElementById(`startPartida${idPartida}`);
-											if (startButtonPartida) {
-												// Obtenha o pai do botão de Iniciar
-												const parentElement = startButtonPartida.parentNode;
-												// Remova o botão de Iniciar
-												startButtonPartida.parentNode.removeChild(startButtonPartida);
-
-												// Crie e adicione o botão de Finalizar
-												const turnBackPartida = document.createElement("a");
-												turnBackPartida.id = `turnBackPartida${idPartida}`;
-												turnBackPartida.href = `/painelws/partida/${idPartida}`;
-												turnBackPartida.innerHTML = '<i class="ri-arrow-turn-back-line"></i></i>Retomar</a>';
-												// Adicione o botão de Finalizar antes do botão de Remover
-												parentElement.insertBefore(
-													turnBackPartida,
-													parentElement.querySelector(`#delPartida${idPartida}`)
-												);
-											}
-											window.location.href = `/painelws/partida/${idPartida}`;
-										})
-									} catch (error) {
-										console.error(error);
-									}
-								});
-							}
+							// Adicione ouvintes de eventos após renderizar os elementos
+							addEventListenersToPartidasContainer();
+							
 						});
 					}
 				})
@@ -352,62 +319,8 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 				})
 		}
 });
-// ouvinte para elemesntos com ID partidasContainer, renderizado pelo handlebars
-document.getElementById("partidasContainer").addEventListener("click", async function (event) {
-	const parentElement = event.target.parentNode;
-	// Verifique se o clique foi em um botão dentro do contêiner de partidas
-	if (parentElement.classList.contains("dropdown-content")) {
-        // Obtenha a referência ao botão clicado
-        const button = event.target;
-		
-        // Obtenha o ID da partida associado a este botão
-        const partidaId = button.closest(".cardDashboard_division").id.replace("partida_", "");
-        // Realize a lógica relacionada ao botão aqui
-        if (button.id.startsWith("startPartida")) {
-			// Busca o token armazenado no login
-			var token = localStorage.getItem("token");
-
-			// Configurar o cabeçalho com a autorizção do token
-			var config = {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			};
-            try {
-				// Faça a requisição para alterar o status da partida para "Em Andamento"
-				axios.get(`${url}partida/status/${partidaId}`, config)
-				.then((response) => {
-					// Remova o botão de Iniciar da partida
-					const startButtonPartida = document.getElementById(`startPartida${partidaId}`);
-					if (startButtonPartida) {
-						// Obtenha o pai do botão de Iniciar
-						const parentElement = startButtonPartida.parentNode;
-						// Remova o botão de Iniciar
-						startButtonPartida.parentNode.removeChild(startButtonPartida);
-
-						// Crie e adicione o botão de Finalizar
-						const turnBackPartida = document.createElement("a");
-						turnBackPartida.id = `turnBackPartida${partidaId}`;
-						turnBackPartida.href = `/painelws/partida/${partidaId}`;
-						turnBackPartida.innerHTML = '<i class="ri-arrow-turn-back-line"></i></i>Retomar</a>';
-						// Adicione o botão de Finalizar antes do botão de Remover
-						parentElement.insertBefore(
-							turnBackPartida,
-							parentElement.querySelector(`#delPartida${partidaId}`)
-						);
-					}
-					window.location.href = `/painelws/partida/${partidaId}`;
-				})
-			} catch (error) {
-				console.error(error);
-			}
-        } else if (button.id.startsWith("turnBackPartida")) {
-            // Lógica para o botão Retomar
-            console.log(`Botão Retomar clicado para a partida ${partidaId}`);
-            // Faça sua requisição axios para retomar a partida
-        }
-	}
-})
+// ouvinte para elementos com ID partidasContainer, renderizado pelo handlebars
+addEventListenersToPartidasContainer();
 // Adicione um ouvinte de evento para os itens de times, renderizado pelo handlebars
 document.getElementById("timesContainer").addEventListener("click", async function (event) {
 	// Obtenha o ID do campeonato clicado
@@ -481,7 +394,64 @@ document.getElementById("jogadoresContainer").addEventListener("click", async fu
 		  });
 	}
 });
-
+// Função para adicionar ouvintes de eventos ao partidasContainer, renderizado pelo JS - Front
+function addEventListenersToPartidasContainer(){
+	document.getElementById("partidasContainer").addEventListener("click", async function (event) {
+		const parentElement = event.target.parentNode;
+		// Verifique se o clique foi em um botão dentro do contêiner de partidas
+		if (parentElement.classList.contains("dropdown-content")) {
+			// Obtenha a referência ao botão clicado
+			const button = event.target;
+			
+			// Obtenha o ID da partida associado a este botão
+			const partidaId = button.closest(".cardDashboard_division").id.replace("partida_", "");
+			// Realize a lógica relacionada ao botão aqui
+			if (button.id.startsWith("startPartida")) {
+				// Busca o token armazenado no login
+				var token = localStorage.getItem("token");
+	
+				// Configurar o cabeçalho com a autorizção do token
+				var config = {
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				};
+				try {
+					// Faça a requisição para alterar o status da partida para "Em Andamento"
+					axios.get(`${url}partida/status/${partidaId}`, config)
+					.then((response) => {
+						// Remova o botão de Iniciar da partida
+						const startButtonPartida = document.getElementById(`startPartida${partidaId}`);
+						if (startButtonPartida) {
+							// Obtenha o pai do botão de Iniciar
+							const parentElement = startButtonPartida.parentNode;
+							// Remova o botão de Iniciar
+							startButtonPartida.parentNode.removeChild(startButtonPartida);
+	
+							// Crie e adicione o botão de Finalizar
+							const turnBackPartida = document.createElement("a");
+							turnBackPartida.id = `turnBackPartida${partidaId}`;
+							turnBackPartida.href = `/painelws/partida/${partidaId}`;
+							turnBackPartida.innerHTML = '<i class="ri-arrow-turn-back-line"></i></i>Retomar</a>';
+							// Adicione o botão de Finalizar antes do botão de Remover
+							parentElement.insertBefore(
+								turnBackPartida,
+								parentElement.querySelector(`#delPartida${partidaId}`)
+							);
+						}
+						window.location.href = `/painelws/partida/${partidaId}`;
+					})
+				} catch (error) {
+					console.error(error);
+				}
+			} else if (button.id.startsWith("turnBackPartida")) {
+				// Lógica para o botão Retomar
+				console.log(`Botão Retomar clicado para a partida ${partidaId}`);
+				// Faça sua requisição axios para retomar a partida
+			}
+		}
+	})
+}
 // Função para adicionar ouvintes de eventos ao timesContainer, renderizado pelo JS - Front
 function addEventListenersToTimesContainer() {
 	document.getElementById("timesContainer").addEventListener("click", async function (event) {
