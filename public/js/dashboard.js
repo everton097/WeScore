@@ -132,7 +132,7 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 				text: "Você não poderá reverter essa ação!",
 				icon: "warning",
 				showCancelButton: true,
-				confirmButtonText: "Sim, remova-o!"
+				confirmButtonText: "Sim, remova!"
 			  }).then((result) => {
 				if (result.isConfirmed) {
 					delCampeonato(campeonatoElement, campeonatoId).then((response) => {
@@ -334,7 +334,7 @@ document.getElementById("timesContainer").addEventListener("click", async functi
 			text: "Você não poderá reverter essa ação!",
 			icon: "warning",
 			showCancelButton: true,
-			confirmButtonText: "Sim, remova-o!"
+			confirmButtonText: "Sim, remova!"
 		  }).then((result) => {
 			if (result.isConfirmed) {
 				delTime(timeElement, timeId).then((response) => {
@@ -376,7 +376,7 @@ document.getElementById("jogadoresContainer").addEventListener("click", async fu
 			text: "Você não poderá reverter essa ação!",
 			icon: "warning",
 			showCancelButton: true,
-			confirmButtonText: "Sim, remova-o!"
+			confirmButtonText: "Sim, remova!"
 		  }).then((result) => {
 			if (result.isConfirmed) {
 				deljogador(jogadorElement, jogadorId).then((response) => {
@@ -461,7 +461,7 @@ function addEventListenersToPartidasContainer(){
 						text: "Você não poderá reverter essa ação!",
 						icon: "warning",
 						showCancelButton: true,
-						confirmButtonText: "Sim, remova-o!"
+						confirmButtonText: "Sim, remova!"
 					  }).then((result) => {
 						if (result.isConfirmed) {
 							// Faça a requisição para deletar  a partida
@@ -502,7 +502,7 @@ function addEventListenersToTimesContainer() {
 				text: "Você não poderá reverter essa ação!",
 				icon: "warning",
 				showCancelButton: true,
-				confirmButtonText: "Sim, remova-o!"
+				confirmButtonText: "Sim, remova!"
 			  }).then((result) => {
 				if (result.isConfirmed) {
 					delTime(timeElement, timeId).then((response) => {
@@ -547,7 +547,7 @@ function addEventListenersTojogadoresContainer() {
 				text: "Você não poderá reverter essa ação!",
 				icon: "warning",
 				showCancelButton: true,
-				confirmButtonText: "Sim, remova-o!"
+				confirmButtonText: "Sim, remova!"
 			  }).then((result) => {
 				if (result.isConfirmed) {
 					deljogador(jogadorElement, jogadorId).then((response) => {
