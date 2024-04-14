@@ -225,10 +225,9 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 							  </div>
 							`;
 							partidasContainer.appendChild(partidaElement);
-							// Adicione ouvintes de eventos após renderizar os elementos
-							addEventListenersToPartidasContainer();
-							
 						});
+						// Adicione ouvintes de eventos após renderizar os elementos
+						addEventListenersToPartidasContainer();
 					}
 				})
 				.catch((error) => {
@@ -405,8 +404,8 @@ function addEventListenersToPartidasContainer(){
 			
 			// Obtenha o ID da partida associado a este botão
 			const partidaId = button.closest(".cardDashboard_division").id.replace("partida_", "");
-			// Realize a lógica relacionada ao botão aqui
-			if (button.id.startsWith("startPartida")) {
+			// Lógica relacionada ao botão
+			if (button.id === `startPartida${partidaId}`) {
 				// Busca o token armazenado no login
 				var token = localStorage.getItem("token");
 	
@@ -444,10 +443,14 @@ function addEventListenersToPartidasContainer(){
 				} catch (error) {
 					console.error(error);
 				}
-			} else if (button.id.startsWith("turnBackPartida")) {
+			} else if (button.id === `turnBackPartida${partidaId}`) {
 				// Lógica para o botão Retomar
 				console.log(`Botão Retomar clicado para a partida ${partidaId}`);
-				// Faça sua requisição axios para retomar a partida
+			} else if (button.id === `delPartida${partidaId}`) {
+				// Lógica para o botão Remover
+				
+				console.log(`Botão Remover clicado para a partida ${partidaId}`);
+				
 			}
 		}
 	})
