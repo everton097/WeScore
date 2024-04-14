@@ -248,9 +248,6 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 												turnBackPartida.id = `turnBackPartida${idPartida}`;
 												turnBackPartida.href = `/painelws/partida/${idPartida}`;
 												turnBackPartida.innerHTML = '<i class="ri-arrow-turn-back-line"></i></i>Retomar</a>';
-												turnBackPartida.addEventListener("click", function () {
-													console.log("Botão de turnBack clicado");
-												});
 												// Adicione o botão de Finalizar antes do botão de Remover
 												parentElement.insertBefore(
 													turnBackPartida,
@@ -367,9 +364,43 @@ document.getElementById("partidasContainer").addEventListener("click", async fun
         const partidaId = button.closest(".cardDashboard_division").id.replace("partida_", "");
         // Realize a lógica relacionada ao botão aqui
         if (button.id.startsWith("startPartida")) {
-            // Lógica para o botão Iniciar
-            console.log(`Botão Iniciar clicado para a partida ${partidaId}`);
-            // Faça sua requisição axios para iniciar a partida
+			// Busca o token armazenado no login
+			var token = localStorage.getItem("token");
+
+			// Configurar o cabeçalho com a autorizção do token
+			var config = {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			};
+            try {
+				// Faça a requisição para alterar o status da partida para "Em Andamento"
+				axios.get(`${url}partida/status/${partidaId}`, config)
+				.then((response) => {
+					// Remova o botão de Iniciar da partida
+					const startButtonPartida = document.getElementById(`startPartida${partidaId}`);
+					if (startButtonPartida) {
+						// Obtenha o pai do botão de Iniciar
+						const parentElement = startButtonPartida.parentNode;
+						// Remova o botão de Iniciar
+						startButtonPartida.parentNode.removeChild(startButtonPartida);
+
+						// Crie e adicione o botão de Finalizar
+						const turnBackPartida = document.createElement("a");
+						turnBackPartida.id = `turnBackPartida${partidaId}`;
+						turnBackPartida.href = `/painelws/partida/${partidaId}`;
+						turnBackPartida.innerHTML = '<i class="ri-arrow-turn-back-line"></i></i>Retomar</a>';
+						// Adicione o botão de Finalizar antes do botão de Remover
+						parentElement.insertBefore(
+							turnBackPartida,
+							parentElement.querySelector(`#delPartida${partidaId}`)
+						);
+					}
+					window.location.href = `/painelws/partida/${partidaId}`;
+				})
+			} catch (error) {
+				console.error(error);
+			}
         } else if (button.id.startsWith("turnBackPartida")) {
             // Lógica para o botão Retomar
             console.log(`Botão Retomar clicado para a partida ${partidaId}`);
