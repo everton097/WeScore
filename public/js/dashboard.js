@@ -404,7 +404,6 @@ function addEventListenersToPartidasContainer(){
 			
 			// Obtenha o ID da partida associado a este botão
 			const partidaId = button.closest(".cardDashboard_division").id.replace("partida_", "");
-			// Lógica relacionada ao botão
 			if (button.id === `startPartida${partidaId}`) {
 				// Busca o token armazenado no login
 				var token = localStorage.getItem("token");
@@ -444,12 +443,46 @@ function addEventListenersToPartidasContainer(){
 					console.error(error);
 				}
 			} else if (button.id === `turnBackPartida${partidaId}`) {
-				// Lógica para o botão Retomar
 				console.log(`Botão Retomar clicado para a partida ${partidaId}`);
 			} else if (button.id === `delPartida${partidaId}`) {
-				// Lógica para o botão Remover
-				
 				console.log(`Botão Remover clicado para a partida ${partidaId}`);
+				// Busca o token armazenado no login
+				var token = localStorage.getItem("token");
+	
+				// Configurar o cabeçalho com a autorizção do token
+				var config = {
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				};
+				try {
+					Swal.fire({
+						title: "Tem certeza?",
+						text: "Você não poderá reverter essa ação!",
+						icon: "warning",
+						showCancelButton: true,
+						confirmButtonText: "Sim, remova-o!"
+					  }).then((result) => {
+						if (result.isConfirmed) {
+							// Faça a requisição para deletar  a partida
+							axios.delete(`${url}partida/${partidaId}`, config)
+							.then((response) => {
+								Swal.fire({
+									icon: 'success',
+									title: 'Partida removida com sucesso.',
+									showConfirmButton: false,
+									showConfirmButton: false,
+									timer: 1500,
+								}).then(() => {
+									// Redireciona para a página inicial do cms após o tempo definido
+									window.location.href = `/painelws`;
+								});
+							})
+						}
+					  });
+				} catch (error) {
+					console.error(error);
+				}
 				
 			}
 		}
