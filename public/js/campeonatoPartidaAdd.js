@@ -40,6 +40,7 @@ document.getElementById("timeSelectorContainer").addEventListener("click", async
 				icon: "error",
 				title: `Você já selecionou dois times`,
 				text: `Não é possível selecionar mais.`,
+				showConfirmButton: false,
 				timer: 1500,
 			});
 			return;
