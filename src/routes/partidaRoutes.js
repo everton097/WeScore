@@ -2,6 +2,7 @@ const express = require('express')
 const partidaRouter = express.Router()
 const partidaController = require('../controllers/partidaController')
 
-partidaRouter.get('/:partida', partidaController.getPartidaCampeonatoById)
+partidaRouter.get('/:idPartida', partidaController.getPartidaCampeonatoById)
+
 
 module.exports = partidaRouter

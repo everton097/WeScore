@@ -182,7 +182,7 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 				},
 			};
 			// Fazer uma solicitação GET para buscar as partidas do campeonato clicado
-			axios.get(`${url}partida/${campeonatoId}`, config)
+			axios.get(`${url}partida/get/${campeonatoId}`, config)
 				.then((response) => {
 					// Renderiza as partidas no contêiner de partidas
 					const partidasContainer = document.getElementById("partidasContainer");
@@ -214,7 +214,7 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 											<div class="painelws_Btn_text">Opções</div>
 										</button>
 										<div class="dropdown-content">
-											<a id="editPartida${partida.idPartida}" href="/painelws/campeonato/${partida.idPartida}"><i class="ri-pencil-line"></i>Editar</a>
+											<a id="editPartida${partida.idPartida}" href="/painelws/campeonato/${campeonatoId}/partida/${partida.idPartida}/edit"><i class="ri-pencil-line"></i>Editar</a>
 											
 											${anchorsHTML}
 											
@@ -310,12 +310,41 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 							// Adiciona ouvintes de eventos após renderizar os elementos
 							addEventListenersToTimesContainer();
 							renderJogadores(response.data[0].idTime);
-						})
-						.catch((error) => {
+						}).catch((error) => {
 							console.error(error);
+							if (error.response) {
+								const { data, status } = error.response;
+								Swal.fire({
+									icon: "error",
+									title: `${data.error}`,
+									text: `Erro ${status} ` || "Erro desconhecido",
+								});
+							} else if (error.request) {
+								// A solicitação foi feita, mas não houve resposta do servidor
+								console.error("Sem resposta do servidor");
+							} else {
+								// Algo aconteceu durante a configuração da solicitação que acionou um erro
+								console.error("Erro na configuração da solicitação", error.message);
+							}
 						});
 					}
-				})
+				}).catch((error) => {
+					console.error(error);
+					if (error.response) {
+						const { data, status } = error.response;
+						Swal.fire({
+							icon: "error",
+							title: `${data.error}`,
+							text: `Erro ${status} ` || "Erro desconhecido",
+						});
+					} else if (error.request) {
+						// A solicitação foi feita, mas não houve resposta do servidor
+						console.error("Sem resposta do servidor");
+					} else {
+						// Algo aconteceu durante a configuração da solicitação que acionou um erro
+						console.error("Erro na configuração da solicitação", error.message);
+					}
+				});
 		}
 });
 // ouvinte para elementos com ID partidasContainer, renderizado pelo handlebars
@@ -340,7 +369,23 @@ document.getElementById("timesContainer").addEventListener("click", async functi
 				delTime(timeElement, timeId).then((response) => {
 				})
 			}
-		  });
+		  }).catch((error) => {
+			console.error(error);
+			if (error.response) {
+				const { data, status } = error.response;
+				Swal.fire({
+					icon: "error",
+					title: `${data.error}`,
+					text: `Erro ${status} ` || "Erro desconhecido",
+				});
+			} else if (error.request) {
+				// A solicitação foi feita, mas não houve resposta do servidor
+				console.error("Sem resposta do servidor");
+			} else {
+				// Algo aconteceu durante a configuração da solicitação que acionou um erro
+				console.error("Erro na configuração da solicitação", error.message);
+			}
+		});
 	}
 
 	// Verifica se o clique foi em um item de campeonato (excluindo botões de opções),
@@ -390,7 +435,23 @@ document.getElementById("jogadoresContainer").addEventListener("click", async fu
 					return false;
 				})
 			}
-		  });
+		  }).catch((error) => {
+			console.error(error);
+			if (error.response) {
+				const { data, status } = error.response;
+				Swal.fire({
+					icon: "error",
+					title: `${data.error}`,
+					text: `Erro ${status} ` || "Erro desconhecido",
+				});
+			} else if (error.request) {
+				// A solicitação foi feita, mas não houve resposta do servidor
+				console.error("Sem resposta do servidor");
+			} else {
+				// Algo aconteceu durante a configuração da solicitação que acionou um erro
+				console.error("Erro na configuração da solicitação", error.message);
+			}
+		});
 	}
 });
 // Função para adicionar ouvintes de eventos ao partidasContainer, renderizado pelo JS - Front
@@ -476,10 +537,58 @@ function addEventListenersToPartidasContainer(){
 								}).then(() => {
 									// Redireciona para a página inicial do cms após o tempo definido
 									window.location.href = `/painelws`;
-								});
-							})
+								}).catch((error) => {
+									console.error(error);
+									if (error.response) {
+										const { data, status } = error.response;
+										Swal.fire({
+											icon: "error",
+											title: `${data.error}`,
+											text: `Erro ${status} ` || "Erro desconhecido",
+										});
+									} else if (error.request) {
+										// A solicitação foi feita, mas não houve resposta do servidor
+										console.error("Sem resposta do servidor");
+									} else {
+										// Algo aconteceu durante a configuração da solicitação que acionou um erro
+										console.error("Erro na configuração da solicitação", error.message);
+									}
+								});;
+							}).catch((error) => {
+								console.error(error);
+								if (error.response) {
+									const { data, status } = error.response;
+									Swal.fire({
+										icon: "error",
+										title: `${data.error}`,
+										text: `Erro ${status} ` || "Erro desconhecido",
+									});
+								} else if (error.request) {
+									// A solicitação foi feita, mas não houve resposta do servidor
+									console.error("Sem resposta do servidor");
+								} else {
+									// Algo aconteceu durante a configuração da solicitação que acionou um erro
+									console.error("Erro na configuração da solicitação", error.message);
+								}
+							});
 						}
-					  });
+					  }).catch((error) => {
+						console.error(error);
+						if (error.response) {
+							const { data, status } = error.response;
+							Swal.fire({
+								icon: "error",
+								title: `${data.error}`,
+								text: `Erro ${status} ` || "Erro desconhecido",
+							});
+						} else if (error.request) {
+							// A solicitação foi feita, mas não houve resposta do servidor
+							console.error("Sem resposta do servidor");
+						} else {
+							// Algo aconteceu durante a configuração da solicitação que acionou um erro
+							console.error("Erro na configuração da solicitação", error.message);
+						}
+					});
 				} catch (error) {
 					console.error(error);
 				}
@@ -508,7 +617,23 @@ function addEventListenersToTimesContainer() {
 					delTime(timeElement, timeId).then((response) => {
 					})
 				}
-			  });
+			  }).catch((error) => {
+				console.error(error);
+				if (error.response) {
+					const { data, status } = error.response;
+					Swal.fire({
+						icon: "error",
+						title: `${data.error}`,
+						text: `Erro ${status} ` || "Erro desconhecido",
+					});
+				} else if (error.request) {
+					// A solicitação foi feita, mas não houve resposta do servidor
+					console.error("Sem resposta do servidor");
+				} else {
+					// Algo aconteceu durante a configuração da solicitação que acionou um erro
+					console.error("Erro na configuração da solicitação", error.message);
+				}
+			});
 		}
 	
 		// Verifica se o clique foi em um item de campeonato (excluindo botões de opções),
@@ -561,7 +686,23 @@ function addEventListenersTojogadoresContainer() {
 						return false;
 					})
 				}
-			  });
+			  }).catch((error) => {
+				console.error(error);
+				if (error.response) {
+					const { data, status } = error.response;
+					Swal.fire({
+						icon: "error",
+						title: `${data.error}`,
+						text: `Erro ${status} ` || "Erro desconhecido",
+					});
+				} else if (error.request) {
+					// A solicitação foi feita, mas não houve resposta do servidor
+					console.error("Sem resposta do servidor");
+				} else {
+					// Algo aconteceu durante a configuração da solicitação que acionou um erro
+					console.error("Erro na configuração da solicitação", error.message);
+				}
+			});
 		}
 	});
 }
@@ -701,7 +842,6 @@ async function delTime(timeElement,timeId) {
 };
 // Função para requisição para remover o jogador
 async function deljogador(jogadorElement,jogadorId) {
-console.log("entrou no deljogador");
 	var token = localStorage.getItem("token");
 				var config = {
 					headers: {

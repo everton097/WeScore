@@ -25,7 +25,7 @@ exports.getALLDatas = async (req,res) => {
                 }
             })
             cont = 0;
-            response = await api.get(`/partida/${idcamp}`, config)
+            response = await api.get(`/partida/get/${idcamp}`, config)
             partidas = response.data
 
             response = await api.get(`/time_campeonato/${idcamp}`, config)

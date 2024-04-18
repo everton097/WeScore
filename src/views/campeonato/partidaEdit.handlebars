@@ -1,0 +1,75 @@
+<section class="containePainelws">
+    <div class="cardForm">
+        <span id="AdicionarTimeCamp" class="title" data-campeonato-id="{{campeonato.idCampeonato}}">Atualizar partida {{partida.rodada}} do campeonato {{campeonato.nomeCampeonato}}</span>
+
+        <form id="createPartidaForm" enctype="multipart/form-data" class="form" data-partida-id="{{partida.idPartida}}">
+            <div class="group">
+                <div id="timeSelectorContainer" class="timeselector_container">
+                    <label for="timesCadastrados">Times cadastrados para inclusão</label>
+					{{#if time.length}}
+						{{#each time}}
+                            {{#if active}}
+								<div id="{{idTime}}" class="timeselector cardTimeSelect time_active" data-time-id="{{idTime}}">
+							{{else}}
+								<div id="{{idTime}}" class="timeselector cardTimeSelect" data-time-id="{{idTime}}">
+							{{/if}}
+								
+								<div class="timeselector_image">
+									<img 
+										src="http://localhost:3001/public/upload/img/time/{{logoTime}}"
+										alt="logo do time"
+									/></div>
+								<div class="timeselector_content">
+									<div class="timeselector_name">
+										<p class="timeselector_nameTime">{{nomeTime}}</p>
+									</div>
+								</div>
+							</div>
+						{{/each}}
+					{{else}}
+						<p>Nenhum time cadastrado anteriormente.</p>
+					{{/if}}
+				</div>
+            </div>
+
+            <div class="group">
+                    <div id="cadrastroNovoPartida" class="timeselector_container">
+                        <label for="cadastrarNovoPartida">Times</label>
+                        <div id="TimesNewPartida">
+                            <div id="TimesNewPartida{{partida.idTime1}}" class="timeselector cardTimeSelect" data-time-id="{{partida.idTime1}}">
+                                <div class="timeselector_image">
+                                    <img src="http://localhost:3001/public/upload/img/time/{{partida.logoTime1}}" alt="logo do time {{partida.nomeTime1}}">
+                                </div>
+                                <div class="timeselector_content">
+                                    <div class="timeselector_name">
+                                        <p class="timeselector_nameTime">{{partida.nomeTime1}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                                <h4>VS</h4>
+                            <div id="TimesNewPartida{{partida.idTime2}}" class="timeselector cardTimeSelect" data-time-id="{{partida.idTime2}}">
+                                <div class="timeselector_image">
+                                    <img src="http://localhost:3001/public/upload/img/time/{{partida.logoTime2}}" alt="logo do time {{partida.nomeTime2}}">
+                                </div>
+                                <div class="timeselector_content">
+                                    <div class="timeselector_name">
+                                        <p class="timeselector_nameTime">{{partida.nomeTime1}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group">
+                            <input name="qtdeSets" placeholder="" type="text" value="{{partida.qtdeSets}}" required="">
+                            <label for="qtdeSets">Quantidade de Sets</label>
+                    </div>
+            </div>
+
+
+        </form>
+        <button id="editPartidaForm" type="submit">Salvar</button>
+    </div>
+</section>
+
+<!-- Scripts do formulário curso -->
+<script src="/js/campeonatoPartidaEdit.js"></script>
