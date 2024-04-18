@@ -36,7 +36,12 @@ document.getElementById("timeSelectorContainer").addEventListener("click", async
 		// Verificar se o usuário está tentando selecionar um terceiro time
 		if (selectedTimes.length >= 2 && !isSelected) {
 			// Exibir mensagem de erro
-			alert("Você já selecionou dois times. Não é possível selecionar mais.");
+			Swal.fire({
+				icon: "error",
+				title: `Você já selecionou dois times`,
+				text: `Não é possível selecionar mais.`,
+				timer: 1500,
+			});
 			return;
 		}
 
