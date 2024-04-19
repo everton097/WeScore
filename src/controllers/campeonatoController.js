@@ -147,3 +147,16 @@ exports.partidaEditCampeonato = async (req,res) => {
         res.status(500).json({ error: 'Erro ao buscar datas.' });
     }
 }
+exports.editCampeonato = async (req,res) => {
+    const user = res.locals.user
+    const { idCampeonato } = req.params;
+    // Configurar o cabeçalho com a autorização do token
+    const token = await req.session.token
+    const config = {
+        headers: { Authorization: `Bearer ${token}` }
+    }
+    // Requisição para retorno da partida a ser editada.
+    let response = await api.get(`/campeonato/${idCampeonato}`, config)
+    const campeonato = response.data
+    res.render('campeonato/edit', { campeonato, user, spaUrl, apiUrl, layout : 'painelws'})
+}

@@ -25,7 +25,6 @@
 	display: flex;
     position: relative;
 	align-items: flex-end;
-	/* align-items: center; */
 	justify-content: center;
 }
 .user_image img {

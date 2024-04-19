@@ -14,5 +14,6 @@ routesCampeonato.get('/add', campeonatoController.addCampeonato)
 routesCampeonato.get('/:idCampeonato/time/add', campeonatoController.timeAddCampeonato)
 routesCampeonato.get('/:idCampeonato/partida/add', campeonatoController.partidaAddCampeonato)
 routesCampeonato.get('/:idCampeonato/partida/:idpartida/edit', campeonatoController.partidaEditCampeonato)
+routesCampeonato.get('/:idCampeonato/edit', campeonatoController.editCampeonato)
 
 module.exports = routesCampeonato

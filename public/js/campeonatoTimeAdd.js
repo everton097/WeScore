@@ -199,39 +199,6 @@ document.querySelector('#saveCampeonatoForm').addEventListener('click', function
         });
     }
   }
-
- 
-/*   // Fazer uma solicitação POST para criar um novo banner
-  axios.post(`${url}campeonato/create`, formData, config)
-  .then(response => {            
-      Swal.fire({
-          icon: 'success',
-          title: 'Campeonato criado com sucesso',
-          showConfirmButton: false,
-          timer: 1500
-      }).then(() => {
-          // Após o tempo definido (1500 ms), redirecione para a página cursos
-          window.location.href = `../campeonato/`;
-      });
-  })
-  .catch(error => {
-      console.error(error);
-      if (error.response) {
-          const { data, status } = error.response;
-          Swal.fire({
-              icon: 'error',
-              title: `${data.message}`,
-              text: `Erro ${status} ` || 'Erro desconhecido',
-          });
-      } else if (error.request) {
-          // A solicitação foi feita, mas não houve resposta do servidor
-          console.error('Sem resposta do servidor');
-      } else {
-          // Algo aconteceu durante a configuração da solicitação que acionou um erro
-          console.error('Erro na configuração da solicitação', error.message);
-      }
-  }); */
-
 });
 
 document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {

@@ -1,0 +1,24 @@
+<section class="containePainelws">
+    <div class="cardForm">
+        <span class="title">Editar campeonato {{campeonato.nomeCampeonato}}</span>
+
+        <form id="createCampeonatoForm" enctype="multipart/form-data" class="form" data-campeonato-id="{{campeonato.idCampeonato}}">
+            <div class="group">
+                <input name="nomeCampeonato" placeholder="" type="text" value="{{campeonato.nomeCampeonato}}" required="">
+                <label for="nomeCampeonato">Nome</label>
+            </div>
+
+            <div class="group">
+                <div class="drop-zone custum-file-upload">
+                    <input id="file" type="file" name="logoCampeonato" class="drop-zone__input">
+                    <div class="drop-zone__thumb" style="background-image: url('http://localhost:3001/public/upload/img/campeonato/{{campeonato.logoCampeonato}}')" data-label="{{campeonato.logoCampeonato}}" data-image-name="{{campeonato.logoCampeonato}}"></div>
+                </div>
+            </div> 
+
+        </form>
+        <button id="EditCampeonatoForm" type="submit">Salvar</button>
+    </div>
+</section>
+
+<!-- Scripts do formulário curso -->
+<script src="/js/campeonatoEdit.js"></script>
