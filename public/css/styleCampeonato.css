@@ -191,8 +191,10 @@
 	height: 100%;
 	border-radius: 5px;
 	overflow: hidden;
-	background-color: transparent;
-	background-size: cover;
+	background: rgb(7, 70, 114, 0.2);
+	background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 	position: relative;
   }
   
@@ -206,6 +208,7 @@
 	color: #fff;
 	background: var(--nav-bar-a-color-border-solid);
 	font-size: 14px;
+  opacity: 0.85;
 	text-align: center;
   }
   .drop-zone__prompt{
