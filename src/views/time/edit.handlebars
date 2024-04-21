@@ -1,0 +1,48 @@
+<section class="containePainelws">
+	<div class="cardForm">
+		<span
+			id="AdicionarTimeCamp"
+			class="title"
+			data-time-id="{{time.idTime}}"
+		>Editar time {{time.nomeTime}}</span>
+
+		<form
+			id="editarTimeForm"
+			enctype="multipart/form-data"
+			class="form"
+			data-time-id="{{time.idTime}}"
+		>
+		<div class="group">
+						<input
+							name="nomeTime"
+							placeholder=""
+							type="text"
+							value="{{time.nomeTime}}"
+							required=""
+						/>
+						<label for="nomeTime">Nome</label>
+					</div>
+					<div class="group">
+						<div class="drop-zone custum-file-upload">
+							<input
+								id="file"
+								type="file"
+								name="logoTime"
+								class="drop-zone__input"
+							/>
+							<div
+								class="drop-zone__thumb"
+								style="background-image: url('http://localhost:3001/public/upload/img/time/{{time.logoTime}}')"
+								data-label="{{time.logoTime}}"
+								data-image-name="{{time.logoTime}}"
+							></div>
+						</div>
+					</div>
+
+		</form>
+		<button id="saveTimeForm" type="submit">Salvar</button>
+	</div>
+</section>
+
+<!-- Scripts do formulário curso -->
+<script src="/js/campeonatoTimeAdd.js"></script>

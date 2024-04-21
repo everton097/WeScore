@@ -299,7 +299,7 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 													<div class="painelws_Btn_text">Opções</div>
 												</button>
 												<div class="dropdown-content">
-													<a id="editTime${time.idTime}" href="/painelws/times/${time.idTime}"><i class="ri-pencil-line"></i>Editar</a>
+													<a id="editTime${time.idTime}" href="/painelws/time/${time.idTime}/edit"><i class="ri-pencil-line"></i>Editar</a>
 													<a id="delTime${time.idTime}" ><i class="ri-delete-bin-line"></i>Remover</a>
 												</div>
 										</div>
