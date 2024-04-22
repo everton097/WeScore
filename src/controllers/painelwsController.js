@@ -54,3 +54,15 @@ exports.getALLDatas = async (req,res) => {
         console.log("PainelWS Token: "+req.session.token)
     }
 }
+
+exports.pageSettings = async (req,res) => {
+    res.render('settings/settings', {layout : 'painelws'})
+
+}
+exports.pageSettingsProfile = async (req,res)=> {
+    res.render('settings/profile', {layout: 'painelws'})
+}
+
+exports.pageSettingsBanner = async (req,res)=> {
+    res.render('settings/banners', {layout: 'painelws'})
+}
