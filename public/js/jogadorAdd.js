@@ -5,20 +5,6 @@ function validateForm(formData) {
   const telefone = formData.get("telefone");
   const numeroCamiseta = formData.get("numeroCamiseta");
   const idTime = formData.get("idTime");
-  console.log(
-    "nomeJogador: ",
-    nomeJogador,
-    "sobrenome: ",
-    sobrenome,
-    "cpf: ",
-    cpf,
-    "telefone: ",
-    telefone,
-    "numeroCamiseta: ",
-    numeroCamiseta,
-    "idTime: ",
-    idTime
-  );
 
   // Validar campos preenchidos. Se algum campo estiver vazio, exibir mensagem de erro
   if (
@@ -81,6 +67,11 @@ cpfInput.addEventListener("input", function (event) {
   // Remove todos os caracteres não numéricos
   let cpfNumerico = cpf.replace(/\D/g, "");
 
+  // Limita a entrada a 11 dígitos
+  if (cpfNumerico.length > 11) {
+    cpfNumerico = cpfNumerico.slice(0, 11);
+  }
+  
   // Formata o CPF conforme o número de dígitos inseridos
   let cpfFormatado;
   if (cpfNumerico.length <= 3) {
@@ -95,7 +86,7 @@ cpfInput.addEventListener("input", function (event) {
       "$1.$2.$3-$4"
     );
   }
-
+console.log(cpfNumerico.length);
   // Atualiza o valor do input com o CPF formatado
   event.target.value = cpfFormatado;
 });
