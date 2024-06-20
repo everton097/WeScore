@@ -160,3 +160,16 @@ exports.editTime = async (req,res) => {
     const time = response.data[0]
     res.render('time/edit', { time, user, spaUrl, apiUrl, layout : 'painelws'})
 }
+exports.jogadorTimeAddByID = async (req,res) => {
+    const user = res.locals.user
+    const { idTime } = req.params;
+    // Configurar o cabeçalho com a autorização do token
+    const token = await req.session.token
+    const config = {
+        headers: { Authorization: `Bearer ${token}` }
+    }
+    // Requisição para retorno da partida a ser editada.
+    let response = await api.get(`/jogador/all`, config)
+    const jogador = response.data[0]
+    res.render('jogador/add', { jogador,idTime, user, spaUrl, apiUrl, layout : 'painelws'})
+}

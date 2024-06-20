@@ -1,5 +1,4 @@
-
-console.log("entrou no campeonatoTimeAdd.js");// Função de validação do formulário
+// Função de validação do formulário
 function validateForm(formData) {
     const name = formData.get('nomeTime');
     const file = formData.get('logoTime');

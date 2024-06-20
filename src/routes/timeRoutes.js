@@ -15,5 +15,6 @@ routesTime.get('/:idCampeonato/time/add', timeController.timeAddCampeonato)
 routesTime.get('/:idCampeonato/partida/add', timeController.partidaAddCampeonato)
 routesTime.get('/:idCampeonato/partida/:idpartida/edit', timeController.partidaEditCampeonato)
 routesTime.get('/:idTime/edit', timeController.editTime)
+routesTime.get('/:idTime/jogador/add', timeController.jogadorTimeAddByID)
 
 module.exports = routesTime
