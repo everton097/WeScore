@@ -246,12 +246,19 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 						const noPartidaMessage = document.createElement("p");
 						noPartidaMessage.innerHTML = "Nenhum time disponível.";
 						timesContainer.appendChild(noPartidaMessage);
+						// Obtém uma referência ao elemento
+						const jogadorLinkElement = document.getElementById("buttonJogadorAdd");
+						// Modifica o atributo href
+						jogadorLinkElement.href = ``;
 						// Renderiza aviso de 'nenhum jogadore' no contêiner de jogadores
 						const jogadoresContainer = document.getElementById("jogadoresContainer");
 						jogadoresContainer.innerHTML = ""; // Limpe o conteúdo anterior
 						const nojogadoreMessage = document.createElement("p");
 						nojogadoreMessage.innerHTML = "Nenhum jogador disponível.";
+						const nojogadoreMessage2 = document.createElement("p");
+						nojogadoreMessage2.innerHTML = "Adicione um time para incluir jogador.";
 						jogadoresContainer.appendChild(nojogadoreMessage);
+						jogadoresContainer.appendChild(nojogadoreMessage2);
 					}else{
 						const idtimes = response.data.idtime
 						// Fazer uma solicitação GET para buscar os times do campeonato clicado

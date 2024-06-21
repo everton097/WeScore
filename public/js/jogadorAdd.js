@@ -71,7 +71,7 @@ cpfInput.addEventListener("input", function (event) {
   if (cpfNumerico.length > 11) {
     cpfNumerico = cpfNumerico.slice(0, 11);
   }
-  
+
   // Formata o CPF conforme o número de dígitos inseridos
   let cpfFormatado;
   if (cpfNumerico.length <= 3) {
@@ -86,7 +86,6 @@ cpfInput.addEventListener("input", function (event) {
       "$1.$2.$3-$4"
     );
   }
-console.log(cpfNumerico.length);
   // Atualiza o valor do input com o CPF formatado
   event.target.value = cpfFormatado;
 });

@@ -13,5 +13,6 @@ routesJogador.get('/', jogadorController.getALLDatas)
 routesJogador.get('/add', jogadorController.addCampeonato)
 routesJogador.get('/:idCampeonato/time/add', jogadorController.timeAddCampeonato)
 routesJogador.get('/:idCampeonato/partida/add', jogadorController.partidaAddCampeonato)
+routesJogador.get('/:idJogador', jogadorController.editJogadorByID)
 
 module.exports = routesJogador
