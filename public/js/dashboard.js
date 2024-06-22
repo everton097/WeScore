@@ -410,6 +410,7 @@ document.getElementById("timesContainer").addEventListener("click", async functi
 
 		// Modifica o atributo href
 		jogadorLinkElement.href = `/painelws/time/${timeId}/jogador/add`;
+		jogadorLinkElement.dataset.timeId=timeId;
 
 		renderJogadores(timeId);
 	}
@@ -420,6 +421,8 @@ document.getElementById("jogadoresContainer").addEventListener("click", async fu
 	// Obtenha o ID do jogador clicado
 	const jogadorId = event.target.closest(".cardDashboard_division").dataset.jogadorId;
 	const jogadorElement = event.target.closest(".cardDashboard_division");
+	const jogadorTimeID = document.getElementById("buttonJogadorAdd").dataset.timeId;
+	console.log(jogadorTimeID);
 	// Verifica se o clique foi no botão de Deletar
 	if (event.target.id === `delJogador${jogadorId}`) {
 		// Fazer uma solicitação PUT para atualizar o status do jogador para "Em Andamento"
@@ -431,7 +434,7 @@ document.getElementById("jogadoresContainer").addEventListener("click", async fu
 			confirmButtonText: "Sim, remova!"
 		  }).then((result) => {
 			if (result.isConfirmed) {
-				deljogador(jogadorElement, jogadorId).then((response) => {
+				deljogador(jogadorElement, jogadorId, jogadorTimeID).then((response) => {
 					Swal.fire({
 						icon: 'success',
 						title: 'Jogador removido com sucesso',
@@ -439,6 +442,7 @@ document.getElementById("jogadoresContainer").addEventListener("click", async fu
 						showConfirmButton: false,
 						timer: 1500,
 					});
+					window.location.href = `/painelws/`;
 					return false;
 				})
 			}
@@ -658,6 +662,7 @@ function addEventListenersToTimesContainer() {
 
 			// Modifica o atributo href
 			jogadorLinkElement.href = `/painelws/time/${timeId}/jogador/add`;
+			jogadorLinkElement.dataset.timeId=timeId;
 
 			renderJogadores(timeId);
 		}
@@ -670,6 +675,7 @@ function addEventListenersTojogadoresContainer() {
 		// Obtenha o ID do jogador clicado
 		const jogadorId = event.target.closest(".cardDashboard_division").dataset.jogadorId;
 		const jogadorElement = event.target.closest(".cardDashboard_division");
+		const jogadorTimeID = document.getElementById("buttonJogadorAdd").dataset.timeId;
 	
 		// Verifica se o clique foi no botão de Deletar
 		if (event.target.id === `delJogador${jogadorId}`) {
@@ -682,7 +688,7 @@ function addEventListenersTojogadoresContainer() {
 				confirmButtonText: "Sim, remova!"
 			  }).then((result) => {
 				if (result.isConfirmed) {
-					deljogador(jogadorElement, jogadorId).then((response) => {
+					deljogador(jogadorElement, jogadorId, jogadorTimeID).then((response) => {
 						Swal.fire({
 							icon: 'success',
 							title: 'Jogador removido com sucesso',
@@ -690,6 +696,7 @@ function addEventListenersTojogadoresContainer() {
 							showConfirmButton: false,
 							timer: 1500,
 						});
+						window.location.href = `/painelws/`;
 						return false;
 					})
 				}
@@ -732,6 +739,7 @@ async function renderJogadores(timeId) {
 
 	// Modifica o atributo href
 	jogadorLinkElement.href = `/painelws/time/${timeId}/jogador/add`;
+	jogadorLinkElement.dataset.timeId=timeId;
 	//busca o token armazenado no login
 	var token = localStorage.getItem("token");
 
@@ -848,14 +856,14 @@ async function delTime(timeElement,timeId) {
 	});
 };
 // Função para requisição para remover o jogador
-async function deljogador(jogadorElement,jogadorId) {
+async function deljogador(jogadorElement,jogadorId,jogadorTimeID) {
 	var token = localStorage.getItem("token");
 				var config = {
 					headers: {
 						Authorization: `Bearer ${token}`,
 					},
 				};
-	await axios.delete(`${url}jogador/${jogadorId}`, config)
+	await axios.put(`${url}jogador/disenroll`,{idJogador: jogadorId, idTime: jogadorTimeID}, config)
 	.then((response) => {
 		// Remover o jogador
 		jogadorElement.parentNode.removeChild(jogadorElement);

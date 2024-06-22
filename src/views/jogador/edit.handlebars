@@ -2,7 +2,7 @@
 	<div class="cardForm">
 		<span class="title">Editar Jogador</span>
 
-		<form id="editJogadorForm" class="form" data-time-id="{{idTime}}">
+		<form id="editJogadorForm" class="form" data-time-id="{{jogador.idTime}}" data-jogador-id="{{jogador.idJogador}}">
 			<div class="group">
 				<input name="nomeJogador" id="nome" placeholder="" type="text" value="{{jogador.nomeJogador}}" required="" />
 				<label for="nomeJogador">Nome</label>
@@ -26,9 +26,9 @@
 			</div>
 
 		</form>
-		<button id="EditJogadorForm" type="submit">Salvar</button>
+		<button id="saveJogadorForm" type="submit">Salvar</button>
 	</div>
 </section>
 
 <!-- Scripts do formulário curso -->
-<script src="/js/jogadorAdd.js"></script>
+<script src="/js/jogadorEdit.js"></script>
