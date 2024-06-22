@@ -47,7 +47,7 @@ document.getElementById("timeSelectorContainer").addEventListener("click", async
     timeElement.classList.add("time_active");
   }
   // Obter formulário de novo time
-  const formCadastroNovoTime = document.getElementById('cadrastroNovoTime');
+  const formCadastroNovoTime = document.getElementById('subForm');
   // Obter todos os elementos com a classe time_active
   const timeActiveElements = document.querySelectorAll('.time_active');
   // Verifica se tem algum time selecionado e impede a interação com o formulário de novo time

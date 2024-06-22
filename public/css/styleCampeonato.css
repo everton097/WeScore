@@ -49,7 +49,8 @@
 
 .form .group input,
 .form .group textarea,
-.form .group .timeselector_container {
+.form .group .timeselector_container,
+.form .group .jogadorselector_container {
   padding: 10px;
   border-radius: 5px;
   border: 1px solid rgba(0, 0, 0, 0.2);
@@ -84,7 +85,8 @@
 .form .group .custum-file-upload:hover,
 .form .group input:hover,
 .form .group textarea:hover,
-.form .group .timeselector_container:hover {
+.form .group .timeselector_container:hover,
+.form .group .jogadorselector_container:hover{
   border-color: var(--input-color-transparency);
   background: #ecf0f5;
 }
@@ -107,6 +109,7 @@
   font-size: 14px;
 }
 .form .group .timeselector_container:hover label:not(.form .group .timeselector_container .group label),
+.form .group .jogadorselector_container:hover label:not(.form .group .jogadorselector_container .group label),
 .form .group .groupPartidaForm #partidaLabel:hover label{
   background-color: #fff;
   color: var(--input-color-transparency);
@@ -221,12 +224,14 @@
   #createCampeonatoForm{
     gap: 10px;
   }
-  .timeselector_container{
+  .timeselector_container,
+  .jogadorselector_container{
     display: flex;
     gap: 5px;
     overflow-y: auto;
   }
-  #cadrastroNovoTime.timeselector_container{
+  #subForm.timeselector_container,
+  #subForm.jogadorselector_container{
     flex-direction: column;
   }
   #cadrastroNovoPartida.timeselector_container{
@@ -241,11 +246,14 @@
     align-items: center;
     flex-direction: row;
   }
-  #cadrastroNovoTime.timeselector_container .group input,
-  #cadrastroNovoTime.timeselector_container .group .custum-file-upload{
+  #subForm.timeselector_container .group input,
+  #subForm.jogadorselector_container .group input,
+  #subForm.timeselector_container .group .custum-file-upload,
+  #subForm.jogadorselector_container .group .custum-file-upload{
     margin: 0px;
   }
-  #cadrastroNovoTime.timeselector_container .group {
+  #subForm.timeselector_container .group,
+  #subForm.jogadorselector_container .group{
     margin-top: 8px;
     margin-bottom: 5px;
   }

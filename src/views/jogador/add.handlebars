@@ -4,25 +4,54 @@
 
 		<form id="createJogadorForm" class="form" data-time-id="{{idTime}}">
 			<div class="group">
-				<input name="nomeJogador" id="nome" placeholder="" type="text" required="" />
-				<label for="nomeJogador">Nome</label>
-			</div>
-			<div class="group">
-				<input name="sobrenome" id="sobrenome" placeholder="" type="text" required="" />
-				<label for="sobrenome">Sobrenome</label>
-			</div>
-			<div class="group">
-				<input name="cpf" id="cpf" placeholder="" type="text" required="" />
-				<label for="cpf">CPF</label>
-			</div>
-			<div class="group">
-				<input name="telefone" id="telefone" type="text" placeholder="" required=""/>
-				<label for="telefone">Telefone</label>
+				<div id="timeSelectorContainer" class="timeselector_container">
+					<label for="timesCadastrados">Jogador cadastrados para inclusão</label>
+					{{#if time.length}}
+					{{#each time}}
+					<div id="{{idTime}}" class="timeselector cardTimeSelect" data-time-id="{{idTime}}">
+						<div class="timeselector_image">
+							<img src="http://localhost:3001/public/upload/img/time/{{logoTime}}" alt="logo do time" />
+						</div>
+						<div class="timeselector_content">
+							<div class="timeselector_name">
+								<p class="timeselector_nameTime">{{nomeTime}}</p>
+							</div>
+						</div>
+					</div>
+					{{/each}}
+					{{else}}
+					<p>Nenhum jogador cadastrado sem time.</p>
+					{{/if}}
+				</div>
 			</div>
 
 			<div class="group">
-				<input name="numeroCamiseta" placeholder="" type="number" min="0" max="99" required="" />
-				<label for="numeroCamiseta">Número da Camiseta</label>
+				<div id="subForm" class="jogadorselector_container">
+					<label for="cadastrarNovoTime">Cadastrar novo Jogador</label>
+
+					<div class="group">
+						<input name="nomeJogador" id="nome" placeholder="" type="text" required="" />
+						<label for="nomeJogador">Nome</label>
+					</div>
+					<div class="group">
+						<input name="sobrenome" id="sobrenome" placeholder="" type="text" required="" />
+						<label for="sobrenome">Sobrenome</label>
+					</div>
+					<div class="group">
+						<input name="cpf" id="cpf" placeholder="" type="text" required="" />
+						<label for="cpf">CPF</label>
+					</div>
+					<div class="group">
+						<input name="telefone" id="telefone" type="text" placeholder="" required="" />
+						<label for="telefone">Telefone</label>
+					</div>
+
+					<div class="group">
+						<input name="numeroCamiseta" placeholder="" type="number" min="0" max="99" required="" />
+						<label for="numeroCamiseta">Número da Camiseta</label>
+					</div>
+
+				</div>
 			</div>
 
 		</form>
