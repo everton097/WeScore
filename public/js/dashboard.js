@@ -163,6 +163,32 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 				console.error(error);
 			}
 		}
+		// Verifica se o clique foi no botão de Finalizar
+		else if (event.target.id === `finish${campeonatoId}`) {
+			// Fazer uma solicitação PUT para atualizar o status do campeonato para "Em Andamento"
+			Swal.fire({
+				title: "Tem certeza?",
+				text: "Você não poderá reverter essa ação!",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonText: "Sim, finalizar!"
+			  }).then((result) => {
+				if (result.isConfirmed) {
+					finishCampeonato(campeonatoElement, campeonatoId).then((response) => {
+						Swal.fire({
+							icon: 'success',
+							title: 'Campeonato finalizado com sucesso',
+							showConfirmButton: false,
+							showConfirmButton: false,
+							timer: 1500,
+						}).then(() => {
+							// Redireciona para a página inicial do cms após o tempo definido
+							window.location.href = `/painelws`;
+						});
+					})
+				}
+			  });
+		}
 		// Verifica se o clique foi no botão de Deletar
 		else if (event.target.id === `del${campeonatoId}`) {
 			// Fazer uma solicitação PUT para atualizar o status do campeonato para "Em Andamento"
@@ -481,7 +507,7 @@ document.getElementById("jogadoresContainer").addEventListener("click", async fu
 						showConfirmButton: false,
 						timer: 1500,
 					});
-					window.location.href = `/painelws/`;
+					window.location.href = `/painelws`;
 					return false;
 				})
 			}
@@ -836,6 +862,37 @@ async function renderJogadores(timeId) {
 		}
 	})
 }
+// Função para requisição para finalizar o campeonato
+async function finishCampeonato(campeonatoElement,campeonatoId) {
+	var token = localStorage.getItem("token");
+				var config = {
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				};
+	await axios.put(`${url}campeonato/status/${campeonatoId}`, config)
+	.then((response) => {
+		// Remover o time
+		timeElement.parentNode.removeChild(timeElement);
+	})
+	.catch((error) => {
+		console.error(error);
+		if (error.response) {
+            const { data, status } = error.response;
+            Swal.fire({
+                icon: 'error',
+                title: `${data.message}`,
+                text: `Erro ${status} ` || 'Erro desconhecido',
+            });
+        } else if (error.request) {
+            // A solicitação foi feita, mas não houve resposta do servidor
+            console.error('Sem resposta do servidor');
+        } else {
+            // Algo aconteceu durante a configuração da solicitação que acionou um erro
+            console.error('Erro na configuração da solicitação', error.message);
+        }
+	});
+};
 // Função para requisição para remover o campeonato
 async function delCampeonato(campeonatoElement,campeonatoId) {
 	var token = localStorage.getItem("token");
