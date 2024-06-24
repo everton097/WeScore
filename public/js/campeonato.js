@@ -63,8 +63,8 @@ document.querySelector('#saveCampeonatoForm').addEventListener('click', function
                 showConfirmButton: false,
                 timer: 1500
             }).then(() => {
-                // Após o tempo definido (1500 ms), redirecione para a página cursos
-                window.location.href = `../campeonato/`;
+                // Após o tempo definido (1500 ms), redirecione para a página painelws
+                window.location.href = `/painelws/`;
             });
         })
         .catch(error => {

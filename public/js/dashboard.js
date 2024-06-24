@@ -39,14 +39,53 @@ document.getElementById("buttonTimeAdd").addEventListener("click", async functio
 		Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'Nenhum campeonato selecionado!',
+			html: `
+			<div>Nenhum <strong>campeonato</strong> selecionado!</div>
+			<div>Adicione um campeonato para incluir <strong>time</strong>.</div>
+		`,
         });
         return false;
 	}else{
 		window.location.href = this.href
 	}}
 );
-
+document.getElementById("buttonPartidaAdd").addEventListener("click", async function (event) {
+	// Impede o comportamento padrão do link
+    event.preventDefault();
+	// Obtenha o ID do campeonato clicado
+	const buttonPartidaAddId = this.dataset.campeonatoId;
+	if (buttonPartidaAddId == 0) {
+		Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+			html: `
+			<div>Nenhum <strong>campeonato</strong> selecionado!</div>
+			<div>Adicione um campeonato para incluir uma <strong>partida</strong>.</div>
+		`,
+        });
+        return false;
+	}else{
+		window.location.href = this.href
+	}}
+);
+document.getElementById("buttonJogadorAdd").addEventListener("click", async function (event) {
+	// Impede o comportamento padrão do link
+    event.preventDefault();
+	// Obtenha o ID do campeonato clicado
+	const buttonJogadorAddId = this.dataset.timeId;
+	if (buttonJogadorAddId == 0) {
+		Swal.fire({
+            icon: 'error',
+            title: 'Oops...',html: `
+			<div>Nenhum <strong>time</strong> selecionado!</div>
+			<div>Adicione um time para incluir <strong>jogador</strong>.</div>
+		`,
+        });
+        return false;
+	}else{
+		window.location.href = this.href
+	}}
+);
 // Adicione um ouvinte de evento para os itens de campeonato, renderizado pelo handlebars
 document.getElementById("campeonatosContainer").addEventListener("click", async function (event) {
 		// Obtenha o ID do campeonato clicado
