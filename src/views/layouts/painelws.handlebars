@@ -39,10 +39,12 @@
 					<li><a href="/painelws/jogador">Jogador</a></li>
 					<li><a href="/painelws/usuario">Usuario</a></li>
 					<div class="user_image">
-						<img id="user_img"
-							src="http://localhost:3001/public/upload/img/usuario/{{user.userLogo}}"
-							alt="logo do usuario"
-						/>
+						<div class="user_image_container">
+							<img id="user_img"
+								src="http://localhost:3001/public/upload/img/usuario/{{user.userLogo}}"
+								alt="logo do usuario"
+							/>
+						</div>
 						<div id="user_input" class="user_input">
 							<p>Olá, {{user.userName}}!</p>
 							<button class="user_input_value">
