@@ -140,7 +140,7 @@ document.querySelector("#savePartidaForm").addEventListener("click", function ()
 						timer: 1500,
 					}).then(() => {
 						// Após o tempo definido (1500 ms), redirecione para a página cursos
-						window.location.href = `/painelws/`;
+						window.location.href = `/painelws`;
 					});
 				})
 				.catch((error) => {
