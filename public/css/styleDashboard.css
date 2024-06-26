@@ -1,7 +1,7 @@
 .container__::-webkit-scrollbar {
 	width: 04px;
 }
-.timeselector_container::-webkit-scrollbar {
+.subselector_container::-webkit-scrollbar {
 	height: 04px;
 }
 .nav-bar ul li a {
@@ -16,11 +16,11 @@
 	z-index: 2000 !important;
 	cursor: pointer;
 	display: flex;
-    position: relative;
+	position: relative;
 	align-items: flex-end;
 	justify-content: center;
 }
-.user_image_container{
+.user_image_container {
 	width: 40px;
 	aspect-ratio: 1 / 1;
 	background: rgb(22, 19, 70);
@@ -112,7 +112,7 @@
 	font-weight: 600;
 	color: #7d8590;
 }
-.user_input_value:hover{
+.user_input_value:hover {
 	color: var(--nav-bar-a-color);
 }
 .user_input:hover > :not(.user_input_value:hover):not(p) {
@@ -172,7 +172,7 @@
 	flex-direction: column;
 	justify-content: space-between;
 	height: calc(100% - 10px);
-    margin: 5px;
+	margin: 5px;
 	background-color: #fff;
 }
 .container__ {
@@ -203,7 +203,7 @@
 	display: flex;
 	flex-direction: column;
 }
-.cardDashboard_container p{
+.cardDashboard_container p {
 	display: flex;
 	align-items: center;
 }
@@ -221,15 +221,15 @@
 	cursor: pointer;
 	color: #000;
 }
-.cardDashboard_division_text{
+.cardDashboard_division_text {
 	display: flex;
 	align-items: start;
 	flex-direction: column;
 	justify-content: flex-start;
 }
 .cardDashboard_division_name {
-	white-space: nowrap; 
-	width: 150; 
+	white-space: nowrap;
+	width: 150;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
@@ -238,7 +238,7 @@
 	color: #64696e;
 	text-align: justify;
 }
-.cardDashboard_division_status{
+.cardDashboard_division_status {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -249,7 +249,7 @@
 	padding: 10px;
 	background-color: red;
 }
-.cardDashboard_division_status_min{
+.cardDashboard_division_status_min {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -260,9 +260,9 @@
 	padding: 10px;
 	background-color: red;
 }
-.cardDashboard_division_text_status{
+.cardDashboard_division_text_status {
 	display: flex;
-    position: relative;
+	position: relative;
 	align-items: center;
 	justify-content: center;
 }
@@ -301,15 +301,15 @@
 	text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
 }
 .cardDashboard_division_status_aguardando,
-.cardDashboard_division_status_aguardando::before{
+.cardDashboard_division_status_aguardando::before {
 	background-color: yellow;
 }
 .cardDashboard_division_status_andamento,
-.cardDashboard_division_status_andamento::before{
+.cardDashboard_division_status_andamento::before {
 	background-color: green;
 }
 .cardDashboard_division_status_finalizado,
-.cardDashboard_division_status_finalizado::before{
+.cardDashboard_division_status_finalizado::before {
 	background-color: cyan;
 }
 .cardDashboard_division_image {
@@ -335,8 +335,9 @@
 	color: rgb(29, 155, 240);
 	font-weight: 800;
 }
-.campeonato_active, .time_active{
-	background-color: #c8cbcb
+.campeonato_active,
+.time_active {
+	background-color: #c8cbcb;
 }
 .cardDashboard_division:hover {
 	background-color: #b3b6b6;
@@ -402,7 +403,7 @@
 	transform: translate(2px, 2px);
 }
 .paste-button {
-    display: flex;
+	display: flex;
 	position: relative;
 	min-width: 100px; /*remover dps para evitar pulo no canto direito no botão*/
 	justify-content: end;
@@ -460,37 +461,61 @@
 	min-width: 150px;
 	opacity: 1;
 }
-#campeonatosContainer p, #partidasContainer p, #timesContainer p, #jogadoresContainer p{
+#campeonatosContainer p,
+#partidasContainer p,
+#timesContainer p,
+#jogadoresContainer p {
 	justify-content: center;
 }
 /* inversão do tooltip */
-.cardDashboard_division:first-child .cardDashboard_division_content .cardDashboard_division_text_status .tooltip::before{
+.cardDashboard_division:first-child
+	.cardDashboard_division_content
+	.cardDashboard_division_text_status
+	.tooltip::before {
 	transform: translate(-50%) rotate(45deg);
 	top: -3px;
 }
-.cardDashboard_division:first-child .cardDashboard_division_content .cardDashboard_division_text_status:hover .tooltip{
+.cardDashboard_division:first-child
+	.cardDashboard_division_content
+	.cardDashboard_division_text_status:hover
+	.tooltip {
 	top: 30px;
 }
 /* inversão do dropdown-content */
-.cardDashboard_division:last-child:not(.cardDashboard_division:first-child):not(.cardDashboard_division:nth-child(2)) .cardDashboard_division_content .paste-button:hover .dropdown-content {
+.cardDashboard_division:last-child:not(.cardDashboard_division:first-child):not(
+		.cardDashboard_division:nth-child(2)
+	)
+	.cardDashboard_division_content
+	.paste-button:hover
+	.dropdown-content {
 	border-radius: 15px 15px 0px 15px;
 }
-.cardDashboard_division:last-child:not(.cardDashboard_division:first-child):not(.cardDashboard_division:nth-child(2)) .cardDashboard_division_content .paste-button:hover button {
-	border-radius: 0px 0px 13px 13px ;
+.cardDashboard_division:last-child:not(.cardDashboard_division:first-child):not(
+		.cardDashboard_division:nth-child(2)
+	)
+	.cardDashboard_division_content
+	.paste-button:hover
+	button {
+	border-radius: 0px 0px 13px 13px;
 }
-.cardDashboard_division:last-child:not(.cardDashboard_division:first-child):not(.cardDashboard_division:nth-child(2)) .cardDashboard_division_content .paste-button:hover .dropdown-content {
+.cardDashboard_division:last-child:not(.cardDashboard_division:first-child):not(
+		.cardDashboard_division:nth-child(2)
+	)
+	.cardDashboard_division_content
+	.paste-button:hover
+	.dropdown-content {
 	top: 0;
 	transform: translateY(-100%);
 }
-.swal2-popup .swal2-styled.swal2-confirm{
+.swal2-popup .swal2-styled.swal2-confirm {
 	background-color: var(--nav-bar-a-color-border-solid) !important;
 }
-.swal2-popup .swal2-styled.swal2-confirm:hover{
+.swal2-popup .swal2-styled.swal2-confirm:hover {
 	background-color: var(--input-color-transparency) !important;
 }
-.swal2-popup .swal2-styled.swal2-cancel{
+.swal2-popup .swal2-styled.swal2-cancel {
 	background-color: var(--input-cancel-color) !important;
 }
-.swal2-popup .swal2-styled.swal2-cancel:hover{
+.swal2-popup .swal2-styled.swal2-cancel:hover {
 	background-color: var(--input-cancel-color-transparency) !important;
 }

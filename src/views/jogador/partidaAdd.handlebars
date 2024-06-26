@@ -1,50 +1,49 @@
 <section class="containePainelws">
     <div class="cardForm">
-        <span id="AdicionarTimeCamp" class="title" data-campeonato-id="{{campeonato.idCampeonato}}">Adicionar partida ao campeonato {{campeonato.nomeCampeonato}}</span>
+        <span id="AdicionarTimeCamp" class="title" data-campeonato-id="{{campeonato.idCampeonato}}">Adicionar partida ao
+            campeonato {{campeonato.nomeCampeonato}}</span>
 
         <form id="createCampeonatoForm" enctype="multipart/form-data" class="form">
             <div class="group">
-                <div id="timeSelectorContainer" class="timeselector_container">
+                <div id="subselectorContainer" class="subselector_container">
                     <label for="timesCadastrados">Times cadastrados para inclusão</label>
-					{{#if time.length}}
-						{{#each time}}
-								<div id="{{idTime}}" class="timeselector cardTimeSelect" data-time-id="{{idTime}}">
-								<div class="timeselector_image">
-									<img 
-										src="http://localhost:3001/public/upload/img/time/{{logoTime}}"
-										alt="logo do time"
-									/></div>
-								<div class="timeselector_content">
-									<div class="timeselector_name">
-										<p class="timeselector_nameTime">{{nomeTime}}</p>
-									</div>
-								</div>
-							</div>
-						{{/each}}
-					{{else}}
-						<p>Nenhum time cadastrado anteriormente.</p>
-					{{/if}}
-				</div>
+                    {{#if time.length}}
+                    {{#each time}}
+                    <div id="{{idTime}}" class="subselector cardTimeSelect" data-time-id="{{idTime}}">
+                        <div class="subselector_image">
+                            <img src="http://localhost:3001/public/upload/img/time/{{logoTime}}" alt="logo do time" />
+                        </div>
+                        <div class="subselector_content">
+                            <div class="subselector_name">
+                                <p class="subselector_nameTime">{{nomeTime}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                    {{else}}
+                    <p>Nenhum time cadastrado anteriormente.</p>
+                    {{/if}}
+                </div>
             </div>
 
             <div class="group">
-                <div id="cadrastroNovoPartida" class="timeselector_container">
+                <div id="cadrastroNovoPartida" class="subselector_container">
                     <label for="cadastrarNovoPartida">Nova Partida</label>
                     <div id="TimesNewPartida">
-                        <div id="TimesNewPartida1" class="timeselector cardTimeSelect" data-time-id="{{idTime}}">
-                            <div class="timeselector_image"></div>
-                            <div class="timeselector_content">
-                                <div class="timeselector_name">
-                                    <p class="timeselector_nameTime">Escolha um time</p>
+                        <div id="TimesNewPartida1" class="subselector cardTimeSelect" data-time-id="{{idTime}}">
+                            <div class="subselector_image"></div>
+                            <div class="subselector_content">
+                                <div class="subselector_name">
+                                    <p class="subselector_nameTime">Escolha um time</p>
                                 </div>
                             </div>
                         </div>
-                            <h4>VS</h4>
-                        <div id="TimesNewPartida2" class="timeselector cardTimeSelect" data-time-id="{{idTime}}">
-                            <div class="timeselector_image"></div>
-                            <div class="timeselector_content">
-                                <div class="timeselector_name">
-                                    <p class="timeselector_nameTime">Escolha um time</p>
+                        <h4>VS</h4>
+                        <div id="TimesNewPartida2" class="subselector cardTimeSelect" data-time-id="{{idTime}}">
+                            <div class="subselector_image"></div>
+                            <div class="subselector_content">
+                                <div class="subselector_name">
+                                    <p class="subselector_nameTime">Escolha um time</p>
                                 </div>
                             </div>
                         </div>

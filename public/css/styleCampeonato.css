@@ -1,207 +1,215 @@
-.containePainelws{
-  background-color: #dbdbdb;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  height: 92vh;
+.containePainelws {
+	background-color: #dbdbdb;
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	height: 92vh;
 }
 .cardForm {
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 20px;
-  width: 350px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: calc(100% - 10px);
-  margin: 5px;
-  min-width: 500px;
+	background-color: #fff;
+	border-radius: 10px;
+	padding: 20px;
+	width: 350px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: calc(100% - 10px);
+	margin: 5px;
+	min-width: 500px;
 }
-.cardForm form{
-  height: 100%;
+.cardForm form {
+	height: 100%;
 }
 
 .title {
-  font-size: 24px;
-  font-weight: 600;
-  text-align: center;
+	font-size: 24px;
+	font-weight: 600;
+	text-align: center;
 }
 
 .form {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column;
 }
 
 .group {
-  position: relative;
+	position: relative;
 }
 
 .form .group label:not(.custum-file-upload) {
-  font-size: 14px;
-  color: var(--input-icon);
-  position: absolute;
-  top: -10px;
-  left: 10px;
-  background-color: #fff;
-  transition: all .3s ease;
+	font-size: 14px;
+	color: var(--input-icon);
+	position: absolute;
+	top: -10px;
+	left: 10px;
+	background-color: #fff;
+	transition: all 0.3s ease;
 }
 
 .form .group input,
 .form .group textarea,
-.form .group .timeselector_container,
+.form .group .subselector_container,
 .form .group .jogadorselector_container {
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  margin-bottom: 20px;
-  outline: 0;
-  width: 100%;
-  background-color: transparent;
-  box-shadow: 0px 10px 20px -10px #9e9e9e;
-  transition: all .3s ease-in;
+	padding: 10px;
+	border-radius: 5px;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	margin-bottom: 20px;
+	outline: 0;
+	width: 100%;
+	background-color: transparent;
+	box-shadow: 0px 10px 20px -10px #9e9e9e;
+	transition: all 0.3s ease-in;
 }
-.form .group hr{
-  color: var(--input-icon);
-  margin-bottom: 20px;
-  box-shadow: 0px 10px 20px -10px #9e9e9e;
+.form .group hr {
+	color: var(--input-icon);
+	margin-bottom: 20px;
+	box-shadow: 0px 10px 20px -10px #9e9e9e;
 }
 
-.form .group input:placeholder-shown+ label, .form .group textarea:placeholder-shown +label {
-  top: 10px;
-  background-color: transparent;
+.form .group input:placeholder-shown + label,
+.form .group textarea:placeholder-shown + label {
+	top: 10px;
+	background-color: transparent;
 }
-.form .group .groupPartidaForm #partidaLabel label{
-  position: relative;
-  top: 7px;
-  transition: all .3s ease-in;
+.form .group .groupPartidaForm #partidaLabel label {
+	position: relative;
+	top: 7px;
+	transition: all 0.3s ease-in;
 }
 
 .form .group input:focus,
-.form .group textarea:focus, .form .group .custum-file-upload:focus {
-  border-color: var(--input-color-transparency);
+.form .group textarea:focus,
+.form .group .custum-file-upload:focus {
+	border-color: var(--input-color-transparency);
 }
 
 .form .group .custum-file-upload:hover,
 .form .group input:hover,
 .form .group textarea:hover,
-.form .group .timeselector_container:hover,
-.form .group .jogadorselector_container:hover{
-  border-color: var(--input-color-transparency);
-  background: #ecf0f5;
+.form .group .subselector_container:hover,
+.form .group .jogadorselector_container:hover {
+	border-color: var(--input-color-transparency);
+	background: #ecf0f5;
 }
 .form .group .custum-file-upload:hover .icon svg,
-.form .group .custum-file-upload.drop-zone--over .icon svg{
-  fill: var(--input-icon-hover);
+.form .group .custum-file-upload.drop-zone--over .icon svg {
+	fill: var(--input-icon-hover);
 }
 .custum-file-upload:hover .text span,
 .form .group .custum-file-upload.drop-zone--over.text span {
-  color: var(--input-icon-hover);
+	color: var(--input-icon-hover);
 }
 
 /*   movimentação active */
-.form .group input:focus+ label, .form .group textarea:focus +label {
-  top: -10px;
-  left: 10px;
-  background-color: #fff;
-  color: var(--input-color-transparency);
-  font-weight: 600;
-  font-size: 14px;
+.form .group input:focus + label,
+.form .group textarea:focus + label {
+	top: -10px;
+	left: 10px;
+	background-color: #fff;
+	color: var(--input-color-transparency);
+	font-weight: 600;
+	font-size: 14px;
 }
-.form .group .timeselector_container:hover label:not(.form .group .timeselector_container .group label),
-.form .group .jogadorselector_container:hover label:not(.form .group .jogadorselector_container .group label),
-.form .group .groupPartidaForm #partidaLabel:hover label{
-  background-color: #fff;
-  color: var(--input-color-transparency);
-  font-weight: 600;
-  font-size: 14px;
+.form
+	.group
+	.subselector_container:hover
+	label:not(.form .group .subselector_container .group label),
+.form
+	.group
+	.jogadorselector_container:hover
+	label:not(.form .group .jogadorselector_container .group label),
+.form .group .groupPartidaForm #partidaLabel:hover label {
+	background-color: #fff;
+	color: var(--input-color-transparency);
+	font-weight: 600;
+	font-size: 14px;
 }
 
 .form .group textarea {
-  resize: none;
-  height: 100px;
+	resize: none;
+	height: 100px;
 }
 
 .cardForm button {
-  background-color: var(--nav-bar-a-color-border-solid);
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 10px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.3s ease;
+	background-color: var(--nav-bar-a-color-border-solid);
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	padding: 10px;
+	font-size: 16px;
+	cursor: pointer;
+	transition: all 0.3s ease;
 }
 
 .cardForm button:hover {
-  background-color:var(--input-color-transparency);
+	background-color: var(--input-color-transparency);
 }
 
 .custum-file-upload {
-  height: 200px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: space-between;
-  gap: 20px;
-  cursor: pointer;
-  align-items: center;
-  justify-content: center;
-  border: 2px dashed rgba(0, 0, 0, 0.2);
-  background-color: transparent;
-  padding: 1.5rem;
-  margin-bottom: 20px;
-  border-radius: 5px;
-  box-shadow: 0px 10px 20px -10px #9e9e9e;
+	height: 200px;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: space-between;
+	gap: 20px;
+	cursor: pointer;
+	align-items: center;
+	justify-content: center;
+	border: 2px dashed rgba(0, 0, 0, 0.2);
+	background-color: transparent;
+	padding: 1.5rem;
+	margin-bottom: 20px;
+	border-radius: 5px;
+	box-shadow: 0px 10px 20px -10px #9e9e9e;
 }
 .custum-file-upload .icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .custum-file-upload .icon svg {
-  height: 80px;
-  fill: var(--input-icon);
+	height: 80px;
+	fill: var(--input-icon);
 }
 
 .custum-file-upload .text {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .custum-file-upload .text span {
-  font-weight: 400;
-  color: var(--input-icon);
+	font-weight: 400;
+	color: var(--input-icon);
 }
-
 
 .custum-file-upload input {
-  display: none;
+	display: none;
 }
 .form .group .custum-file-upload.drop-zone--over {
-  border-color: #4376dd;
-  background: #ecf0f5;
+	border-color: #4376dd;
+	background: #ecf0f5;
 }
 
 .drop-zone__input {
 	display: none;
-  }
-  
-  .drop-zone__thumb {
+}
+
+.drop-zone__thumb {
 	width: 100%;
 	height: 100%;
 	border-radius: 5px;
 	overflow: hidden;
 	background: rgb(7, 70, 114, 0.2);
 	background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
+	background-position: center;
+	background-repeat: no-repeat;
 	position: relative;
-  }
-  
-  .drop-zone__thumb::after {
+}
+
+.drop-zone__thumb::after {
 	content: attr(data-label);
 	position: absolute;
 	bottom: 0;
@@ -211,108 +219,135 @@
 	color: #fff;
 	background: var(--nav-bar-a-color-border-solid);
 	font-size: 14px;
-  opacity: 0.85;
+	opacity: 0.85;
 	text-align: center;
-  }
-  .drop-zone__prompt{
+}
+.drop-zone__prompt {
+	display: flex;
+	flex-direction: column;
+	align-items: space-between;
+	gap: 20px;
+	justify-content: center;
+}
+#createCampeonatoForm {
+	gap: 10px;
+}
+.subselector_container,
+.jogadorselector_container {
+	display: flex;
+	gap: 5px;
+	overflow-y: auto;
+}
+#subForm.subselector_container,
+#subForm.jogadorselector_container {
+	flex-direction: column;
+}
+#cadrastroNovoPartida.subselector_container {
+	justify-content: space-around;
+	align-items: center;
+	flex-direction: row;
+}
+#TimesNewPartida {
+	display: flex;
+	width: 100%;
+	justify-content: space-around;
+	align-items: center;
+	flex-direction: row;
+}
+#subForm.subselector_container .group input,
+#subForm.jogadorselector_container .group input,
+#subForm.subselector_container .group .custum-file-upload,
+#subForm.jogadorselector_container .group .custum-file-upload {
+	margin: 0px;
+}
+#subForm.subselector_container .group,
+#subForm.jogadorselector_container .group {
+	margin-top: 8px;
+	margin-bottom: 5px;
+}
+.subselector {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 5px;
+	padding: 10px 15px;
+	background-color: #e5e3e3;
+	border-radius: 5px;
+	cursor: pointer;
+}
+.subselector:hover {
+	background-color: #c8cbcb;
+}
+.time_active {
+	background-color: #b3b6b6;
+}
+.subselector_image {
+	width: 60px;
+	aspect-ratio: 1 / 1;
+	background: rgb(22, 19, 70);
+	background: linear-gradient(
+		295deg,
+		rgba(22, 19, 70, 1) 41%,
+		rgba(89, 177, 237, 1) 100%
+	);
+	border-radius: 50%;
+	overflow: hidden;
+}
+.subselector_image img {
+	width: 100%;
+	aspect-ratio: 1 / 1;
+	object-fit: cover;
+}
+.subselector_icon {
+  position: relative;
   display: flex;
-  flex-direction: column;
-  align-items: space-between;
-  gap: 20px;
+  align-items: center;
   justify-content: center;
-  }
-  #createCampeonatoForm{
-    gap: 10px;
-  }
-  .timeselector_container,
-  .jogadorselector_container{
-    display: flex;
-    gap: 5px;
-    overflow-y: auto;
-  }
-  #subForm.timeselector_container,
-  #subForm.jogadorselector_container{
-    flex-direction: column;
-  }
-  #cadrastroNovoPartida.timeselector_container{
-    justify-content: space-around;
-    align-items: center;
-    flex-direction: row;
-  }
-  #TimesNewPartida{
-    display: flex;
-    width: 100%;
-    justify-content: space-around;
-    align-items: center;
-    flex-direction: row;
-  }
-  #subForm.timeselector_container .group input,
-  #subForm.jogadorselector_container .group input,
-  #subForm.timeselector_container .group .custum-file-upload,
-  #subForm.jogadorselector_container .group .custum-file-upload{
-    margin: 0px;
-  }
-  #subForm.timeselector_container .group,
-  #subForm.jogadorselector_container .group{
-    margin-top: 8px;
-    margin-bottom: 5px;
-  }
-  .timeselector{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    padding: 10px 15px;
-    background-color: #e5e3e3;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  .timeselector:hover{
-    background-color: #c8cbcb;
-  }
-  .time_active{
-    background-color: #b3b6b6;
-  }
-  .timeselector_image {
-    width: 60px;
-    aspect-ratio: 1 / 1;
-    background: rgb(22, 19, 70);
-    background: linear-gradient(
-      295deg,
-      rgba(22, 19, 70, 1) 41%,
-      rgba(89, 177, 237, 1) 100%
-    );
-    border-radius: 50%;
-    overflow: hidden;
-  }
-  .timeselector_image img {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-  }
-  .timeselector_content{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .timeselector_text{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .timeselector_name {
-    white-space: nowrap; 
-    width: 110; 
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .timeselector_nameTime {
-    font-size: 0.9em;
-    color: #64696e;
-    text-align: justify;
-    text-align: center;
-  }
-  .timeselector_container label{
-    color: var(--input-icon);
-  }
+  text-align: center;
+  width: 60px;
+  aspect-ratio: 1 / 1;
+  background: transparent;
+  overflow: hidden;
+}
+
+.subselector_icon i {
+  font-size: 4.0em;
+  color: var(--nav-bar-a-color-border-solid);
+}
+
+.subselector_icon a {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.29em;
+	font-weight: 600;
+  color: var(--input-color-transparency);
+}
+
+.subselector_content {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.subselector_text {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.subselector_name {
+	white-space: nowrap;
+	width: 110;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.subselector_nameTime {
+	font-size: 0.9em;
+	color: #64696e;
+	text-align: justify;
+	text-align: center;
+}
+.subselector_container label {
+	color: var(--input-icon);
+}

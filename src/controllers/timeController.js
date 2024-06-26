@@ -168,8 +168,9 @@ exports.jogadorTimeAddByID = async (req,res) => {
     const config = {
         headers: { Authorization: `Bearer ${token}` }
     }
-    // Requisição para retorno da partida a ser editada.
-    let response = await api.get(`/jogador/all`, config)
-    const jogador = response.data[0]
+    // Requisição para retorno de jogadores sem time.
+    let response = await api.get(`/jogador/nolink`, config)
+    const jogador = response.data
+    console.log(jogador);
     res.render('jogador/add', { jogador,idTime, user, spaUrl, apiUrl, layout : 'painelws'})
 }

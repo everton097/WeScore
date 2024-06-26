@@ -4,17 +4,17 @@
 
 		<form id="createJogadorForm" class="form" data-time-id="{{idTime}}">
 			<div class="group">
-				<div id="timeSelectorContainer" class="timeselector_container">
-					<label for="timesCadastrados">Jogador cadastrados para inclusão</label>
-					{{#if time.length}}
-					{{#each time}}
-					<div id="{{idTime}}" class="timeselector cardTimeSelect" data-time-id="{{idTime}}">
-						<div class="timeselector_image">
-							<img src="http://localhost:3001/public/upload/img/time/{{logoTime}}" alt="logo do time" />
+				<div id="subselectorContainer" class="subselector_container">
+					<label for="jogadoresCadastrados">Jogador cadastrados para inclusão</label>
+					{{#if jogador.length}}
+					{{#each jogador}}
+					<div id="{{idJogador}}" class="subselector cardJogadorSelect" data-jogador-id="{{idJogador}}">
+						<div class="subselector_icon">
+							<i class="ri-t-shirt-2-line"><a>{{numeroCamiseta}}</a></i>
 						</div>
-						<div class="timeselector_content">
-							<div class="timeselector_name">
-								<p class="timeselector_nameTime">{{nomeTime}}</p>
+						<div class="subselector_content">
+							<div class="subselector_name">
+								<p class="subselector_nameTime">{{nomeJogador}} {{sobrenome}}</p>
 							</div>
 						</div>
 					</div>

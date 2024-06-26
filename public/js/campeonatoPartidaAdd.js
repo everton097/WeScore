@@ -23,10 +23,12 @@ function obterIdUsuarioLocalStorage() {
 let selectedTimes = [];
 
 // Evento quando time é clicado
-document.getElementById("timeSelectorContainer").addEventListener("click", async function (event) {
+document
+	.getElementById("subselectorContainer")
+	.addEventListener("click", async function (event) {
 		// Obtenha o ID do time clicado
-		const timeId = event.target.closest(".timeselector").dataset.timeId;
-		const timeElement = event.target.closest(".timeselector");
+		const timeId = event.target.closest(".subselector").dataset.timeId;
+		const timeElement = event.target.closest(".subselector");
 
 		// Verificar se a classe time_active está presente
 		const isTimeActive = timeElement.classList.contains("time_active");
@@ -49,10 +51,10 @@ document.getElementById("timeSelectorContainer").addEventListener("click", async
 		// Adicionar ou remover o time da lista de times selecionados
 		if (isTimeActive && isSelected) {
 			let partidaContainer;
-			const defaultTime = `<div class="timeselector_image"></div>
-                            <div class="timeselector_content">
-                                <div class="timeselector_name">
-                                    <p class="timeselector_nameTime">Escolha um time</p>
+			const defaultTime = `<div class="subselector_image"></div>
+                            <div class="subselector_content">
+                                <div class="subselector_name">
+                                    <p class="subselector_nameTime">Escolha um time</p>
                                 </div>
                             </div>`;
 
@@ -88,12 +90,12 @@ document.getElementById("timeSelectorContainer").addEventListener("click", async
 
 			// Adicionar os times selecionados ao grupo de partidas
 			const time = document.querySelector(
-				`.timeselector[data-time-id="${timeId}"]`
+				`.subselector[data-time-id="${timeId}"]`
 			);
 			const clone = time.cloneNode(true);
-			// Obter apenas as divs internas do clone com as classes timeselector_image e timeselector_content
+			// Obter apenas as divs internas do clone com as classes subselector_image e subselector_content
 			const innerDivs = clone.querySelectorAll(
-				".timeselector_image, .timeselector_content"
+				".subselector_image, .subselector_content"
 			);
 			// Limpar o conteúdo do container antes de adicionar as divs internas
 			partidaContainer.innerHTML = "";
@@ -103,10 +105,12 @@ document.getElementById("timeSelectorContainer").addEventListener("click", async
 				partidaContainer.appendChild(div.cloneNode(true));
 			});
 		}
-});
+	});
 
 // Evento quando o botão "Salvar" de criação é clicado
-document.querySelector("#savePartidaForm").addEventListener("click", function () {
+document
+	.querySelector("#savePartidaForm")
+	.addEventListener("click", function () {
 		//busca o token armazenado no login
 		var token = localStorage.getItem("token");
 		// Configurar o cabeçalho com a autorizção do token
@@ -161,4 +165,4 @@ document.querySelector("#savePartidaForm").addEventListener("click", function ()
 					}
 				});
 		}
-});
+	});
