@@ -69,8 +69,6 @@ function subselector(idobjeto) {
 					partidaContainer.appendChild(div.cloneNode(true));
 				});
 			}
-			console.log("final");
-			console.log(selectedTimes);
 		});
 }
 function submultselector() {
