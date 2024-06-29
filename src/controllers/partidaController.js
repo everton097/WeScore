@@ -1,10 +1,13 @@
 const api = require('../config/api')
+const apiUrl = "http://localhost:3001/"
+const spaUrl = "http://localhost:3002/"
 
 exports.getPartidaCampeonatoById = async (req,res) =>{
     try {
         const idPartida = req.params.idPartida
         // Configurar o cabeçalho com a autorização do token
         const token = await req.session.token
+        const user = res.locals.user
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         }
@@ -21,7 +24,7 @@ exports.getPartidaCampeonatoById = async (req,res) =>{
         console.log("Partidas",partida)
         console.log("JogadoresTime1",jogadoresTime1)
         console.log("JogadoresTime2",jogadoresTime2)
-        res.render('jogos', { partida, jogadoresTime1, jogadoresTime2, layout : 'painelws' })
+        res.render('jogos', { partida, jogadoresTime1, jogadoresTime2, user, spaUrl, apiUrl, layout : 'painelws' })
     } catch (error) {
         res.status(500).json({ error: 'Erro ao buscar datas.' });
         console.error(error)
