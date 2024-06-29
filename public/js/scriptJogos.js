@@ -8,6 +8,18 @@ let countTime02 = 0,
 	controlet2 = "semponto",
 	rotacaot2 = "mantem";
 
+	// Controle de estado para armazenar os IDs dos times selecionados
+let selectedTimes = [];
+const teste = document.querySelectorAll(`.time_active`);
+teste.forEach(function (element) {
+	selectedTimes.push(element.dataset.timeId);
+});
+console.log(selectedTimes);
+
+
+
+
+console.log(partidaResponse);
 const partidaID = document.getElementById("idPartida").dataset.partidaId;
 if (partidaID) {
 	// busca o token armazenado no login
@@ -31,10 +43,66 @@ if (partidaID) {
 				partida.idTime === null
 			) {
 				Swal.fire({
-					icon: "success",
-					title: "Partida nova",
-					showConfirmButton: false,
-					timer: 1500,
+					title: "Definição de lado da quadra",
+					showConfirmButton: true,
+					html: `
+								<form id="createCampeonatoForm" enctype="multipart/form-data" class="form">
+            <div class="group">
+                <div id="subselectorContainer" class="subselector_container">
+                    <label for="timesCadastrados">Times da partida</label>
+                    
+                    <div id="${partidaResponse.idTime1}" class="subselector cardTimeSelect" data-time-id="${partidaResponse.idTime1}">
+                        <div class="subselector_image">
+                            <img src="http://localhost:3001/public/upload/img/time/${partidaResponse.logoTime1}" alt="logo do time" />
+                        </div>
+                        <div class="subselector_content">
+                            <div class="subselector_name">
+                                <p class="subselector_nameTime">${partidaResponse.nomeTime1}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="${partidaResponse.idTime2}" class="subselector cardTimeSelect" data-time-id="${partidaResponse.idTime2}">
+                        <div class="subselector_image">
+                            <img src="http://localhost:3001/public/upload/img/time/${partidaResponse.logoTime2}" alt="logo do time" />
+                        </div>
+                        <div class="subselector_content">
+                            <div class="subselector_name">
+                                <p class="subselector_nameTime">${partidaResponse.nomeTime2}</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="group">
+                <div id="cadrastroNovoPartida" class="subselector_container">
+                    <label for="cadastrarNovoPartida">Quadra</label>
+                    <div id="TimesNewPartida">
+                        <div id="TimesNewPartida0" class="subselector cardTimeSelect" data-time-id="{{idTime}}">
+                            <div class="subselector_image"></div>
+                            <div class="subselector_content">
+                                <div class="subselector_name">
+                                    <p class="subselector_nameTime">Escolha um time</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="TimesNewPartida0" class="subselector cardTimeSelect" data-time-id="{{idTime}}">
+                            <div class="subselector_image"></div>
+                            <div class="subselector_content">
+                                <div class="subselector_name">
+                                    <p class="subselector_nameTime">Escolha um time</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </form>
+							`,
 				}).then(() => {
 					console.log(
 						"Partida nova",
@@ -44,6 +112,7 @@ if (partidaID) {
 						partida
 					);
 				});
+				subselector("subselectorContainer")
 			} else {
         countTime01 = partida.ptTime1;
 				countTime02 = partida.ptTime2;
@@ -52,7 +121,7 @@ if (partidaID) {
         updateBola01();//pensar em metodo para ser automatico
         Swal.fire({
 					icon: "error",
-					title: "Partida velha",
+					title: "Partida antiga",
 					showConfirmButton: false,
 					timer: 1500,
 				}).then(() => {
@@ -84,6 +153,8 @@ if (partidaID) {
 			}
 		});
 }
+
+
 
 const valueTime01 = document.getElementById("valueTime01");
 const plusButtonTime01 = document.getElementById("plusTime01");

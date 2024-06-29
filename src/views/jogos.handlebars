@@ -23,13 +23,13 @@
 		<div class="bolinhaSubistituicao subtime02">14</div>
 	</div>
 </div>
-<section id="idPartida" data-partida-id="{{partida.idPartida}}">
+<section id="idPartida" data-partida-id="{{idPartida}}">
 	<div class="mural">
+
 		<div class="time01">
-			<div class="logotime01">
-				<img src="http://localhost:3001/public/upload/img/time/{{partida.logoTime1}}" alt="logotime1" />
+			<div id="logotime01" class="logotime01">
 			</div>
-			<p class="nometime01">{{partida.nomeTime1}}</p>
+			<p class="nometime01"></p>
 		</div>
 		<div class="score" id="counter">
 			<img id="bolavolei01" class="bolavolei01" src="/img/bola.png" />
@@ -46,12 +46,13 @@
 			</div>
 			<img id="bolavolei02" class="bolavolei02" src="/img/bola.png" />
 		</div>
+
 		<div class="time02">
-			<p class="nometime02">{{partida.nomeTime2}}</p>
-			<div class="logotime02">
-				<img src="http://localhost:3001/public/upload/img/time/{{partida.logoTime2}}" alt="logotime1" />
+			<p class="nometime02"></p>
+			<div id="logotime02" class="logotime02">
 			</div>
 		</div>
+
 	</div>
 </section>
 
@@ -59,7 +60,7 @@
 <button id="testeonclick" data-target="cartoes">Mostrar Cartões</button>
 <button id="testeonclickc" data-target="substituicao">Mostrar Substituição</button>
 </nav>
-<section  id="cartoes" style="display: none;">
+<section id="cartoes" style="display: none;">
 	<div>cartoes</div>
 </section>
 <section id="substituicao" style="display: none;">
@@ -85,27 +86,30 @@
 		<div class="quadraVolei">
 			<div class="ballplayer">
 				<div class="jogadoresTime01 quadra">
-					<div id="Time01jgd1" class="bolinha jogador1">01</div>
-					<div id="Time01jgd2" class="bolinha jogador2">02</div>
-					<div id="Time01jgd3" class="bolinha jogador3">03</div>
-					<div id="Time01jgd4" class="bolinha jogador4">04</div>
-					<div id="Time01jgd5" class="bolinha jogador5">05</div>
-					<div id="Time01jgd6" class="bolinha jogador6">06</div>
+					<div id="Time01jgd1" class="bolinha jogador1"></div>
+					<div id="Time01jgd2" class="bolinha jogador2"></div>
+					<div id="Time01jgd3" class="bolinha jogador3"></div>
+					<div id="Time01jgd4" class="bolinha jogador4"></div>
+					<div id="Time01jgd5" class="bolinha jogador5"></div>
+					<div id="Time01jgd6" class="bolinha jogador6"></div>
 				</div>
 			</div>
 			<div class="ballplayer">
 				<div class="jogadoresTime02 quadra">
-					<div id="Time02jgd1" class="bolinha2 jogador1t2">01</div>
-					<div id="Time02jgd2" class="bolinha2 jogador2t2">02</div>
-					<div id="Time02jgd3" class="bolinha2 jogador3t2">03</div>
-					<div id="Time02jgd4" class="bolinha2 jogador4t2">04</div>
-					<div id="Time02jgd5" class="bolinha2 jogador5t2">05</div>
-					<div id="Time02jgd6" class="bolinha2 jogador6t2">06</div>
+					<div id="Time02jgd1" class="bolinha2 jogador1t2"></div>
+					<div id="Time02jgd2" class="bolinha2 jogador2t2"></div>
+					<div id="Time02jgd3" class="bolinha2 jogador3t2"></div>
+					<div id="Time02jgd4" class="bolinha2 jogador4t2"></div>
+					<div id="Time02jgd5" class="bolinha2 jogador5t2"></div>
+					<div id="Time02jgd6" class="bolinha2 jogador6t2"></div>
 				</div>
 			</div>
 		</div>
 	</div>
 
 </section>
-	
+<script>
+    const partidaResponse = {{{jsonPartida}}};
+</script>
+<script src="/js/subselector.js"></script>
 <script src="/js/scriptJogos.js"></script>
