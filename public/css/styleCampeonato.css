@@ -250,7 +250,7 @@
 	align-items: center;
 	flex-direction: row;
 }
-#TimesNewPartida {
+#TimesNew_containerPartida {
 	display: flex;
 	width: 100%;
 	justify-content: space-around;

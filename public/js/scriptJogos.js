@@ -8,18 +8,9 @@ let countTime02 = 0,
 	controlet2 = "semponto",
 	rotacaot2 = "mantem";
 
-	// Controle de estado para armazenar os IDs dos times selecionados
+// Controle de estado para armazenar os IDs dos times selecionados
 let selectedTimes = [];
-const teste = document.querySelectorAll(`.time_active`);
-teste.forEach(function (element) {
-	selectedTimes.push(element.dataset.timeId);
-});
-console.log(selectedTimes);
 
-
-
-
-console.log(partidaResponse);
 const partidaID = document.getElementById("idPartida").dataset.partidaId;
 if (partidaID) {
 	// busca o token armazenado no login
@@ -37,105 +28,110 @@ if (partidaID) {
 		.then((response) => {
 			const partida = response.data;
 			if (
-				partida.ptTime1 === 0 &&
-				partida.ptTime2 === 0 &&
-				partida.set === 1 &&
-				partida.idTime === null
+				(partida.ptTime1 === 0 &&
+					partida.ptTime2 === 0 &&
+					partida.set === 1 &&
+					partida.idTime === null,
+				partida.ladoQuadraTime1 === null,
+				partida.ladoQuadraTime2 === null,
+				partida.saqueInicial === null)
 			) {
-				Swal.fire({
-					title: "Definição de lado da quadra",
-					showConfirmButton: true,
-					html: `
+				const newModelPartida = document.createElement("div");
+				newModelPartida.id = `modalDefinicaoLado`;
+				newModelPartida.classList.add("modal");
+				newModelPartida.innerHTML = `
+					<div class="modal-content">
+							<h2>Definição de lado da quadra</h2>
+							<div class="modal-body">
 								<form id="createCampeonatoForm" enctype="multipart/form-data" class="form">
-            <div class="group">
-                <div id="subselectorContainer" class="subselector_container">
-                    <label for="timesCadastrados">Times da partida</label>
-                    
-                    <div id="${partidaResponse.idTime1}" class="subselector cardTimeSelect" data-time-id="${partidaResponse.idTime1}">
-                        <div class="subselector_image">
-                            <img src="http://localhost:3001/public/upload/img/time/${partidaResponse.logoTime1}" alt="logo do time" />
-                        </div>
-                        <div class="subselector_content">
-                            <div class="subselector_name">
-                                <p class="subselector_nameTime">${partidaResponse.nomeTime1}</p>
-                            </div>
-                        </div>
-                    </div>
+									<div class="group">
+											<div id="subselectorContainer" class="subselector_container">
+													<label for="timesCadastrados">Times da partida</label>
+													
+													<div id="${partidaResponse.idTime1}" class="subselector cardTimeSelect" data-time-id="${partidaResponse.idTime1}">
+															<div class="subselector_image">
+																	<img src="http://localhost:3001/public/upload/img/time/${partidaResponse.logoTime1}" alt="logo do time" />
+															</div>
+															<div class="subselector_content">
+																	<div class="subselector_name">
+																			<p class="subselector_nameTime">${partidaResponse.nomeTime1}</p>
+																	</div>
+															</div>
+													</div>
 
-                    <div id="${partidaResponse.idTime2}" class="subselector cardTimeSelect" data-time-id="${partidaResponse.idTime2}">
-                        <div class="subselector_image">
-                            <img src="http://localhost:3001/public/upload/img/time/${partidaResponse.logoTime2}" alt="logo do time" />
-                        </div>
-                        <div class="subselector_content">
-                            <div class="subselector_name">
-                                <p class="subselector_nameTime">${partidaResponse.nomeTime2}</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
+													<div id="${partidaResponse.idTime2}" class="subselector cardTimeSelect" data-time-id="${partidaResponse.idTime2}">
+															<div class="subselector_image">
+																	<img src="http://localhost:3001/public/upload/img/time/${partidaResponse.logoTime2}" alt="logo do time" />
+															</div>
+															<div class="subselector_content">
+																	<div class="subselector_name">
+																			<p class="subselector_nameTime">${partidaResponse.nomeTime2}</p>
+																	</div>
+															</div>
+													</div>
+													
+											</div>
+									</div>
 
-            <div class="group">
-                <div id="cadrastroNovoPartida" class="subselector_container">
-                    <label for="cadastrarNovoPartida">Quadra</label>
-                    <div id="TimesNewPartida">
-                        <div id="TimesNewPartida0" class="subselector cardTimeSelect" data-time-id="{{idTime}}">
-                            <div class="subselector_image"></div>
-                            <div class="subselector_content">
-                                <div class="subselector_name">
-                                    <p class="subselector_nameTime">Escolha um time</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="TimesNewPartida0" class="subselector cardTimeSelect" data-time-id="{{idTime}}">
-                            <div class="subselector_image"></div>
-                            <div class="subselector_content">
-                                <div class="subselector_name">
-                                    <p class="subselector_nameTime">Escolha um time</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+									<div class="group">
+											<div id="cadrastroNovoPartida" class="subselector_container">
+													<label for="cadastrarNovoPartida">Quadra</label>
+													<div id="TimesNew_containerPartida">
+															<div id="TimesNewPartida0" class="subselector cardTimeSelect" data-time-id="{{idTime}}">
+																	<div class="subselector_image"></div>
+																	<div class="subselector_content">
+																			<div class="subselector_name">
+																					<p class="subselector_nameTime">Escolha um time</p>
+																			</div>
+																	</div>
+															</div>
+															<div id="TimesNewPartida0" class="subselector cardTimeSelect" data-time-id="{{idTime}}">
+																	<div class="subselector_image"></div>
+																	<div class="subselector_content">
+																			<div class="subselector_name">
+																					<p class="subselector_nameTime">Escolha um time</p>
+																			</div>
+																	</div>
+															</div>
+													</div>
+											</div>
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+									<button id="btnFecharModal" class="btn btn-cancel">Fechar</button>
+									<button id="btnSalvarModal" class="btn btn-primary">Salvar</button>
+							</div>
+					</div>
+				`;
 
-
-        </form>
-							`,
-				}).then(() => {
-					console.log(
-						"Partida nova",
-						partida.ptTime1,
-						partida.ptTime2,
-						partida.set,
-						partida
-					);
-				});
-				subselector("subselectorContainer")
+				document.body.appendChild(newModelPartida);
+				openModal('modalDefinicaoLado');
+				subselector("subselectorContainer");
+				submultselector();
 			} else {
-        countTime01 = partida.ptTime1;
+				countTime01 = partida.ptTime1;
 				countTime02 = partida.ptTime2;
-        updateValueTime01();
-        updateValueTime02();
-        updateBola01();//pensar em metodo para ser automatico
-        Swal.fire({
+				updateValueTime01();
+				updateValueTime02();
+				updateBola01(); //pensar em metodo para ser automatico
+				Swal.fire({
 					icon: "error",
 					title: "Partida antiga",
 					showConfirmButton: false,
 					timer: 1500,
 				}).then(() => {
 					console.log(
-            "Partida antiga",
-            partida.ptTime1,
-            partida.ptTime2,
-            partida.set,
-            partida
-          );
+						"Partida antiga",
+						partida.ptTime1,
+						partida.ptTime2,
+						partida.set,
+						partida
+					);
 				});
 			}
 		})
-		.catch((error) => {
+		/* .catch((error) => {
 			console.error(error);
 			if (error.response) {
 				const { data, status } = error.response;
@@ -151,10 +147,8 @@ if (partidaID) {
 				// Algo aconteceu durante a configuração da solicitação que acionou um erro
 				console.error("Erro na configuração da solicitação", error.message);
 			}
-		});
+		}); */
 }
-
-
 
 const valueTime01 = document.getElementById("valueTime01");
 const plusButtonTime01 = document.getElementById("plusTime01");
@@ -580,3 +574,31 @@ alterCards.forEach((alterCard) => {
 		document.getElementById(targetId).style.display = "block";
 	});
 });
+// Função para encontrar os lados e preparar os dados para a API
+function prepararDadosParaAPI(partidaResponse, selectedTimes) {
+	const idTimeSelecionado1 = selectedTimes[0];
+	const idTimeSelecionado2 = selectedTimes[1];
+
+	let ladoQuadraTime1, ladoQuadraTime2;
+
+	if (
+		partidaResponse.idTime1.toString() === idTimeSelecionado1 ||
+		partidaResponse.idTime1.toString() === idTimeSelecionado2
+	) {
+		ladoQuadraTime1 = "esquerda";
+		ladoQuadraTime2 = "direita";
+	} else {
+		ladoQuadraTime1 = "direita";
+		ladoQuadraTime2 = "esquerda";
+	}
+
+	// Preparar objeto para enviar à API
+	const dadosParaAPI = {
+		idPartida: partidaResponse.idPartida,
+		ladoQuadraTime1,
+		ladoQuadraTime2,
+		// Outros campos necessários para a API
+	};
+
+	return dadosParaAPI;
+}

@@ -1,35 +1,3 @@
-// Exemplo de JavaScript para adicionar/remover a classe
-var userImage = document.getElementById("user_img");
-var userInput = document.getElementById("user_input");
-// Adiciona um ouvinte de evento de clique à imagem do usuário
-userImage.addEventListener("click", function () {
-	// Verifica se o menu de opções está visível
-	if (
-		userInput.style.visibility === "hidden" ||
-		userInput.style.visibility === ""
-	) {
-		userInput.style.visibility = "visible";
-		userInput.style.opacity = "1";
-		userInput.style.top = "48px";
-	} else {
-		userInput.style.visibility = "hidden";
-		userInput.style.opacity = "0";
-		userInput.style.top = "30px";
-	}
-});
-
-var logoutButton = document.getElementById("logoutButton");
-logoutButton.addEventListener("click", function () {
-	// Limpa dados do usuario do localStorage
-	localStorage.removeItem('token');
-    localStorage.removeItem('userId');
-    localStorage.removeItem('userName');
-    localStorage.removeItem('userMail');
-    localStorage.removeItem('userLogo');
-	// Redireciona para a página /logout
-	window.location.href = "/logout";
-});
-
 document.getElementById("buttonTimeAdd").addEventListener("click", async function (event) {
 	// Impede o comportamento padrão do link
     event.preventDefault();
