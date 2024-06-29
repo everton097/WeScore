@@ -76,7 +76,6 @@ function subselector(idobjeto) {
 function submultselector() {
 	// Evento quando time é clicado
 	var elements = document.querySelectorAll('[id^="TimesNewPartida"]');
-	console.log(elements);
 	elements.forEach(function (element) {
 		element.addEventListener("click", async function (event) {
 			// Obtenha o ID do time clicado
@@ -84,13 +83,24 @@ function submultselector() {
 
 			// Verificar se a classe time_active está presente
 			const isTimeActive = element.classList.contains("time_active");
-
-			// Verificar se o usuário está tentando selecionar um terceiro time
-			if (selectedTimes.length >= 3) {
+			// Verificar se o usuário está tentando selecionar antes de escolher os times
+			if (selectedTimes.length < 2) {
 				// Exibir mensagem de erro
 				Swal.fire({
 					icon: "error",
-					title: `Você já selecionou dois times`,
+					title: `Selecione os dois times antes`,
+					text: `Não é possível selecionar.`,
+					showConfirmButton: false,
+					timer: 1500,
+				});
+				return;
+			}
+			// Verificar se o usuário está tentando selecionar um terceiro time
+			if (selectedTimes.length >= 3 && !isTimeActive) {
+				// Exibir mensagem de erro
+				Swal.fire({
+					icon: "error",
+					title: `Você já selecionou o saque`,
 					text: `Não é possível selecionar mais.`,
 					showConfirmButton: false,
 					timer: 1500,
@@ -98,8 +108,6 @@ function submultselector() {
 				return;
 			}
 			// Verificar se o time clicado já está na lista de times selecionados
-			console.log(selectedTimes.length);
-			console.log(selectedTimes[2]);
 			const isSelected =
 				selectedTimes.length > 2 && selectedTimes[2] === timeId;
 
@@ -108,15 +116,11 @@ function submultselector() {
 				// Remover o time da lista de times selecionados
 				selectedTimes.pop();
 				element.classList.remove("time_active");
-				console.log("remove classe");
 			} else if (!isTimeActive && !isSelected) {
 				// Adicionar o time à lista de times selecionados
 				selectedTimes.push(timeId);
 				element.classList.add("time_active");
-				console.log("adiciona classe");
 			}
-			console.log("finalMult");
-			console.log(selectedTimes);
 		});
 	});
 }

@@ -35,11 +35,11 @@ userImage.addEventListener("click", function () {
 var logoutButton = document.getElementById("logoutButton");
 logoutButton.addEventListener("click", function () {
 	// Limpa dados do usuario do localStorage
-	localStorage.removeItem('token');
-    localStorage.removeItem('userId');
-    localStorage.removeItem('userName');
-    localStorage.removeItem('userMail');
-    localStorage.removeItem('userLogo');
+	localStorage.removeItem("token");
+	localStorage.removeItem("userId");
+	localStorage.removeItem("userName");
+	localStorage.removeItem("userMail");
+	localStorage.removeItem("userLogo");
 	// Redireciona para a página /logout
 	window.location.href = "/logout";
 });
@@ -48,16 +48,23 @@ logoutButton.addEventListener("click", function () {
 function openModal(idmodel) {
 	const modal = document.getElementById(idmodel);
 	modal.style.display = "block";
+	modal.classList.remove("modal-close");
 	// Evento para fechar o modal quando o usuário clica no botão "Fechar"
 	document
-		.getElementById('btnFecharModal')
+		.getElementById("btnFecharModal")
 		.addEventListener("click", function () {
-			closeModal();
+			closeModal(idmodel);
 		});
 }
 
 // Função para fechar o modal
 function closeModal(idmodel) {
 	const modal = document.getElementById(idmodel);
-	modal.style.display = "none";
+	modal.classList.add("modal-close");
+	// Espera a animação terminar antes de esconder o modal
+	modal.addEventListener("animationend", function handleAnimationEnd() {
+		modal.style.display = "none";
+		modal.classList.remove("modal-close");
+		modal.removeEventListener("animationend", handleAnimationEnd);
+	});
 }

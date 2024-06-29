@@ -23,23 +23,21 @@ if (partidaID) {
 		},
 	};
 	// Fazer uma solicitação GET para recuperar ultimo ponto da partida
-	axios
-		.get(`${url}ponto/last/${partidaID}`, config)
-		.then((response) => {
-			const partida = response.data;
-			if (
-				(partida.ptTime1 === 0 &&
-					partida.ptTime2 === 0 &&
-					partida.set === 1 &&
-					partida.idTime === null,
-				partida.ladoQuadraTime1 === null,
-				partida.ladoQuadraTime2 === null,
-				partida.saqueInicial === null)
-			) {
-				const newModelPartida = document.createElement("div");
-				newModelPartida.id = `modalDefinicaoLado`;
-				newModelPartida.classList.add("modal");
-				newModelPartida.innerHTML = `
+	axios.get(`${url}ponto/last/${partidaID}`, config).then((response) => {
+		const partida = response.data;
+		if (
+			(partida.ptTime1 === 0 &&
+				partida.ptTime2 === 0 &&
+				partida.set === 1 &&
+				partida.idTime === null,
+			partida.ladoQuadraTime1 === null,
+			partida.ladoQuadraTime2 === null,
+			partida.saqueInicial === null)
+		) {
+			const newModelPartida = document.createElement("div");
+			newModelPartida.id = `modalDefinicaoLado`;
+			newModelPartida.classList.add("modal");
+			newModelPartida.innerHTML = `
 					<div class="modal-content">
 							<h2>Definição de lado da quadra</h2>
 							<div class="modal-body">
@@ -105,33 +103,52 @@ if (partidaID) {
 					</div>
 				`;
 
-				document.body.appendChild(newModelPartida);
-				openModal('modalDefinicaoLado');
-				subselector("subselectorContainer");
-				submultselector();
-			} else {
-				countTime01 = partida.ptTime1;
-				countTime02 = partida.ptTime2;
-				updateValueTime01();
-				updateValueTime02();
-				updateBola01(); //pensar em metodo para ser automatico
-				Swal.fire({
-					icon: "error",
-					title: "Partida antiga",
-					showConfirmButton: false,
-					timer: 1500,
-				}).then(() => {
-					console.log(
-						"Partida antiga",
-						partida.ptTime1,
-						partida.ptTime2,
-						partida.set,
-						partida
+			document.body.appendChild(newModelPartida);
+			openModal("modalDefinicaoLado");
+			subselector("subselectorContainer");
+			submultselector();
+			const dadosParaEnviarAPI = prepararDadosParaAPI(
+				partidaResponse,
+				selectedTimes
+			);
+			// Evento para salvar os dados quando o usuário clica no botão "Salvar"
+			document
+				.getElementById("btnSalvarModal")
+				.addEventListener("click", function () {
+					const dadosParaEnviarAPI = prepararDadosParaAPI(
+						partidaResponse,
+						selectedTimes
 					);
+					console.log(dadosParaEnviarAPI);
+
+					// Lógica para enviar os dados para a API
+					// ...
+
+					closeModal(); // Fecha o modal após salvar
 				});
-			}
-		})
-		/* .catch((error) => {
+		} else {
+			countTime01 = partida.ptTime1;
+			countTime02 = partida.ptTime2;
+			updateValueTime01();
+			updateValueTime02();
+			updateBola01(); //pensar em metodo para ser automatico
+			Swal.fire({
+				icon: "error",
+				title: "Partida antiga",
+				showConfirmButton: false,
+				timer: 1500,
+			}).then(() => {
+				console.log(
+					"Partida antiga",
+					partida.ptTime1,
+					partida.ptTime2,
+					partida.set,
+					partida
+				);
+			});
+		}
+	});
+	/* .catch((error) => {
 			console.error(error);
 			if (error.response) {
 				const { data, status } = error.response;

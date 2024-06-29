@@ -342,8 +342,12 @@ section .footer-content span {
 	text-align: center;
 	animation: model-show 0.3s;
 }
-.modal-content h2{
-	color: rgb(89, 89, 89);;
+.modal-close {
+	animation: modal-hide 0.3s forwards;
+}
+
+.modal-content h2 {
+	color: rgb(89, 89, 89);
 }
 
 .close {
@@ -422,5 +426,21 @@ section .footer-content span {
 
 	100% {
 		transform: scale(1);
+	}
+}
+@keyframes modal-hide {
+	0% {
+		transform: scale(1);
+	}
+	45% {
+		transform: scale(1.05);
+	}
+
+	80% {
+		transform: scale(0.95);
+	}
+	100% {
+		transform: scale(0.7);
+		opacity: 0;
 	}
 }
