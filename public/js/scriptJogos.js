@@ -609,75 +609,38 @@ alterCards.forEach((alterCard) => {
 });
 // Fução para renderizar placar de acordo com escolha de lados
 function renderizarPlacar(partidaResponse, partida) {
-	// Verificar o lado da quadra dos times
 	const isTime1Esquerda = partida.ladoQuadraTime1 === "Esquerda";
+
 	// Definir os dados do time da esquerda
+	const timeEsquerda = isTime1Esquerda ? partidaResponse.idTime1 : partidaResponse.idTime2;
+	const nomeTimeEsquerda = isTime1Esquerda ? partidaResponse.nomeTime1 : partidaResponse.nomeTime2;
+	const logoTimeEsquerda = isTime1Esquerda ? partidaResponse.logoTime1 : partidaResponse.logoTime2;
+	const timeDireita = isTime1Esquerda ? partidaResponse.idTime2 : partidaResponse.idTime1;
+	const nomeTimeDireita = isTime1Esquerda ? partidaResponse.nomeTime2 : partidaResponse.nomeTime1;
+	const logoTimeDireita = isTime1Esquerda ? partidaResponse.logoTime2 : partidaResponse.logoTime1;
+
+	// Atualizar os elementos no DOM
+	document.getElementById("logoTimeEsquerda").src = `http://localhost:3001/public/upload/img/time/${logoTimeEsquerda}`;
+	document.getElementById("nomeTimeEsquerda").innerText = nomeTimeEsquerda;
+	document.getElementById("logoTimeDireita").src = `http://localhost:3001/public/upload/img/time/${logoTimeDireita}`;
+	document.getElementById("nomeTimeDireita").innerText = nomeTimeDireita;
+
+	// Definir os pontos dos times
 	if (isTime1Esquerda) {
-		document.getElementById(
-			"logoTimeEsquerda"
-		).src = `http://localhost:3001/public/upload/img/time/${partidaResponse.logoTime1}`;
-		document.getElementById("nomeTimeEsquerda").innerText =
-			partidaResponse.nomeTime1;
-		countTime01 = partida.ptTime1;
-		countTime02 = partida.ptTime2;
+			countTime01 = partida.ptTime1;
+			countTime02 = partida.ptTime2;
 	} else {
-		document.getElementById(
-			"logoTimeEsquerda"
-		).src = `http://localhost:3001/public/upload/img/time/${partidaResponse.logoTime2}`;
-		document.getElementById("nomeTimeEsquerda").innerText =
-			partidaResponse.nomeTime2;
-		countTime01 = partida.ptTime2;
-		countTime02 = partida.ptTime1;
+			countTime01 = partida.ptTime2;
+			countTime02 = partida.ptTime1;
 	}
 
-	// Definir os dados do time da direita
-	if (isTime1Esquerda) {
-		document.getElementById(
-			"logoTimeDireita"
-		).src = `http://localhost:3001/public/upload/img/time/${partidaResponse.logoTime2}`;
-		document.getElementById("nomeTimeDireita").innerText =
-			partidaResponse.nomeTime2;
-	} else {
-		document.getElementById(
-			"logoTimeDireita"
-		).src = `http://localhost:3001/public/upload/img/time/${partidaResponse.logoTime1}`;
-		document.getElementById("nomeTimeDireita").innerText =
-			partidaResponse.nomeTime1;
-	}
-	if (partida.idTime == null) {
-		if (
-			partidaResponse.idTime1 === partida.saqueInicial &&
-			partida.ladoQuadraTime1 === "Esquerda"
-		) {
+	// Verificar o saque inicial ou o ID do time
+	const timeSaque = partida.idTime || partida.saqueInicial;
+
+	if (timeEsquerda === timeSaque) {
 			updateBola01();
-		} else if (partidaResponse.idTime1 === partida.saqueInicial) {
+	} else if (timeDireita === timeSaque) {
 			updateBola02();
-		}
-		if (
-			partidaResponse.idTime2 === partida.saqueInicial &&
-			partida.ladoQuadraTime2 === "Esquerda"
-		) {
-			updateBola01();
-		} else if (partidaResponse.idTime2 === partida.saqueInicial) {
-			updateBola02();
-		}
-	} else {
-		if (
-			partidaResponse.idTime1 === partida.idTime &&
-			partida.ladoQuadraTime1 === "Esquerda"
-		) {
-			updateBola01();
-		} else if (partidaResponse.idTime1 === partida.idTime) {
-			updateBola02();
-		}
-		if (
-			partidaResponse.idTime2 === partida.idTime &&
-			partida.ladoQuadraTime2 === "Esquerda"
-		) {
-			updateBola01();
-		} else if (partidaResponse.idTime2 === partida.idTime) {
-			updateBola02();
-		}
 	}
 
 	updateValueTime01();
