@@ -9,7 +9,8 @@ let countTime02 = 0,
 	rotacaot2 = "mantem";
 
 // Controle de estado para armazenar os IDs dos times selecionados
-let selectedTimes = [];
+let selectedTimes = [],
+	partida = {};
 
 const partidaID = document.getElementById("idPartida").dataset.partidaId;
 if (partidaID) {
@@ -26,15 +27,15 @@ if (partidaID) {
 	axios
 		.get(`${url}ponto/last/${partidaID}`, config)
 		.then((response) => {
-			const partida = response.data;
+			partida = response.data;
 			if (
-				(partida.ptTime1 === 0 &&
-					partida.ptTime2 === 0 &&
-					partida.set === 1 &&
-					partida.idTime === null,
-				partida.ladoQuadraTime1 === null,
-				partida.ladoQuadraTime2 === null,
-				partida.saqueInicial === null)
+				partida.ptTime1 === 0 &&
+				partida.ptTime2 === 0 &&
+				partida.set === 1 &&
+				partida.idTime === null &&
+				partida.ladoQuadraTime1 === null &&
+				partida.ladoQuadraTime2 === null &&
+				partida.saqueInicial === null
 			) {
 				const newModelPartida = document.createElement("div");
 				newModelPartida.id = `modalDefinicaoLado`;
@@ -75,7 +76,7 @@ if (partidaID) {
 
 									<div class="group">
 											<div id="cadrastroNovoPartida" class="subselector_container">
-													<label for="cadastrarNovoPartida">Quadra</label>
+													<label for="cadastrarNovoPartida">Quadra / Saque</label>
 													<div id="TimesNew_containerPartida">
 															<div id="TimesNewPartida0" class="subselector cardTimeSelect" data-time-id="{{idTime}}">
 																	<div class="subselector_image"></div>
@@ -117,13 +118,23 @@ if (partidaID) {
 							partidaResponse,
 							selectedTimes
 						);
-						console.log(dadosParaEnviarAPI);
+						partida.ladoQuadraTime1 = dadosParaEnviarAPI.ladoQuadraTime1
+						partida.ladoQuadraTime2 = dadosParaEnviarAPI.ladoQuadraTime2
+						partida.saqueInicial = dadosParaEnviarAPI.saqueInicial
+						console.log(partida.saqueInicial);
+						renderizarPlacar(partidaResponse, partida);
+						console.log(partida.saqueInicial);
 
 						// Fazer uma atualização PUT para atualizar o ponto inicial da partida
-						axios
-							.put(`${url}ponto/initial/${partidaID}`, dadosParaEnviarAPI ,config)
+						/* axios
+							.put(
+								`${url}ponto/initial/${partidaID}`,
+								dadosParaEnviarAPI,
+								config
+							)
 							.then((response) => {
 								closeModal("modalDefinicaoLado");
+								renderizarPlacar(partidaResponse, partida);
 							})
 							.catch((error) => {
 								console.error(error);
@@ -144,14 +155,14 @@ if (partidaID) {
 										error.message
 									);
 								}
-							});
+							}); */
 					});
 			} else {
 				countTime01 = partida.ptTime1;
 				countTime02 = partida.ptTime2;
 				updateValueTime01();
 				updateValueTime02();
-				updateBola01(); //pensar em metodo para ser automatico
+				renderizarPlacar(partidaResponse, partida);
 				Swal.fire({
 					icon: "error",
 					title: "Partida antiga",
@@ -611,16 +622,69 @@ alterCards.forEach((alterCard) => {
 		document.getElementById(targetId).style.display = "block";
 	});
 });
+// Fução para renderizar placar de acordo com escolha de lados
+function renderizarPlacar(partidaResponse, partida) {
+	const timeEsquerdaElement = document.getElementById('timeEsquerda');
+	const timeDireitaElement = document.getElementById('timeDireita');
+
+	// Verificar o lado da quadra dos times
+	const isTime1Esquerda = partida.ladoQuadraTime1 === 'esquerda';
+
+	// Definir os dados do time da esquerda
+	if (isTime1Esquerda) {
+			document.getElementById('logoTimeEsquerda').src = `http://localhost:3001/public/upload/img/time/${partidaResponse.logoTime1}`;
+			document.getElementById('nomeTimeEsquerda').innerText = partidaResponse.nomeTime1;
+			countTime01 = partida.ptTime1;
+			countTime02 = partida.ptTime2;
+			console.log( typeof partidaResponse.idTime1, typeof partida.idTime);
+			if (partidaResponse.idTime1 === partida.idTime) {
+				console.log("aqui1");
+				updateBola01();
+			}
+	} else {
+			document.getElementById('logoTimeEsquerda').src = `http://localhost:3001/public/upload/img/time/${partidaResponse.logoTime2}`;
+			document.getElementById('nomeTimeEsquerda').innerText = partidaResponse.nomeTime2;
+			countTime01 = partida.ptTime2;
+			countTime02 = partida.ptTime1;
+	}
+
+	// Definir os dados do time da direita
+	if (isTime1Esquerda) {
+			document.getElementById('logoTimeDireita').src = `http://localhost:3001/public/upload/img/time/${partidaResponse.logoTime2}`;
+			document.getElementById('nomeTimeDireita').innerText = partidaResponse.nomeTime2;
+			console.log( typeof partidaResponse.idTime1, typeof partida.idTime);
+			console.log( partidaResponse.idTime1, partida.idTime);
+			if (partidaResponse.idTime1 === partida.idTime) {
+				console.log("aqui3");
+				updateBola02();
+			}
+	} else {
+			document.getElementById('logoTimeDireita').src = `http://localhost:3001/public/upload/img/time/${partidaResponse.logoTime1}`;
+			document.getElementById('nomeTimeDireita').innerText = partidaResponse.nomeTime1;
+	}
+
+	if (
+		partidaResponse.idTime1.toString() === partida.saqueInicial
+	) {
+		console.log("saque esquerda");
+		updateBola01();
+	} else if(partidaResponse.idTime2.toString() === partida.saqueInicial){
+		console.log("saque direita");
+		updateBola02();
+	}
+	updateValueTime01();
+	updateValueTime02();
+}
 // Função para encontrar os lados e preparar os dados para a API
 function prepararDadosParaAPI(partidaResponse, selectedTimes) {
-	const idTimeSelecionado1 = selectedTimes[0];
-	const idTimeSelecionado2 = selectedTimes[1];
+	const idTimeSelecionado1 = selectedTimes[0];//18
+	const idTimeSelecionado2 = selectedTimes[1];//1
 
 	let ladoQuadraTime1, ladoQuadraTime2;
 
 	if (
-		partidaResponse.idTime1.toString() === idTimeSelecionado1 ||
-		partidaResponse.idTime1.toString() === idTimeSelecionado2
+		partidaResponse.idTime1.toString() === idTimeSelecionado1 &&
+		partidaResponse.idTime2.toString() === idTimeSelecionado2
 	) {
 		ladoQuadraTime1 = "esquerda";
 		ladoQuadraTime2 = "direita";
@@ -636,6 +700,8 @@ function prepararDadosParaAPI(partidaResponse, selectedTimes) {
 		ladoQuadraTime2,
 		saqueInicial: selectedTimes[2],
 	};
-
+	console.log("Debug dados api",
+		dadosParaAPI
+	);
 	return dadosParaAPI;
 }
