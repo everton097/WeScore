@@ -118,12 +118,11 @@ if (partidaID) {
 							partidaResponse,
 							selectedTimes
 						);
-						partida.ladoQuadraTime1 = dadosParaEnviarAPI.ladoQuadraTime1
-						partida.ladoQuadraTime2 = dadosParaEnviarAPI.ladoQuadraTime2
-						partida.saqueInicial = dadosParaEnviarAPI.saqueInicial
-						console.log(partida.saqueInicial);
+						partida.ladoQuadraTime1 = dadosParaEnviarAPI.ladoQuadraTime1;
+						partida.ladoQuadraTime2 = dadosParaEnviarAPI.ladoQuadraTime2;
+						partida.saqueInicial = dadosParaEnviarAPI.saqueInicial;
+
 						renderizarPlacar(partidaResponse, partida);
-						console.log(partida.saqueInicial);
 
 						// Fazer uma atualização PUT para atualizar o ponto inicial da partida
 						/* axios
@@ -163,20 +162,6 @@ if (partidaID) {
 				updateValueTime01();
 				updateValueTime02();
 				renderizarPlacar(partidaResponse, partida);
-				Swal.fire({
-					icon: "error",
-					title: "Partida antiga",
-					showConfirmButton: false,
-					timer: 1500,
-				}).then(() => {
-					console.log(
-						"Partida antiga",
-						partida.ptTime1,
-						partida.ptTime2,
-						partida.set,
-						partida
-					);
-				});
 			}
 		})
 		.catch((error) => {
@@ -624,61 +609,84 @@ alterCards.forEach((alterCard) => {
 });
 // Fução para renderizar placar de acordo com escolha de lados
 function renderizarPlacar(partidaResponse, partida) {
-	const timeEsquerdaElement = document.getElementById('timeEsquerda');
-	const timeDireitaElement = document.getElementById('timeDireita');
-
 	// Verificar o lado da quadra dos times
-	const isTime1Esquerda = partida.ladoQuadraTime1 === 'esquerda';
-
+	const isTime1Esquerda = partida.ladoQuadraTime1 === "Esquerda";
 	// Definir os dados do time da esquerda
 	if (isTime1Esquerda) {
-			document.getElementById('logoTimeEsquerda').src = `http://localhost:3001/public/upload/img/time/${partidaResponse.logoTime1}`;
-			document.getElementById('nomeTimeEsquerda').innerText = partidaResponse.nomeTime1;
-			countTime01 = partida.ptTime1;
-			countTime02 = partida.ptTime2;
-			console.log( typeof partidaResponse.idTime1, typeof partida.idTime);
-			if (partidaResponse.idTime1 === partida.idTime) {
-				console.log("aqui1");
-				updateBola01();
-			}
+		document.getElementById(
+			"logoTimeEsquerda"
+		).src = `http://localhost:3001/public/upload/img/time/${partidaResponse.logoTime1}`;
+		document.getElementById("nomeTimeEsquerda").innerText =
+			partidaResponse.nomeTime1;
+		countTime01 = partida.ptTime1;
+		countTime02 = partida.ptTime2;
 	} else {
-			document.getElementById('logoTimeEsquerda').src = `http://localhost:3001/public/upload/img/time/${partidaResponse.logoTime2}`;
-			document.getElementById('nomeTimeEsquerda').innerText = partidaResponse.nomeTime2;
-			countTime01 = partida.ptTime2;
-			countTime02 = partida.ptTime1;
+		document.getElementById(
+			"logoTimeEsquerda"
+		).src = `http://localhost:3001/public/upload/img/time/${partidaResponse.logoTime2}`;
+		document.getElementById("nomeTimeEsquerda").innerText =
+			partidaResponse.nomeTime2;
+		countTime01 = partida.ptTime2;
+		countTime02 = partida.ptTime1;
 	}
 
 	// Definir os dados do time da direita
 	if (isTime1Esquerda) {
-			document.getElementById('logoTimeDireita').src = `http://localhost:3001/public/upload/img/time/${partidaResponse.logoTime2}`;
-			document.getElementById('nomeTimeDireita').innerText = partidaResponse.nomeTime2;
-			console.log( typeof partidaResponse.idTime1, typeof partida.idTime);
-			console.log( partidaResponse.idTime1, partida.idTime);
-			if (partidaResponse.idTime1 === partida.idTime) {
-				console.log("aqui3");
-				updateBola02();
-			}
+		document.getElementById(
+			"logoTimeDireita"
+		).src = `http://localhost:3001/public/upload/img/time/${partidaResponse.logoTime2}`;
+		document.getElementById("nomeTimeDireita").innerText =
+			partidaResponse.nomeTime2;
 	} else {
-			document.getElementById('logoTimeDireita').src = `http://localhost:3001/public/upload/img/time/${partidaResponse.logoTime1}`;
-			document.getElementById('nomeTimeDireita').innerText = partidaResponse.nomeTime1;
+		document.getElementById(
+			"logoTimeDireita"
+		).src = `http://localhost:3001/public/upload/img/time/${partidaResponse.logoTime1}`;
+		document.getElementById("nomeTimeDireita").innerText =
+			partidaResponse.nomeTime1;
+	}
+	if (partida.idTime == null) {
+		if (
+			partidaResponse.idTime1 === partida.saqueInicial &&
+			partida.ladoQuadraTime1 === "Esquerda"
+		) {
+			updateBola01();
+		} else if (partidaResponse.idTime1 === partida.saqueInicial) {
+			updateBola02();
+		}
+		if (
+			partidaResponse.idTime2 === partida.saqueInicial &&
+			partida.ladoQuadraTime2 === "Esquerda"
+		) {
+			updateBola01();
+		} else if (partidaResponse.idTime2 === partida.saqueInicial) {
+			updateBola02();
+		}
+	} else {
+		if (
+			partidaResponse.idTime1 === partida.idTime &&
+			partida.ladoQuadraTime1 === "Esquerda"
+		) {
+			updateBola01();
+		} else if (partidaResponse.idTime1 === partida.idTime) {
+			updateBola02();
+		}
+		if (
+			partidaResponse.idTime2 === partida.idTime &&
+			partida.ladoQuadraTime2 === "Esquerda"
+		) {
+			updateBola01();
+		} else if (partidaResponse.idTime2 === partida.idTime) {
+			updateBola02();
+		}
 	}
 
-	if (
-		partidaResponse.idTime1.toString() === partida.saqueInicial
-	) {
-		console.log("saque esquerda");
-		updateBola01();
-	} else if(partidaResponse.idTime2.toString() === partida.saqueInicial){
-		console.log("saque direita");
-		updateBola02();
-	}
 	updateValueTime01();
 	updateValueTime02();
 }
 // Função para encontrar os lados e preparar os dados para a API
 function prepararDadosParaAPI(partidaResponse, selectedTimes) {
-	const idTimeSelecionado1 = selectedTimes[0];//18
-	const idTimeSelecionado2 = selectedTimes[1];//1
+	const idTimeSelecionado1 = selectedTimes[0];
+	const idTimeSelecionado2 = selectedTimes[1];
 
 	let ladoQuadraTime1, ladoQuadraTime2;
 
@@ -686,11 +694,11 @@ function prepararDadosParaAPI(partidaResponse, selectedTimes) {
 		partidaResponse.idTime1.toString() === idTimeSelecionado1 &&
 		partidaResponse.idTime2.toString() === idTimeSelecionado2
 	) {
-		ladoQuadraTime1 = "esquerda";
-		ladoQuadraTime2 = "direita";
+		ladoQuadraTime1 = "Esquerda";
+		ladoQuadraTime2 = "Direita";
 	} else {
-		ladoQuadraTime1 = "direita";
-		ladoQuadraTime2 = "esquerda";
+		ladoQuadraTime1 = "Direita";
+		ladoQuadraTime2 = "Esquerda";
 	}
 
 	// Preparar objeto para enviar à API
@@ -698,10 +706,7 @@ function prepararDadosParaAPI(partidaResponse, selectedTimes) {
 		idPartida: partidaResponse.idPartida,
 		ladoQuadraTime1,
 		ladoQuadraTime2,
-		saqueInicial: selectedTimes[2],
+		saqueInicial: parseInt(selectedTimes[2]),
 	};
-	console.log("Debug dados api",
-		dadosParaAPI
-	);
 	return dadosParaAPI;
 }
