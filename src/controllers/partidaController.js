@@ -17,9 +17,9 @@ exports.getPartidaCampeonatoById = async (req,res) =>{
         const partida = response.data
 
         response = await api.get(`/time/players/${partida.idTime1}`, config)
-        const jogadoresTime1 = response.data.Jogadors
+        const jogadoresTime1 = response.data
         response = await api.get(`/time/players/${partida.idTime2}`, config)
-        const jogadoresTime2 = response.data.Jogadors
+        const jogadoresTime2 = response.data
         
         console.log("Partidas",partida)
         console.log("JogadoresTime1",jogadoresTime1)

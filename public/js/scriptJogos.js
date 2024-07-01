@@ -125,7 +125,7 @@ if (partidaID) {
 						renderizarPlacar(partidaResponse, partida);
 
 						// Fazer uma atualização PUT para atualizar o ponto inicial da partida
-						/* axios
+						axios
 							.put(
 								`${url}ponto/initial/${partidaID}`,
 								dadosParaEnviarAPI,
@@ -154,7 +154,7 @@ if (partidaID) {
 										error.message
 									);
 								}
-							}); */
+							});
 					});
 			} else {
 				countTime01 = partida.ptTime1;
