@@ -47,7 +47,7 @@ logoutButton.addEventListener("click", function () {
 // Função para abrir o modal
 function openModal(idmodel) {
 	const modal = document.getElementById(idmodel);
-	modal.style.display = "block";
+	modal.style.display = "flex";
 	modal.classList.remove("modal-close");
 	// Evento para fechar o modal quando o usuário clica no botão "Fechar"
 	document

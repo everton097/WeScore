@@ -8,6 +8,10 @@ let countTime02 = 0,
 	controlet2 = "semponto",
 	rotacaot2 = "mantem";
 
+let timeDireita = 0,
+	timeEsquerda = 0,
+	nomeTimeDireita = "",
+	nomeTimeEsquerda = "";
 // Controle de estado para armazenar os IDs dos times selecionados
 let selectedTimes = [],
 	partida = {};
@@ -134,6 +138,39 @@ if (partidaID) {
 							.then((response) => {
 								closeModal("modalDefinicaoLado");
 								renderizarPlacar(partidaResponse, partida);
+								const newModelPartida = document.createElement("div");
+								newModelPartida.id = `modalDefinicaoJogadores`;
+								newModelPartida.classList.add("modal");
+								newModelPartida.innerHTML = `
+									<div class="modal-content">
+											<h2>Definição de jogadores titulares</h2>
+											<div class="modal-body">
+												<form id="selecaoJogadoresForm" enctype="multipart/form-data" class="form">
+													<div class="group">
+															<div id="subselectorContainer" class="subselector_container">
+																	<label for="timesCadastrados"><strong>${nomeTimeEsquerda}</strong></label>
+																	<div id="escolhaJogadoresLadoEsquerdo" class="escolhaJogadoresLadoEsquerdo"></div>
+															</div>
+													</div>
+
+													<div class="group">
+															<div id="subselectorContainer" class="subselector_container">
+																	<label for="timesCadastrados"><strong>${nomeTimeDireita}</strong></label>
+																	<div id="escolhaJogadoresLadoDireito" class="escolhaJogadoresLadoDireito"></div>
+															</div>
+													</div>
+												</form>
+											</div>
+											<div class="modal-footer">
+													<button id="btnFecharModal" class="btn btn-cancel">Fechar</button>
+													<button id="btnSalvarModal" class="btn btn-primary">Salvar</button>
+											</div>
+									</div>
+								`;
+
+								document.body.appendChild(newModelPartida);
+								renderizarJogadores(jogadoresTime1, jogadoresTime2);
+								openModal("modalDefinicaoJogadores");
 							})
 							.catch((error) => {
 								console.error(error);
@@ -612,35 +649,51 @@ function renderizarPlacar(partidaResponse, partida) {
 	const isTime1Esquerda = partida.ladoQuadraTime1 === "Esquerda";
 
 	// Definir os dados do time da esquerda
-	const timeEsquerda = isTime1Esquerda ? partidaResponse.idTime1 : partidaResponse.idTime2;
-	const nomeTimeEsquerda = isTime1Esquerda ? partidaResponse.nomeTime1 : partidaResponse.nomeTime2;
-	const logoTimeEsquerda = isTime1Esquerda ? partidaResponse.logoTime1 : partidaResponse.logoTime2;
-	const timeDireita = isTime1Esquerda ? partidaResponse.idTime2 : partidaResponse.idTime1;
-	const nomeTimeDireita = isTime1Esquerda ? partidaResponse.nomeTime2 : partidaResponse.nomeTime1;
-	const logoTimeDireita = isTime1Esquerda ? partidaResponse.logoTime2 : partidaResponse.logoTime1;
+	timeEsquerda = isTime1Esquerda
+		? partidaResponse.idTime1
+		: partidaResponse.idTime2;
+	nomeTimeEsquerda = isTime1Esquerda
+		? partidaResponse.nomeTime1
+		: partidaResponse.nomeTime2;
+	const logoTimeEsquerda = isTime1Esquerda
+		? partidaResponse.logoTime1
+		: partidaResponse.logoTime2;
+	timeDireita = isTime1Esquerda
+		? partidaResponse.idTime2
+		: partidaResponse.idTime1;
+	nomeTimeDireita = isTime1Esquerda
+		? partidaResponse.nomeTime2
+		: partidaResponse.nomeTime1;
+	const logoTimeDireita = isTime1Esquerda
+		? partidaResponse.logoTime2
+		: partidaResponse.logoTime1;
 
 	// Atualizar os elementos no DOM
-	document.getElementById("logoTimeEsquerda").src = `http://localhost:3001/public/upload/img/time/${logoTimeEsquerda}`;
+	document.getElementById(
+		"logoTimeEsquerda"
+	).src = `http://localhost:3001/public/upload/img/time/${logoTimeEsquerda}`;
 	document.getElementById("nomeTimeEsquerda").innerText = nomeTimeEsquerda;
-	document.getElementById("logoTimeDireita").src = `http://localhost:3001/public/upload/img/time/${logoTimeDireita}`;
+	document.getElementById(
+		"logoTimeDireita"
+	).src = `http://localhost:3001/public/upload/img/time/${logoTimeDireita}`;
 	document.getElementById("nomeTimeDireita").innerText = nomeTimeDireita;
 
 	// Definir os pontos dos times
 	if (isTime1Esquerda) {
-			countTime01 = partida.ptTime1;
-			countTime02 = partida.ptTime2;
+		countTime01 = partida.ptTime1;
+		countTime02 = partida.ptTime2;
 	} else {
-			countTime01 = partida.ptTime2;
-			countTime02 = partida.ptTime1;
+		countTime01 = partida.ptTime2;
+		countTime02 = partida.ptTime1;
 	}
 
 	// Verificar o saque inicial ou o ID do time
 	const timeSaque = partida.idTime || partida.saqueInicial;
 
 	if (timeEsquerda === timeSaque) {
-			updateBola01();
+		updateBola01();
 	} else if (timeDireita === timeSaque) {
-			updateBola02();
+		updateBola02();
 	}
 
 	updateValueTime01();
@@ -672,4 +725,35 @@ function prepararDadosParaAPI(partidaResponse, selectedTimes) {
 		saqueInicial: parseInt(selectedTimes[2]),
 	};
 	return dadosParaAPI;
+}
+function renderizarJogadores(jogadoresTime1, jogadoresTime2) {
+	// Limpar as divs antes de adicionar novos jogadores
+	document.getElementById("escolhaJogadoresLadoEsquerdo").innerHTML = "";
+	document.getElementById("escolhaJogadoresLadoDireito").innerHTML = "";
+
+	// Função auxiliar para adicionar jogadores ao lado correto
+	function adicionarJogadores(lado, jogadores) {
+		const container = document.getElementById(lado);
+		jogadores.forEach((jogador) => {
+			const jogadorDiv = document.createElement("div");
+			jogadorDiv.id = `jogador${jogador.idJogador}`;
+			jogadorDiv.classList.add("bolinhaEscolhaJogadores");
+			jogadorDiv.innerText = jogador.numeroCamiseta;
+			container.appendChild(jogadorDiv);
+		});
+	}
+
+	// Verificar e adicionar jogadores do time 1
+	if (jogadoresTime1.idTime === timeEsquerda) {
+		adicionarJogadores("escolhaJogadoresLadoEsquerdo", jogadoresTime1.Jogadors);
+	} else if (jogadoresTime1.idTime === timeDireita) {
+		adicionarJogadores("escolhaJogadoresLadoDireito", jogadoresTime1.Jogadors);
+	}
+
+	// Verificar e adicionar jogadores do time 2
+	if (jogadoresTime2.idTime === timeEsquerda) {
+		adicionarJogadores("escolhaJogadoresLadoEsquerdo", jogadoresTime2.Jogadors);
+	} else if (jogadoresTime2.idTime === timeDireita) {
+		adicionarJogadores("escolhaJogadoresLadoDireito", jogadoresTime2.Jogadors);
+	}
 }

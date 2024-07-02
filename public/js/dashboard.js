@@ -787,7 +787,7 @@ async function renderJogadores(timeId) {
 	axios.get(`${url}time/players/${timeId}`, config)
 	.then((response) => {
 		// Se não houverem times, mostre mensagem informativa
-		if (response.data.length === 0) {
+		if (response.data.Jogadors.length === 0) {
 			// Renderiza as jogadores no contêiner de jogadores
 			const jogadoresContainer = document.getElementById("jogadoresContainer");
 			jogadoresContainer.innerHTML = ""; // Limpe o conteúdo anterior
@@ -798,7 +798,7 @@ async function renderJogadores(timeId) {
 			// Renderiza as jogadores no contêiner de jogadores
 			const jogadoresContainer = document.getElementById("jogadoresContainer");
 			jogadoresContainer.innerHTML = ""; // Limpe o conteúdo anterior
-			response.data.forEach((jogador) => {
+			response.data.Jogadors.forEach((jogador) => {
 				const jogadorElement = document.createElement("div");
 				jogadorElement.id = `jogador_${jogador.idJogador}`;
 				jogadorElement.classList.add("cardDashboard_division");

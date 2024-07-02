@@ -42,7 +42,7 @@ exports.getALLDatas = async (req,res) => {
                     }
                 })
                 response = await api.get(`/time/players/${idtimes[0]}`, config)
-                jogadores = response.data
+                jogadores = response.data.Jogadors
             }
         }
         const user = res.locals.user
