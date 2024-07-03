@@ -199,6 +199,14 @@ if (partidaID) {
 				updateValueTime01();
 				updateValueTime02();
 				renderizarPlacar(partidaResponse, partida);
+				
+				console.log("Partida antiga!");
+				console.log("Partida",partida);
+				console.log("Response",partidaResponse);
+				console.log(timeDireita);
+				console.log(timeEsquerda);
+				console.log(nomeTimeDireita);
+				console.log(nomeTimeEsquerda);
 			}
 		})
 		.catch((error) => {
@@ -644,6 +652,8 @@ alterCards.forEach((alterCard) => {
 		document.getElementById(targetId).style.display = "block";
 	});
 });
+
+
 // Fução para renderizar placar de acordo com escolha de lados
 function renderizarPlacar(partidaResponse, partida) {
 	const isTime1Esquerda = partida.ladoQuadraTime1 === "Esquerda";
@@ -756,4 +766,41 @@ function renderizarJogadores(jogadoresTime1, jogadoresTime2) {
 	} else if (jogadoresTime2.idTime === timeDireita) {
 		adicionarJogadores("escolhaJogadoresLadoDireito", jogadoresTime2.Jogadors);
 	}
+}
+function escolhaJogadores() {
+	closeModal("modalDefinicaoLado");
+								renderizarPlacar(partidaResponse, partida);
+								const newModelPartida = document.createElement("div");
+								newModelPartida.id = `modalDefinicaoJogadores`;
+								newModelPartida.classList.add("modal");
+								newModelPartida.innerHTML = `
+									<div class="modal-content">
+											<h2>Definição de jogadores titulares</h2>
+											<div class="modal-body">
+												<form id="selecaoJogadoresForm" enctype="multipart/form-data" class="form">
+													<div class="group">
+															<div id="subselectorContainer" class="subselector_container">
+																	<label for="timesCadastrados"><strong>${nomeTimeEsquerda}</strong></label>
+																	<div id="escolhaJogadoresLadoEsquerdo" class="escolhaJogadoresLadoEsquerdo"></div>
+															</div>
+													</div>
+
+													<div class="group">
+															<div id="subselectorContainer" class="subselector_container">
+																	<label for="timesCadastrados"><strong>${nomeTimeDireita}</strong></label>
+																	<div id="escolhaJogadoresLadoDireito" class="escolhaJogadoresLadoDireito"></div>
+															</div>
+													</div>
+												</form>
+											</div>
+											<div class="modal-footer">
+													<button id="btnFecharModal" class="btn btn-cancel">Fechar</button>
+													<button id="btnSalvarModal" class="btn btn-primary">Salvar</button>
+											</div>
+									</div>
+								`;
+
+								document.body.appendChild(newModelPartida);
+								renderizarJogadores(jogadoresTime1, jogadoresTime2);
+								openModal("modalDefinicaoJogadores");
 }
