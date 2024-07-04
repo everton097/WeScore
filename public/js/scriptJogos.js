@@ -780,10 +780,6 @@ function prepararDadosParaAPI(partidaResponse, selectedTimes) {
 }
 
 	function renderizarJogadores(jogadoresTime1, jogadoresTime2) {
-    // Limpar as divs antes de adicionar novos jogadores
-    document.getElementById("escolhaJogadoresLadoEsquerdo").innerHTML = "";
-    document.getElementById("escolhaJogadoresLadoDireito").innerHTML = "";
-
     // Função auxiliar para adicionar jogadores ao lado correto
     function adicionarJogadores(lado, jogadores, arrayLado, ladojogador, posicoesDisponiveis, posicoesJogadores) {
         const container = document.getElementById(lado);
