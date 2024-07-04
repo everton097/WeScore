@@ -38,7 +38,7 @@
   background-color: var(--nav-bar-a-color);
   display: flex;
   color: white;
-  font-size: 100%;
+  font-size: 70%;
   text-align: center;
   font-weight: bolder;
   align-items: center;
@@ -46,6 +46,7 @@
   transition: left 0.5s ease, top 0.5s ease;
   cursor: pointer;
 }
+
 .bolinha2 {
   position: absolute;
   width: 20%;
@@ -54,13 +55,17 @@
   background-color: var(--nav-bar-a-color-border-solid);
   display: flex;
   color: white;
-  font-size: 100%;
+  font-size: 70%;
   text-align: center;
   font-weight: bolder;
   align-items: center;
   justify-content: center;
   transition: left 0.5s ease, top 0.5s ease;
   cursor: pointer;
+}
+.group .bolinha,
+.group .bolinha2{
+  font-size: 50%;
 }
 .volleyball-court {
   width: 50%;
@@ -72,6 +77,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.group .volleyball-court {
+  width: 90%;
+  transition: 0.5s;
+}
+.group .quadradejogo{
+  width: 90%;
+  transition: 0.5s;
 }
 .net {
   width: 3px;
@@ -209,6 +222,10 @@
   }
   .attack-line.right {
     right: 34%;
+  }
+  .group .bolinha,
+  .group .bolinha2{
+    font-size: 70%;
   }
 }
 @media only screen and (max-width: 500px) {

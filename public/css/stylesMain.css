@@ -4,7 +4,9 @@
 	--box-shadow-color: rgba(191, 191, 191, 1);
 	--logo-color: #0ebeff;
 	--nav-bar-a-color: #0ebeff;
+	--nav-bar-a-color-active: #009ed8;
 	--nav-bar-a-color-border-solid: #074672;
+	--nav-bar-a-color-border-solid-active: #042b47;
 	--activePage: #074672;
 	--hamburger-color: #0ebeff;
 	--hamburger-background-color: white;

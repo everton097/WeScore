@@ -171,9 +171,17 @@ button {
   justify-content: center;
   cursor: pointer;
 }
+.bolinhaSubistituicao.jogadorSelecionado,
+.bolinhaEscolhaJogadores.jogadorSelecionado{
+  background-color: var(--nav-bar-a-color-active);
+}
 .subtime02,
 .escolhaJogadoresLadoDireito .bolinhaEscolhaJogadores{
   background-color: var(--nav-bar-a-color-border-solid);
+}
+.subtime02.jogadorSelecionado,
+.escolhaJogadoresLadoDireito .bolinhaEscolhaJogadores.jogadorSelecionado{
+  background-color: var(--nav-bar-a-color-border-solid-active);
 }
 .jogadoresSubistituicaoTime01,
 .escolhaJogadoresLadoEsquerdo{

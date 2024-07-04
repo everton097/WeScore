@@ -14,7 +14,9 @@ let timeDireita = 0,
 	nomeTimeEsquerda = "";
 // Controle de estado para armazenar os IDs dos times selecionados
 let selectedTimes = [],
-	partida = {};
+	partida = {},
+	jogadoresEmQuadraDireita = [],
+	jogadoresEmQuadraEsquerda = [];
 
 const partidaID = document.getElementById("idPartida").dataset.partidaId;
 if (partidaID) {
@@ -159,6 +161,50 @@ if (partidaID) {
 																	<div id="escolhaJogadoresLadoDireito" class="escolhaJogadoresLadoDireito"></div>
 															</div>
 													</div>
+
+													<div class="group">
+															<div id="subselectorContainer" class="subselector_container">
+																	<label for="timesCadastrados"><strong>Quadra final</strong></label>
+																	<div class="quadradejogo">
+																		<div class="volleyball-court">
+																			<div class="service-area left"></div>
+																			<div class="service-area right"></div>
+																			<div class="attack-area left"></div>
+																			<div class="attack-area right"></div>
+																			<div class="attack-line left"></div>
+																			<div class="attack-line right"></div>
+																			<div class="coach-box left"></div>
+																			<div class="coach-box right"></div>
+																			<div class="coach-box left bottom"></div>
+																			<div class="coach-box right bottom"></div>
+																			<div class="baseline"></div>
+																			<div class="net"></div>
+																		</div>
+																		<div class="quadraVolei">
+																			<div class="ballplayer">
+																				<div class="jogadoresTime01 quadra">
+																					<div id="JogadorEsquerda0" class="bolinha" style="left: 10%; top: 78%;"></div>
+																					<div id="JogadorEsquerda1" class="bolinha" style="left: 65%; top: 78%;"></div>
+																					<div id="JogadorEsquerda2" class="bolinha" style="left: 65%; top: 40%;"></div>
+																					<div id="JogadorEsquerda3" class="bolinha" style="left: 65%; top: 8%;"></div>
+																					<div id="JogadorEsquerda4" class="bolinha" style="left: 10%; top: 8%;"></div>
+																					<div id="JogadorEsquerda5" class="bolinha" style="left: 10%; top: 40%;"></div>
+																				</div>
+																			</div>
+																			<div class="ballplayer">
+																				<div class="jogadoresTime02 quadra">
+																					<div id="JogadorDireita0" class="bolinha2" style="left: 75%; top: 8%;"></div>
+																					<div id="JogadorDireita1" class="bolinha2" style="left: 75%; top: 40%;"></div>
+																					<div id="JogadorDireita2" class="bolinha2" style="left: 75%; top: 78%;"></div>
+																					<div id="JogadorDireita3" class="bolinha2" style="left: 25%; top: 78%;"></div>
+																					<div id="JogadorDireita4" class="bolinha2" style="left: 25%; top: 40%;"></div>
+																					<div id="JogadorDireita5" class="bolinha2" style="left: 25%; top: 8%;"></div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+															</div>
+													</div>
 												</form>
 											</div>
 											<div class="modal-footer">
@@ -199,10 +245,10 @@ if (partidaID) {
 				updateValueTime01();
 				updateValueTime02();
 				renderizarPlacar(partidaResponse, partida);
-				
+
 				console.log("Partida antiga!");
-				console.log("Partida",partida);
-				console.log("Response",partidaResponse);
+				console.log("Partida", partida);
+				console.log("Response", partidaResponse);
 				console.log(timeDireita);
 				console.log(timeEsquerda);
 				console.log(nomeTimeDireita);
@@ -239,19 +285,19 @@ const subsTime02 = document.getElementById("subistituicaoTime02");
 const compStylesSubsTime02 = window.getComputedStyle(subsTime01);
 const compStylesSubsTime01 = window.getComputedStyle(subsTime02);
 //Jogadores para substituição do time 01
-const subsTime01jgd1 = document.getElementById("Time01jgd1");
-const subsTime01jgd2 = document.getElementById("Time01jgd2");
-const subsTime01jgd3 = document.getElementById("Time01jgd3");
-const subsTime01jgd4 = document.getElementById("Time01jgd4");
-const subsTime01jgd5 = document.getElementById("Time01jgd5");
-const subsTime01jgd6 = document.getElementById("Time01jgd6");
+/* const subsJogadorEsquerda0 = document.getElementById("JogadorEsquerda0");
+const subsJogadorEsquerda1 = document.getElementById("JogadorEsquerda1");
+const subsJogadorEsquerda2 = document.getElementById("JogadorEsquerda2");
+const subsJogadorEsquerda3 = document.getElementById("JogadorEsquerda3");
+const subsJogadorEsquerda4 = document.getElementById("JogadorEsquerda4");
+const subsJogadorEsquerda5 = document.getElementById("JogadorEsquerda5");
 //Jogadores para substituição do time 02
-const subsTime02jgd1 = document.getElementById("Time02jgd1");
-const subsTime02jgd2 = document.getElementById("Time02jgd2");
-const subsTime02jgd3 = document.getElementById("Time02jgd3");
-const subsTime02jgd4 = document.getElementById("Time02jgd4");
-const subsTime02jgd5 = document.getElementById("Time02jgd5");
-const subsTime02jgd6 = document.getElementById("Time02jgd6");
+const subsJogadorDireita0 = document.getElementById("JogadorDireita0");
+const subsJogadorDireita1 = document.getElementById("JogadorDireita1");
+const subsJogadorDireita2 = document.getElementById("JogadorDireita2");
+const subsJogadorDireita3 = document.getElementById("JogadorDireita3");
+const subsJogadorDireita4 = document.getElementById("JogadorDireita4");
+const subsJogadorDireita5 = document.getElementById("JogadorDireita5"); */
 //recupera o Card de Substituição
 const statusDisplayCard = document.getElementById("popupcard");
 //Computar o estilo do css
@@ -275,46 +321,46 @@ const AlterStatusCard = (time) => {
 closecard.addEventListener("click", () => {
 	AlterStatusCard();
 });
-//Jogadores para substituição do time 01
-subsTime01jgd6.addEventListener("click", () => {
+/* //Jogadores para substituição do time 01
+subsJogadorEsquerda5.addEventListener("click", () => {
 	AlterStatusCard("time01");
 });
-subsTime01jgd5.addEventListener("click", () => {
+subsJogadorEsquerda4.addEventListener("click", () => {
 	AlterStatusCard("time01");
 });
-subsTime01jgd4.addEventListener("click", () => {
+subsJogadorEsquerda3.addEventListener("click", () => {
 	AlterStatusCard("time01");
 });
-subsTime01jgd3.addEventListener("click", () => {
+subsJogadorEsquerda2.addEventListener("click", () => {
 	AlterStatusCard("time01");
 });
-subsTime01jgd2.addEventListener("click", () => {
+subsJogadorEsquerda1.addEventListener("click", () => {
 	AlterStatusCard("time01");
 });
-subsTime01jgd1.addEventListener("click", () => {
+subsJogadorEsquerda0.addEventListener("click", () => {
 	AlterStatusCard("time01");
 	//document.getElementById("popupcard").style.display = "flex";
 });
 //Jogadores para substituição do time 02
-subsTime02jgd6.addEventListener("click", () => {
+subsJogadorDireita5.addEventListener("click", () => {
 	AlterStatusCard("time02");
 });
-subsTime02jgd5.addEventListener("click", () => {
+subsJogadorDireita4.addEventListener("click", () => {
 	AlterStatusCard("time02");
 });
-subsTime02jgd4.addEventListener("click", () => {
+subsJogadorDireita3.addEventListener("click", () => {
 	AlterStatusCard("time02");
 });
-subsTime02jgd3.addEventListener("click", () => {
+subsJogadorDireita2.addEventListener("click", () => {
 	AlterStatusCard("time02");
 });
-subsTime02jgd2.addEventListener("click", () => {
+subsJogadorDireita1.addEventListener("click", () => {
 	AlterStatusCard("time02");
 });
-subsTime02jgd1.addEventListener("click", () => {
+subsJogadorDireita0.addEventListener("click", () => {
 	AlterStatusCard("time02");
 	//document.getElementById("popupcard").style.display = "flex";
-});
+}); */
 
 const updateValueTime01 = () => {
 	if (countTime01 <= 9) {
@@ -419,25 +465,25 @@ document.addEventListener("mouseup", () => clearInterval(intervalIDTime01));
 var posiocaoLeftT1 = [0, 0, 55, 55, 55, 0];
 var posiocaoTopT1 = [37.5, 2, 2, 37.5, 75, 75];
 
-const jogador1 = document.querySelector(".jogador1");
-const jogador2 = document.querySelector(".jogador2");
-const jogador3 = document.querySelector(".jogador3");
-const jogador4 = document.querySelector(".jogador4");
-const jogador5 = document.querySelector(".jogador5");
-const jogador6 = document.querySelector(".jogador6");
+/* const JogadorEsquerda0 = document.querySelector("#JogadorEsquerda0");
+const JogadorEsquerda1 = document.querySelector("#JogadorEsquerda1");
+const JogadorEsquerda2 = document.querySelector("#JogadorEsquerda2");
+const JogadorEsquerda3 = document.querySelector("#JogadorEsquerda3");
+const JogadorEsquerda4 = document.querySelector("#JogadorEsquerda4");
+const JogadorEsquerda5 = document.querySelector("#JogadorEsquerda5");
 
-jogador1.style.left = `${posiocaoLeftT1[5]}%`;
-jogador1.style.top = `${posiocaoTopT1[5]}%`;
-jogador2.style.left = `${posiocaoLeftT1[4]}%`;
-jogador2.style.top = `${posiocaoTopT1[4]}%`;
-jogador3.style.left = `${posiocaoLeftT1[3]}%`;
-jogador3.style.top = `${posiocaoTopT1[3]}%`;
-jogador4.style.left = `${posiocaoLeftT1[2]}%`;
-jogador4.style.top = `${posiocaoTopT1[2]}%`;
-jogador5.style.left = `${posiocaoLeftT1[1]}%`;
-jogador5.style.top = `${posiocaoTopT1[1]}%`;
-jogador6.style.left = `${posiocaoLeftT1[0]}%`;
-jogador6.style.top = `${posiocaoTopT1[0]}%`;
+JogadorEsquerda0.style.left = `${posiocaoLeftT1[5]}%`;
+JogadorEsquerda0.style.top = `${posiocaoTopT1[5]}%`;
+JogadorEsquerda1.style.left = `${posiocaoLeftT1[4]}%`;
+JogadorEsquerda1.style.top = `${posiocaoTopT1[4]}%`;
+JogadorEsquerda2.style.left = `${posiocaoLeftT1[3]}%`;
+JogadorEsquerda2.style.top = `${posiocaoTopT1[3]}%`;
+JogadorEsquerda3.style.left = `${posiocaoLeftT1[2]}%`;
+JogadorEsquerda3.style.top = `${posiocaoTopT1[2]}%`;
+JogadorEsquerda4.style.left = `${posiocaoLeftT1[1]}%`;
+JogadorEsquerda4.style.top = `${posiocaoTopT1[1]}%`;
+JogadorEsquerda5.style.left = `${posiocaoLeftT1[0]}%`;
+JogadorEsquerda5.style.top = `${posiocaoTopT1[0]}%`; */
 
 const updateTime01 = () => {
 	if (controlet1 == "semponto" && rotacaot1 == "mantem") {
@@ -445,18 +491,18 @@ const updateTime01 = () => {
 		moveLeft(posiocaoLeftT1);
 		moveLeft(posiocaoTopT1);
 
-		jogador1.style.left = `${posiocaoLeftT1[5]}%`;
-		jogador1.style.top = `${posiocaoTopT1[5]}%`;
-		jogador2.style.left = `${posiocaoLeftT1[4]}%`;
-		jogador2.style.top = `${posiocaoTopT1[4]}%`;
-		jogador3.style.left = `${posiocaoLeftT1[3]}%`;
-		jogador3.style.top = `${posiocaoTopT1[3]}%`;
-		jogador4.style.left = `${posiocaoLeftT1[2]}%`;
-		jogador4.style.top = `${posiocaoTopT1[2]}%`;
-		jogador5.style.left = `${posiocaoLeftT1[1]}%`;
-		jogador5.style.top = `${posiocaoTopT1[1]}%`;
-		jogador6.style.left = `${posiocaoLeftT1[0]}%`;
-		jogador6.style.top = `${posiocaoTopT1[0]}%`;
+		JogadorEsquerda0.style.left = `${posiocaoLeftT1[5]}%`;
+		JogadorEsquerda0.style.top = `${posiocaoTopT1[5]}%`;
+		JogadorEsquerda1.style.left = `${posiocaoLeftT1[4]}%`;
+		JogadorEsquerda1.style.top = `${posiocaoTopT1[4]}%`;
+		JogadorEsquerda2.style.left = `${posiocaoLeftT1[3]}%`;
+		JogadorEsquerda2.style.top = `${posiocaoTopT1[3]}%`;
+		JogadorEsquerda3.style.left = `${posiocaoLeftT1[2]}%`;
+		JogadorEsquerda3.style.top = `${posiocaoTopT1[2]}%`;
+		JogadorEsquerda4.style.left = `${posiocaoLeftT1[1]}%`;
+		JogadorEsquerda4.style.top = `${posiocaoTopT1[1]}%`;
+		JogadorEsquerda5.style.left = `${posiocaoLeftT1[0]}%`;
+		JogadorEsquerda5.style.top = `${posiocaoTopT1[0]}%`;
 		rotacaot1 = "rotacionou";
 		rotacaot2 = "mantem";
 	} else {
@@ -468,18 +514,18 @@ const updateMenusTime01 = () => {
 		//Altera posição dos jogadores.
 		moveRight(posiocaoLeftT1);
 		moveRight(posiocaoTopT1);
-		jogador1.style.left = `${posiocaoLeftT1[5]}%`;
-		jogador1.style.top = `${posiocaoTopT1[5]}%`;
-		jogador2.style.left = `${posiocaoLeftT1[4]}%`;
-		jogador2.style.top = `${posiocaoTopT1[4]}%`;
-		jogador3.style.left = `${posiocaoLeftT1[3]}%`;
-		jogador3.style.top = `${posiocaoTopT1[3]}%`;
-		jogador4.style.left = `${posiocaoLeftT1[2]}%`;
-		jogador4.style.top = `${posiocaoTopT1[2]}%`;
-		jogador5.style.left = `${posiocaoLeftT1[1]}%`;
-		jogador5.style.top = `${posiocaoTopT1[1]}%`;
-		jogador6.style.left = `${posiocaoLeftT1[0]}%`;
-		jogador6.style.top = `${posiocaoTopT1[0]}%`;
+		JogadorEsquerda0.style.left = `${posiocaoLeftT1[5]}%`;
+		JogadorEsquerda0.style.top = `${posiocaoTopT1[5]}%`;
+		JogadorEsquerda1.style.left = `${posiocaoLeftT1[4]}%`;
+		JogadorEsquerda1.style.top = `${posiocaoTopT1[4]}%`;
+		JogadorEsquerda2.style.left = `${posiocaoLeftT1[3]}%`;
+		JogadorEsquerda2.style.top = `${posiocaoTopT1[3]}%`;
+		JogadorEsquerda3.style.left = `${posiocaoLeftT1[2]}%`;
+		JogadorEsquerda3.style.top = `${posiocaoTopT1[2]}%`;
+		JogadorEsquerda4.style.left = `${posiocaoLeftT1[1]}%`;
+		JogadorEsquerda4.style.top = `${posiocaoTopT1[1]}%`;
+		JogadorEsquerda5.style.left = `${posiocaoLeftT1[0]}%`;
+		JogadorEsquerda5.style.top = `${posiocaoTopT1[0]}%`;
 		controlet1 = "semponto";
 		rotacaot1 = "mantem";
 		rotacaot2 = "rotacionou";
@@ -553,27 +599,27 @@ minusButtonTime02.addEventListener("mousedown", () => {
 });
 document.addEventListener("mouseup", () => clearInterval(intervalIDTime02));
 
-var posiocaoLeftT2 = [75, 75, 75, 25, 25, 25];
+/* var posiocaoLeftT2 = [75, 75, 75, 25, 25, 25];
 var posiocaoTopT2 = [0, 37.5, 75, 75, 37.5, 0];
-const jogador1t2 = document.querySelector(".jogador1t2");
-const jogador2t2 = document.querySelector(".jogador2t2");
-const jogador3t2 = document.querySelector(".jogador3t2");
-const jogador4t2 = document.querySelector(".jogador4t2");
-const jogador5t2 = document.querySelector(".jogador5t2");
-const jogador6t2 = document.querySelector(".jogador6t2");
+const JogadorDireita0 = document.querySelector("#JogadorDireita0");
+const JogadorDireita1 = document.querySelector("#JogadorDireita1");
+const JogadorDireita2 = document.querySelector("#JogadorDireita2");
+const JogadorDireita3 = document.querySelector("#JogadorDireita3");
+const JogadorDireita4 = document.querySelector("#JogadorDireita4");
+const JogadorDireita5 = document.querySelector("#JogadorDireita5");
 
-jogador1t2.style.left = `${posiocaoLeftT2[0]}%`;
-jogador1t2.style.top = `${posiocaoTopT2[0]}%`;
-jogador2t2.style.left = `${posiocaoLeftT2[1]}%`;
-jogador2t2.style.top = `${posiocaoTopT2[1]}%`;
-jogador3t2.style.left = `${posiocaoLeftT2[2]}%`;
-jogador3t2.style.top = `${posiocaoTopT2[2]}%`;
-jogador4t2.style.left = `${posiocaoLeftT2[3]}%`;
-jogador4t2.style.top = `${posiocaoTopT2[3]}%`;
-jogador5t2.style.left = `${posiocaoLeftT2[4]}%`;
-jogador5t2.style.top = `${posiocaoTopT2[4]}%`;
-jogador6t2.style.left = `${posiocaoLeftT2[5]}%`;
-jogador6t2.style.top = `${posiocaoTopT2[5]}%`;
+JogadorDireita0.style.left = `${posiocaoLeftT2[0]}%`;
+JogadorDireita0.style.top = `${posiocaoTopT2[0]}%`;
+JogadorDireita1.style.left = `${posiocaoLeftT2[1]}%`;
+JogadorDireita1.style.top = `${posiocaoTopT2[1]}%`;
+JogadorDireita2.style.left = `${posiocaoLeftT2[2]}%`;
+JogadorDireita2.style.top = `${posiocaoTopT2[2]}%`;
+JogadorDireita3.style.left = `${posiocaoLeftT2[3]}%`;
+JogadorDireita3.style.top = `${posiocaoTopT2[3]}%`;
+JogadorDireita4.style.left = `${posiocaoLeftT2[4]}%`;
+JogadorDireita4.style.top = `${posiocaoTopT2[4]}%`;
+JogadorDireita5.style.left = `${posiocaoLeftT2[5]}%`;
+JogadorDireita5.style.top = `${posiocaoTopT2[5]}%`; */
 
 const updateTime02 = () => {
 	if (controlet2 == "semponto" && rotacaot2 == "mantem") {
@@ -581,18 +627,18 @@ const updateTime02 = () => {
 		moveLeft(posiocaoLeftT2);
 		moveLeft(posiocaoTopT2);
 
-		jogador1t2.style.left = `${posiocaoLeftT2[0]}%`;
-		jogador1t2.style.top = `${posiocaoTopT2[0]}%`;
-		jogador2t2.style.left = `${posiocaoLeftT2[1]}%`;
-		jogador2t2.style.top = `${posiocaoTopT2[1]}%`;
-		jogador3t2.style.left = `${posiocaoLeftT2[2]}%`;
-		jogador3t2.style.top = `${posiocaoTopT2[2]}%`;
-		jogador4t2.style.left = `${posiocaoLeftT2[3]}%`;
-		jogador4t2.style.top = `${posiocaoTopT2[3]}%`;
-		jogador5t2.style.left = `${posiocaoLeftT2[4]}%`;
-		jogador5t2.style.top = `${posiocaoTopT2[4]}%`;
-		jogador6t2.style.left = `${posiocaoLeftT2[5]}%`;
-		jogador6t2.style.top = `${posiocaoTopT2[5]}%`;
+		JogadorDireita0.style.left = `${posiocaoLeftT2[0]}%`;
+		JogadorDireita0.style.top = `${posiocaoTopT2[0]}%`;
+		JogadorDireita1.style.left = `${posiocaoLeftT2[1]}%`;
+		JogadorDireita1.style.top = `${posiocaoTopT2[1]}%`;
+		JogadorDireita2.style.left = `${posiocaoLeftT2[2]}%`;
+		JogadorDireita2.style.top = `${posiocaoTopT2[2]}%`;
+		JogadorDireita3.style.left = `${posiocaoLeftT2[3]}%`;
+		JogadorDireita3.style.top = `${posiocaoTopT2[3]}%`;
+		JogadorDireita4.style.left = `${posiocaoLeftT2[4]}%`;
+		JogadorDireita4.style.top = `${posiocaoTopT2[4]}%`;
+		JogadorDireita5.style.left = `${posiocaoLeftT2[5]}%`;
+		JogadorDireita5.style.top = `${posiocaoTopT2[5]}%`;
 		rotacaot2 = "rotacionou";
 		rotacaot1 = "mantem";
 	} else {
@@ -605,18 +651,18 @@ const updateMenusTime02 = () => {
 		moveRight(posiocaoLeftT2);
 		moveRight(posiocaoTopT2);
 
-		jogador1t2.style.left = `${posiocaoLeftT2[0]}%`;
-		jogador1t2.style.top = `${posiocaoTopT2[0]}%`;
-		jogador2t2.style.left = `${posiocaoLeftT2[1]}%`;
-		jogador2t2.style.top = `${posiocaoTopT2[1]}%`;
-		jogador3t2.style.left = `${posiocaoLeftT2[2]}%`;
-		jogador3t2.style.top = `${posiocaoTopT2[2]}%`;
-		jogador4t2.style.left = `${posiocaoLeftT2[3]}%`;
-		jogador4t2.style.top = `${posiocaoTopT2[3]}%`;
-		jogador5t2.style.left = `${posiocaoLeftT2[4]}%`;
-		jogador5t2.style.top = `${posiocaoTopT2[4]}%`;
-		jogador6t2.style.left = `${posiocaoLeftT2[5]}%`;
-		jogador6t2.style.top = `${posiocaoTopT2[5]}%`;
+		JogadorDireita0.style.left = `${posiocaoLeftT2[0]}%`;
+		JogadorDireita0.style.top = `${posiocaoTopT2[0]}%`;
+		JogadorDireita1.style.left = `${posiocaoLeftT2[1]}%`;
+		JogadorDireita1.style.top = `${posiocaoTopT2[1]}%`;
+		JogadorDireita2.style.left = `${posiocaoLeftT2[2]}%`;
+		JogadorDireita2.style.top = `${posiocaoTopT2[2]}%`;
+		JogadorDireita3.style.left = `${posiocaoLeftT2[3]}%`;
+		JogadorDireita3.style.top = `${posiocaoTopT2[3]}%`;
+		JogadorDireita4.style.left = `${posiocaoLeftT2[4]}%`;
+		JogadorDireita4.style.top = `${posiocaoTopT2[4]}%`;
+		JogadorDireita5.style.left = `${posiocaoLeftT2[5]}%`;
+		JogadorDireita5.style.top = `${posiocaoTopT2[5]}%`;
 		controlet2 = "semponto";
 		rotacaot2 = "mantem";
 		rotacaot1 = "rotacionou";
@@ -653,11 +699,9 @@ alterCards.forEach((alterCard) => {
 	});
 });
 
-
 // Fução para renderizar placar de acordo com escolha de lados
 function renderizarPlacar(partidaResponse, partida) {
 	const isTime1Esquerda = partida.ladoQuadraTime1 === "Esquerda";
-
 	// Definir os dados do time da esquerda
 	timeEsquerda = isTime1Esquerda
 		? partidaResponse.idTime1
@@ -713,9 +757,7 @@ function renderizarPlacar(partidaResponse, partida) {
 function prepararDadosParaAPI(partidaResponse, selectedTimes) {
 	const idTimeSelecionado1 = selectedTimes[0];
 	const idTimeSelecionado2 = selectedTimes[1];
-
 	let ladoQuadraTime1, ladoQuadraTime2;
-
 	if (
 		partidaResponse.idTime1.toString() === idTimeSelecionado1 &&
 		partidaResponse.idTime2.toString() === idTimeSelecionado2
@@ -742,38 +784,95 @@ function renderizarJogadores(jogadoresTime1, jogadoresTime2) {
 	document.getElementById("escolhaJogadoresLadoDireito").innerHTML = "";
 
 	// Função auxiliar para adicionar jogadores ao lado correto
-	function adicionarJogadores(lado, jogadores) {
+	function adicionarJogadores(lado, jogadores, arrayLado, ladojogador) {
 		const container = document.getElementById(lado);
 		jogadores.forEach((jogador) => {
 			const jogadorDiv = document.createElement("div");
 			jogadorDiv.id = `jogador${jogador.idJogador}`;
 			jogadorDiv.classList.add("bolinhaEscolhaJogadores");
 			jogadorDiv.innerText = jogador.numeroCamiseta;
+
+			// Adicionar ouvinte de clique
+			jogadorDiv.addEventListener("click", () => {
+				console.log(arrayLado.length);
+
+				if (arrayLado.includes(jogador.numeroCamiseta)) {
+					// Se já estiver no array, remover
+					arrayLado.splice(arrayLado.indexOf(jogador.numeroCamiseta), 1);
+					jogadorDiv.classList.remove("jogadorSelecionado");
+					document.querySelector(
+						`#Jogador${ladojogador}${arrayLado.length}`
+					).innerHTML = "";
+				} else {
+					// Verificar se o usuário está tentando selecionar mais que 6 jogadores para o time
+					if (arrayLado.length > 5) {
+						// Exibir mensagem de erro
+						Swal.fire({
+							icon: "error",
+							title: `Você já selecionou 6 jogadores`,
+							text: `Não é possível selecionar mais.`,
+							showConfirmButton: false,
+							timer: 2500,
+						});
+						return;
+					}
+					// Se não estiver no array, adicionar
+					document.querySelector(
+						`#Jogador${ladojogador}${arrayLado.length}`
+					).innerHTML = `${jogador.numeroCamiseta}`;
+					arrayLado.push(jogador.numeroCamiseta);
+					jogadorDiv.classList.add("jogadorSelecionado");
+				}
+				console.log("Esquerda:", jogadoresEmQuadraEsquerda); // Verificar jogadores adicionados
+				console.log("Direita:", jogadoresEmQuadraDireita); // Verificar jogadores adicionados
+			});
+
 			container.appendChild(jogadorDiv);
 		});
 	}
 
 	// Verificar e adicionar jogadores do time 1
 	if (jogadoresTime1.idTime === timeEsquerda) {
-		adicionarJogadores("escolhaJogadoresLadoEsquerdo", jogadoresTime1.Jogadors);
+		adicionarJogadores(
+			"escolhaJogadoresLadoEsquerdo",
+			jogadoresTime1.Jogadors,
+			jogadoresEmQuadraEsquerda,
+			"Esquerda"
+		);
 	} else if (jogadoresTime1.idTime === timeDireita) {
-		adicionarJogadores("escolhaJogadoresLadoDireito", jogadoresTime1.Jogadors);
+		adicionarJogadores(
+			"escolhaJogadoresLadoDireito",
+			jogadoresTime1.Jogadors,
+			jogadoresEmQuadraDireita,
+			"Direita"
+		);
 	}
 
 	// Verificar e adicionar jogadores do time 2
 	if (jogadoresTime2.idTime === timeEsquerda) {
-		adicionarJogadores("escolhaJogadoresLadoEsquerdo", jogadoresTime2.Jogadors);
+		adicionarJogadores(
+			"escolhaJogadoresLadoEsquerdo",
+			jogadoresTime2.Jogadors,
+			jogadoresEmQuadraEsquerda,
+			"Esquerda"
+		);
 	} else if (jogadoresTime2.idTime === timeDireita) {
-		adicionarJogadores("escolhaJogadoresLadoDireito", jogadoresTime2.Jogadors);
+		adicionarJogadores(
+			"escolhaJogadoresLadoDireito",
+			jogadoresTime2.Jogadors,
+			jogadoresEmQuadraDireita,
+			"Direita"
+		);
 	}
 }
+
 function escolhaJogadores() {
 	closeModal("modalDefinicaoLado");
-								renderizarPlacar(partidaResponse, partida);
-								const newModelPartida = document.createElement("div");
-								newModelPartida.id = `modalDefinicaoJogadores`;
-								newModelPartida.classList.add("modal");
-								newModelPartida.innerHTML = `
+	renderizarPlacar(partidaResponse, partida);
+	const newModelPartida = document.createElement("div");
+	newModelPartida.id = `modalDefinicaoJogadores`;
+	newModelPartida.classList.add("modal");
+	newModelPartida.innerHTML = `
 									<div class="modal-content">
 											<h2>Definição de jogadores titulares</h2>
 											<div class="modal-body">
@@ -800,7 +899,7 @@ function escolhaJogadores() {
 									</div>
 								`;
 
-								document.body.appendChild(newModelPartida);
-								renderizarJogadores(jogadoresTime1, jogadoresTime2);
-								openModal("modalDefinicaoJogadores");
+	document.body.appendChild(newModelPartida);
+	renderizarJogadores(jogadoresTime1, jogadoresTime2);
+	openModal("modalDefinicaoJogadores");
 }
