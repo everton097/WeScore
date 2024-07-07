@@ -46,6 +46,9 @@
   transition: left 0.5s ease, top 0.5s ease;
   cursor: pointer;
 }
+.bolinha.libero{
+  background-color: var(--nav-bar-a-color-active);
+}
 
 .bolinha2 {
   position: absolute;
@@ -63,9 +66,17 @@
   transition: left 0.5s ease, top 0.5s ease;
   cursor: pointer;
 }
+.bolinha2.libero{
+  background-color: var(--nav-bar-a-color-border-solid-active);
+}
 .group .bolinha,
 .group .bolinha2{
   font-size: 50%;
+}
+.bolinha.libero,
+.bolinha2.libero{
+  width: 10%;
+  font-size: 30%;
 }
 .volleyball-court {
   width: 50%;

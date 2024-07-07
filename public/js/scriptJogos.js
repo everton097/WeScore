@@ -120,7 +120,7 @@ if (partidaID) {
 				document
 					.getElementById("btnSalvarModal")
 					.addEventListener("click", function () {
-						const dadosParaEnviarAPI = prepararDadosParaAPI(
+						const dadosParaEnviarAPI = prepararDadosParaAPIDefinicaoTimes(
 							partidaResponse,
 							selectedTimes
 						);
@@ -189,16 +189,18 @@ if (partidaID) {
 																					<div id="JogadorEsquerda3" class="bolinha" style="left: 65%; top: 8%;"></div>
 																					<div id="JogadorEsquerda4" class="bolinha" style="left: 10%; top: 8%;"></div>
 																					<div id="JogadorEsquerda5" class="bolinha" style="left: 10%; top: 40%;"></div>
+																					<div id="JogadorEsquerda6" class="bolinha libero" style="left: 10%; top: 55%;"></div>
 																				</div>
 																			</div>
 																			<div class="ballplayer">
 																				<div class="jogadoresTime02 quadra">
 																					<div id="JogadorDireita0" class="bolinha2" style="left: 75%; top: 8%;"></div>
-																					<div id="JogadorDireita1" class="bolinha2" style="left: 75%; top: 40%;"></div>
-																					<div id="JogadorDireita2" class="bolinha2" style="left: 75%; top: 78%;"></div>
+																					<div id="JogadorDireita1" class="bolinha2" style="left: 25%; top: 8%;"></div>
+																					<div id="JogadorDireita2" class="bolinha2" style="left: 25%; top: 40%;"></div>
 																					<div id="JogadorDireita3" class="bolinha2" style="left: 25%; top: 78%;"></div>
-																					<div id="JogadorDireita4" class="bolinha2" style="left: 25%; top: 40%;"></div>
-																					<div id="JogadorDireita5" class="bolinha2" style="left: 25%; top: 8%;"></div>
+																					<div id="JogadorDireita4" class="bolinha2" style="left: 75%; top: 78%;"></div>
+																					<div id="JogadorDireita5" class="bolinha2" style="left: 75%; top: 40%;"></div>
+																					<div id="JogadorDireita6" class="bolinha2 libero" style="left: 85%; top: 55%;"></div>
 																				</div>
 																			</div>
 																		</div>
@@ -209,14 +211,60 @@ if (partidaID) {
 											</div>
 											<div class="modal-footer">
 													<button id="btnFecharModal" class="btn btn-cancel">Fechar</button>
-													<button id="btnSalvarModal" class="btn btn-primary">Salvar</button>
+													<button id="btnSalvarModal-DefinicaoJogadores" class="btn btn-primary">Salvar</button>
 											</div>
 									</div>
 								`;
 
 								document.body.appendChild(newModelPartida);
-								renderizarJogadores(jogadoresTime1, jogadoresTime2);
+								renderizarJogadores(jogadoresTime1, jogadoresTime2, timeEsquerda, timeDireita);
 								openModal("modalDefinicaoJogadores");
+								// Evento para salvar os dados quando o usuário clica no botão "Salvar"
+								document
+									.getElementById("btnSalvarModal-DefinicaoJogadores")
+									.addEventListener("click", function () {
+										const dadosParaEnviarAPI =
+											prepararDadosParaAPIDefinicaoJogadores(
+												partidaResponse,
+												partida,
+												jogadoresEmQuadraDireita,
+												jogadoresEmQuadraEsquerda
+											);
+										// Fazer uma solicitação POST para vincular jogadores em suas posições
+										axios
+											.post(`${url}posicao/create`, dadosParaEnviarAPI, config)
+											.then((response) => {
+												Swal.fire({
+													icon: "success",
+													title: "Jogadores vinculados com sucesso",
+													showConfirmButton: false,
+													timer: 1500,
+												}).then(() => {
+													closeModal("modalDefinicaoJogadores");
+													adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, timeEsquerda, timeDireita, jogadoresEmQuadraEsquerda,jogadoresEmQuadraDireita)
+												});
+											})
+											.catch((error) => {
+												console.error(error);
+												if (error.response) {
+													const { data, status } = error.response;
+													Swal.fire({
+														icon: "error",
+														title: `${data.error}`,
+														text: `Erro ${status} ` || "Erro desconhecido",
+													});
+												} else if (error.request) {
+													// A solicitação foi feita, mas não houve resposta do servidor
+													console.error("Sem resposta do servidor");
+												} else {
+													// Algo aconteceu durante a configuração da solicitação que acionou um erro
+													console.error(
+														"Erro na configuração da solicitação",
+														error.message
+													);
+												}
+											});
+									});
 							})
 							.catch((error) => {
 								console.error(error);
@@ -462,29 +510,8 @@ minusButtonTime01.addEventListener("mousedown", () => {
 });
 document.addEventListener("mouseup", () => clearInterval(intervalIDTime01));
 
-var posiocaoLeftT1 = [0, 0, 55, 55, 55, 0];
-var posiocaoTopT1 = [37.5, 2, 2, 37.5, 75, 75];
-
-/* const JogadorEsquerda0 = document.querySelector("#JogadorEsquerda0");
-const JogadorEsquerda1 = document.querySelector("#JogadorEsquerda1");
-const JogadorEsquerda2 = document.querySelector("#JogadorEsquerda2");
-const JogadorEsquerda3 = document.querySelector("#JogadorEsquerda3");
-const JogadorEsquerda4 = document.querySelector("#JogadorEsquerda4");
-const JogadorEsquerda5 = document.querySelector("#JogadorEsquerda5");
-
-JogadorEsquerda0.style.left = `${posiocaoLeftT1[5]}%`;
-JogadorEsquerda0.style.top = `${posiocaoTopT1[5]}%`;
-JogadorEsquerda1.style.left = `${posiocaoLeftT1[4]}%`;
-JogadorEsquerda1.style.top = `${posiocaoTopT1[4]}%`;
-JogadorEsquerda2.style.left = `${posiocaoLeftT1[3]}%`;
-JogadorEsquerda2.style.top = `${posiocaoTopT1[3]}%`;
-JogadorEsquerda3.style.left = `${posiocaoLeftT1[2]}%`;
-JogadorEsquerda3.style.top = `${posiocaoTopT1[2]}%`;
-JogadorEsquerda4.style.left = `${posiocaoLeftT1[1]}%`;
-JogadorEsquerda4.style.top = `${posiocaoTopT1[1]}%`;
-JogadorEsquerda5.style.left = `${posiocaoLeftT1[0]}%`;
-JogadorEsquerda5.style.top = `${posiocaoTopT1[0]}%`; */
-
+const posicoesLeftT1 = [ 0, 55,   55, 55, 0,    0,  0];
+const posicoesTopT1 =  [75, 75, 37.5,  2, 2, 37.5, 55];
 const updateTime01 = () => {
 	if (controlet1 == "semponto" && rotacaot1 == "mantem") {
 		//Altera posição dos jogadores.
@@ -599,33 +626,14 @@ minusButtonTime02.addEventListener("mousedown", () => {
 });
 document.addEventListener("mouseup", () => clearInterval(intervalIDTime02));
 
-/* var posiocaoLeftT2 = [75, 75, 75, 25, 25, 25];
-var posiocaoTopT2 = [0, 37.5, 75, 75, 37.5, 0];
-const JogadorDireita0 = document.querySelector("#JogadorDireita0");
-const JogadorDireita1 = document.querySelector("#JogadorDireita1");
-const JogadorDireita2 = document.querySelector("#JogadorDireita2");
-const JogadorDireita3 = document.querySelector("#JogadorDireita3");
-const JogadorDireita4 = document.querySelector("#JogadorDireita4");
-const JogadorDireita5 = document.querySelector("#JogadorDireita5");
 
-JogadorDireita0.style.left = `${posiocaoLeftT2[0]}%`;
-JogadorDireita0.style.top = `${posiocaoTopT2[0]}%`;
-JogadorDireita1.style.left = `${posiocaoLeftT2[1]}%`;
-JogadorDireita1.style.top = `${posiocaoTopT2[1]}%`;
-JogadorDireita2.style.left = `${posiocaoLeftT2[2]}%`;
-JogadorDireita2.style.top = `${posiocaoTopT2[2]}%`;
-JogadorDireita3.style.left = `${posiocaoLeftT2[3]}%`;
-JogadorDireita3.style.top = `${posiocaoTopT2[3]}%`;
-JogadorDireita4.style.left = `${posiocaoLeftT2[4]}%`;
-JogadorDireita4.style.top = `${posiocaoTopT2[4]}%`;
-JogadorDireita5.style.left = `${posiocaoLeftT2[5]}%`;
-JogadorDireita5.style.top = `${posiocaoTopT2[5]}%`; */
-
+const posicoesLeftT2 = [75, 25,   25, 25, 75,   75, 85];
+const posicoesTopT2 =  [ 0,  0, 37.5, 75, 75, 37.5, 55];
 const updateTime02 = () => {
 	if (controlet2 == "semponto" && rotacaot2 == "mantem") {
 		//Altera posição dos jogadores.
-		moveLeft(posiocaoLeftT2);
-		moveLeft(posiocaoTopT2);
+		moveRight(posiocaoLeftT2);
+		moveRight(posiocaoTopT2);
 
 		JogadorDireita0.style.left = `${posiocaoLeftT2[0]}%`;
 		JogadorDireita0.style.top = `${posiocaoTopT2[0]}%`;
@@ -754,7 +762,7 @@ function renderizarPlacar(partidaResponse, partida) {
 	updateValueTime02();
 }
 // Função para encontrar os lados e preparar os dados para a API
-function prepararDadosParaAPI(partidaResponse, selectedTimes) {
+function prepararDadosParaAPIDefinicaoTimes(partidaResponse, selectedTimes) {
 	const idTimeSelecionado1 = selectedTimes[0];
 	const idTimeSelecionado2 = selectedTimes[1];
 	let ladoQuadraTime1, ladoQuadraTime2;
@@ -778,91 +786,153 @@ function prepararDadosParaAPI(partidaResponse, selectedTimes) {
 	};
 	return dadosParaAPI;
 }
-
-	function renderizarJogadores(jogadoresTime1, jogadoresTime2) {
-    // Função auxiliar para adicionar jogadores ao lado correto
-    function adicionarJogadores(lado, jogadores, arrayLado, ladojogador, posicoesDisponiveis, posicoesJogadores) {
-        const container = document.getElementById(lado);
-
-        // Verificar se jogadores é um array
-        if (!Array.isArray(jogadores)) {
-            console.error(`Esperado um array de jogadores, mas recebeu: ${typeof jogadores}`);
-            return;
-        }
-
-        jogadores.forEach((jogador) => {
-            const jogadorDiv = document.createElement("div");
-            jogadorDiv.id = `jogador${jogador.idJogador}`;
-            jogadorDiv.classList.add("bolinhaEscolhaJogadores");
-            jogadorDiv.innerText = jogador.numeroCamiseta;
-
-            // Adicionar ouvinte de clique
-            jogadorDiv.addEventListener("click", () => {
-                console.log(arrayLado.length);
-
-                if (arrayLado.includes(jogador.numeroCamiseta)) {
-                    // Se já estiver no array, remover
-                    const index = arrayLado.indexOf(jogador.numeroCamiseta);
-                    const posicaoRemovida = posicoesJogadores[jogador.numeroCamiseta];
-                    arrayLado.splice(index, 1);
-                    delete posicoesJogadores[jogador.numeroCamiseta];
-                    jogadorDiv.classList.remove("jogadorSelecionado");
-
-                    // Limpar a posição correta e devolver a posição ao array de posições disponíveis
-                    document.querySelector(`#Jogador${ladojogador}${posicaoRemovida}`).innerHTML = "";
-
-                    // Inserir a posição de volta no início do array de posições disponíveis
-                    posicoesDisponiveis.push(posicaoRemovida);
-                    posicoesDisponiveis.sort((a, b) => a - b);  // Ordenar as posições disponíveis
-                } else {
-                    // Verificar se o usuário está tentando selecionar mais que 6 jogadores para o time
-                    if (arrayLado.length >= 6) {
-                        // Exibir mensagem de erro
-                        Swal.fire({
-                            icon: "error",
-                            title: `Você já selecionou 6 jogadores`,
-                            text: `Não é possível selecionar mais.`,
-                            showConfirmButton: false,
-                            timer: 2000,
-                        });
-                        return;
-                    }
-                    // Se não estiver no array, adicionar
-                    const posicaoAdicionada = posicoesDisponiveis.shift();
-                    arrayLado.push(jogador.numeroCamiseta);
-                    posicoesJogadores[jogador.numeroCamiseta] = posicaoAdicionada;
-                    document.querySelector(`#Jogador${ladojogador}${posicaoAdicionada}`).innerHTML = `${jogador.numeroCamiseta}`;
-                    jogadorDiv.classList.add("jogadorSelecionado");
-                }
-                console.log("Esquerda:", jogadoresEmQuadraEsquerda); // Verificar jogadores adicionados
-                console.log("Direita:", jogadoresEmQuadraDireita); // Verificar jogadores adicionados
-                console.log("Posições Disponíveis:", posicoesDisponiveis); // Verificar posições disponíveis
-            });
-
-            container.appendChild(jogadorDiv);
-        });
-    }
-
-    // Verificar se jogadoresTime1 e jogadoresTime2 são objetos com a propriedade Jogadors
-    if (!jogadoresTime1.Jogadors || !jogadoresTime2.Jogadors) {
-        console.error('Esperado objetos com a propriedade Jogadors para jogadoresTime1 e jogadoresTime2.');
-        return;
-    }
-
-    // Arrays para manter as posições disponíveis e mapa de posições dos jogadores
-    const posicoesDisponiveisEsquerda = [0, 1, 2, 3, 4, 5];
-    const posicoesDisponiveisDireita = [0, 1, 2, 3, 4, 5];
-    const posicoesJogadoresEsquerda = {};
-    const posicoesJogadoresDireita = {};
-
-    // Adicionar jogadores ao lado esquerdo e direito usando a propriedade Jogadors dos objetos
-    adicionarJogadores("escolhaJogadoresLadoEsquerdo", jogadoresTime1.Jogadors, jogadoresEmQuadraEsquerda, "Esquerda", posicoesDisponiveisEsquerda, posicoesJogadoresEsquerda);
-    adicionarJogadores("escolhaJogadoresLadoDireito", jogadoresTime2.Jogadors, jogadoresEmQuadraDireita, "Direita", posicoesDisponiveisDireita, posicoesJogadoresDireita);
+// Função para encontrar os lados e preparar os dados para a API
+function prepararDadosParaAPIDefinicaoJogadores(
+	partidaResponse,
+	partida,
+	jogadoresEmQuadraDireita,
+	jogadoresEmQuadraEsquerda
+) {
+	// Preparar objeto para enviar à API
+	const dadosParaAPI = {
+		idPartida: partidaResponse.idPartida,
+		idPonto: partida.idPonto,
+		jogadoresEmQuadraDireita: jogadoresEmQuadraDireita,
+		jogadoresEmQuadraEsquerda: jogadoresEmQuadraEsquerda,
+	};
+	return dadosParaAPI;
 }
 
+function renderizarJogadores(jogadoresTime1, jogadoresTime2, timeEsquerda, timeDireita) {
+	// Função auxiliar para adicionar jogadores ao lado correto
+	function adicionarJogadores(
+		lado,
+		jogadores,
+		arrayLado,
+		ladojogador,
+		posicoesDisponiveis,
+		posicoesJogadores
+	) {
+		const container = document.getElementById(lado);
 
+		// Verificar se jogadores é um array
+		if (!Array.isArray(jogadores)) {
+			console.error(
+				`Esperado um array de jogadores, mas recebeu: ${typeof jogadores}`
+			);
+			return;
+		}
 
+		jogadores.forEach((jogador) => {
+			const jogadorDiv = document.createElement("div");
+			jogadorDiv.id = `jogador${jogador.idJogador}`;
+			jogadorDiv.classList.add("bolinhaEscolhaJogadores");
+			jogadorDiv.innerText = jogador.numeroCamiseta;
 
+			// Adicionar ouvinte de clique
+			jogadorDiv.addEventListener("click", () => {
+				if (arrayLado.includes(jogador.idJogador)) {
+					// Se já estiver no array, remover
+					const index = arrayLado.indexOf(jogador.idJogador);
+					const posicaoRemovida = posicoesJogadores[jogador.idJogador];
+					arrayLado.splice(index, 1);
+					delete posicoesJogadores[jogador.idJogador];
+					jogadorDiv.classList.remove("jogadorSelecionado");
+
+					// Limpar a posição correta e devolver a posição ao array de posições disponíveis
+					document.querySelector(
+						`#Jogador${ladojogador}${posicaoRemovida}`
+					).innerHTML = "";
+
+					// Inserir a posição de volta no início do array de posições disponíveis
+					posicoesDisponiveis.push(posicaoRemovida);
+					posicoesDisponiveis.sort((a, b) => a - b); // Ordenar as posições disponíveis
+				} else {
+					// Verificar se o usuário está tentando selecionar mais que 6 jogadores para o time
+					if (arrayLado.length >= 7) {
+						// Exibir mensagem de erro
+						Swal.fire({
+							icon: "error",
+							title: `Você já selecionou 7 jogadores`,
+							text: `Não é possível selecionar mais.`,
+							showConfirmButton: false,
+							timer: 2000,
+						});
+						return;
+					}
+					// Se não estiver no array, adicionar
+					const posicaoAdicionada = posicoesDisponiveis.shift();
+					arrayLado.push(jogador.idJogador);
+					posicoesJogadores[jogador.idJogador] = posicaoAdicionada;
+					document.querySelector(
+						`#Jogador${ladojogador}${posicaoAdicionada}`
+					).innerHTML = `${jogador.numeroCamiseta}`;
+					jogadorDiv.classList.add("jogadorSelecionado");
+				}
+				console.log("Esquerda:", jogadoresEmQuadraEsquerda); // Verificar jogadores adicionados
+				console.log("Direita:", jogadoresEmQuadraDireita); // Verificar jogadores adicionados
+				console.log("Posições Disponíveis:", posicoesDisponiveis); // Verificar posições disponíveis
+			});
+
+			container.appendChild(jogadorDiv);
+		});
+	}
+
+	// Verificar se jogadoresTime1 e jogadoresTime2 são objetos com a propriedade Jogadors
+	if (!jogadoresTime1.Jogadors || !jogadoresTime2.Jogadors) {
+		console.error(
+			"Esperado objetos com a propriedade Jogadors para jogadoresTime1 e jogadoresTime2."
+		);
+		return;
+	}
+
+	// Arrays para manter as posições disponíveis e mapa de posições dos jogadores
+	const posicoesDisponiveisEsquerda = [0, 1, 2, 3, 4, 5, 6];
+	const posicoesDisponiveisDireita = [0, 1, 2, 3, 4, 5, 6];
+	const posicoesJogadoresEsquerda = {};
+	const posicoesJogadoresDireita = {};
+
+	// Determinar qual time é da esquerda e qual é da direita
+	if (jogadoresTime1.idTime === timeEsquerda) {
+		// Renderizar jogadores do time 1 à esquerda e jogadores do time 2 à direita
+		adicionarJogadores(
+			"escolhaJogadoresLadoEsquerdo",
+			jogadoresTime1.Jogadors,
+			jogadoresEmQuadraEsquerda,
+			"Esquerda",
+			posicoesDisponiveisEsquerda,
+			posicoesJogadoresEsquerda
+		);
+		adicionarJogadores(
+			"escolhaJogadoresLadoDireito",
+			jogadoresTime2.Jogadors,
+			jogadoresEmQuadraDireita,
+			"Direita",
+			posicoesDisponiveisDireita,
+			posicoesJogadoresDireita
+		);
+	} else if (jogadoresTime2.idTime === timeEsquerda) {
+		// Renderizar jogadores do time 2 à esquerda e jogadores do time 1 à direita
+		adicionarJogadores(
+			"escolhaJogadoresLadoEsquerdo",
+			jogadoresTime2.Jogadors,
+			jogadoresEmQuadraEsquerda,
+			"Esquerda",
+			posicoesDisponiveisEsquerda,
+			posicoesJogadoresEsquerda
+		);
+		adicionarJogadores(
+			"escolhaJogadoresLadoDireito",
+			jogadoresTime1.Jogadors,
+			jogadoresEmQuadraDireita,
+			"Direita",
+			posicoesDisponiveisDireita,
+			posicoesJogadoresDireita
+		);
+	} else {
+		console.error("Os IDs dos times não correspondem aos IDs dos lados fornecidos.");
+	}
+}
 
 function escolhaJogadores() {
 	closeModal("modalDefinicaoLado");
@@ -900,4 +970,65 @@ function escolhaJogadores() {
 	document.body.appendChild(newModelPartida);
 	renderizarJogadores(jogadoresTime1, jogadoresTime2);
 	openModal("modalDefinicaoJogadores");
+}
+
+function adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, timeEsquerda, timeDireita, jogadoresEmQuadraEsquerda, jogadoresEmQuadraDireita) {
+	const containerEsquerda = document.querySelector(".jogadoresTime01");
+	const containerDireita = document.querySelector(".jogadoresTime02");
+
+	// Limpar os containers antes de adicionar novos jogadores
+	containerEsquerda.innerHTML = "";
+	containerDireita.innerHTML = "";
+
+	// Definir as posições para os jogadores em cada lado
+	const posicoesLeftT1 = [ 0, 55,   55, 55, 0,    0,  0];
+	const posicoesTopT1 =  [75, 75, 37.5,  2, 2, 37.5, 55];
+	const posicoesLeftT2 = [75, 25,   25, 25, 75,   75, 85];
+	const posicoesTopT2 =  [ 0,  0, 37.5, 75, 75, 37.5, 55];
+
+	// Função auxiliar para criar e posicionar jogadores
+	function criarJogador(id, numeroCamiseta, lado, posicoesLeft, posicoesTop) {
+		const jogadorDiv = document.createElement("div");
+		jogadorDiv.id = `Jogador${lado}${id}`;
+		if (id == 6) {
+			jogadorDiv.classList.add(`bolinha${lado === "Direita" ? "2" : ""}`);
+			jogadorDiv.classList.add("libero");
+		}else{
+			jogadorDiv.classList.add(`bolinha${lado === "Direita" ? "2" : ""}`);
+		}
+		jogadorDiv.innerText = numeroCamiseta;
+		jogadorDiv.style.left = `${posicoesLeft[id]}%`;
+		jogadorDiv.style.top = `${posicoesTop[id]}%`;
+
+		return jogadorDiv;
+	}
+
+	// Função para adicionar jogadores ao lado correto
+	function adicionarJogadores(jogadoresTitulares, timecompleto, lado, posicoesLeft, posicoesTop) {
+		jogadoresTitulares.forEach((idJogador, index) => {
+			let jogador = timecompleto.find(j => j.idJogador === idJogador);
+
+			if (jogador) {
+					const jogadorDiv = criarJogador(index, jogador.numeroCamiseta, lado, posicoesLeft, posicoesTop);
+					if (lado === "Esquerda") {
+							containerEsquerda.appendChild(jogadorDiv);
+					} else {
+							containerDireita.appendChild(jogadorDiv);
+					}
+			} else {
+					console.warn(`Jogador com ID ${idJogador} não encontrado no time completo.`);
+			}
+		});
+	}
+
+	// Verificar qual time é da esquerda e qual é da direita
+	if (jogadoresTime1.idTime === timeEsquerda) {
+		console.log('Time 1 é da esquerda');
+		adicionarJogadores(jogadoresEmQuadraEsquerda, jogadoresTime1.Jogadors, "Esquerda", posicoesLeftT1, posicoesTopT1);
+		adicionarJogadores(jogadoresEmQuadraDireita, jogadoresTime2.Jogadors, "Direita", posicoesLeftT2, posicoesTopT2);
+	} else {
+		console.log('Time 1 é da direita');
+		adicionarJogadores(jogadoresEmQuadraDireita, jogadoresTime1.Jogadors, "Direita", posicoesLeftT2, posicoesTopT2);
+		adicionarJogadores(jogadoresEmQuadraEsquerda, jogadoresTime2.Jogadors, "Esquerda", posicoesLeftT1, posicoesTopT1);
+	}
 }
