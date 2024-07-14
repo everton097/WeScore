@@ -183,24 +183,24 @@ if (partidaID) {
 																		<div class="quadraVolei">
 																			<div class="ballplayer">
 																				<div class="jogadoresTime01 quadra">
-																					<div id="JogadorEsquerda0" class="bolinha" style="left: 10%; top: 78%;"></div>
-																					<div id="JogadorEsquerda1" class="bolinha" style="left: 65%; top: 78%;"></div>
-																					<div id="JogadorEsquerda2" class="bolinha" style="left: 65%; top: 40%;"></div>
-																					<div id="JogadorEsquerda3" class="bolinha" style="left: 65%; top: 8%;"></div>
-																					<div id="JogadorEsquerda4" class="bolinha" style="left: 10%; top: 8%;"></div>
-																					<div id="JogadorEsquerda5" class="bolinha" style="left: 10%; top: 40%;"></div>
-																					<div id="JogadorEsquerda6" class="bolinha libero" style="left: 10%; top: 55%;"></div>
+																					<div id="JogadorEsquerda0" class="bolinha"></div>
+																					<div id="JogadorEsquerda1" class="bolinha"></div>
+																					<div id="JogadorEsquerda2" class="bolinha"></div>
+																					<div id="JogadorEsquerda3" class="bolinha"></div>
+																					<div id="JogadorEsquerda4" class="bolinha"></div>
+																					<div id="JogadorEsquerda5" class="bolinha"></div>
+																					<div id="JogadorEsquerda6" class="bolinha libero"></div>
 																				</div>
 																			</div>
 																			<div class="ballplayer">
 																				<div class="jogadoresTime02 quadra">
-																					<div id="JogadorDireita0" class="bolinha2" style="left: 75%; top: 8%;"></div>
-																					<div id="JogadorDireita1" class="bolinha2" style="left: 25%; top: 8%;"></div>
-																					<div id="JogadorDireita2" class="bolinha2" style="left: 25%; top: 40%;"></div>
-																					<div id="JogadorDireita3" class="bolinha2" style="left: 25%; top: 78%;"></div>
-																					<div id="JogadorDireita4" class="bolinha2" style="left: 75%; top: 78%;"></div>
-																					<div id="JogadorDireita5" class="bolinha2" style="left: 75%; top: 40%;"></div>
-																					<div id="JogadorDireita6" class="bolinha2 libero" style="left: 85%; top: 55%;"></div>
+																					<div id="JogadorDireita0" class="bolinha2"></div>
+																					<div id="JogadorDireita1" class="bolinha2"></div>
+																					<div id="JogadorDireita2" class="bolinha2"></div>
+																					<div id="JogadorDireita3" class="bolinha2"></div>
+																					<div id="JogadorDireita4" class="bolinha2"></div>
+																					<div id="JogadorDireita5" class="bolinha2"></div>
+																					<div id="JogadorDireita6" class="bolinha2 libero"></div>
 																				</div>
 																			</div>
 																		</div>
@@ -294,7 +294,6 @@ if (partidaID) {
 				updateValueTime02();
 				renderizarPlacar(partidaResponse, partida);
 
-				console.log("Partida antiga!");
 				console.log("Partida", partida);
 				console.log("Response", partidaResponse);
 				console.log(timeDireita);
@@ -307,10 +306,7 @@ if (partidaID) {
 					.get(`${url}posicao/allLastByPoint/${partida.idPonto}`, config)
 					.then((response) => {
 						AtualizarDadosPartida(response);
-						console.log("Jogadores titulares Esquerda", jogadoresEmQuadraEsquerda);
-						console.log("Jogadores titulares Direita", jogadoresEmQuadraDireita);
 						adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, timeEsquerda, timeDireita, jogadoresEmQuadraEsquerda, jogadoresEmQuadraDireita)
-
 					})
 					.catch((error) => {
 						console.error(error);
@@ -510,49 +506,51 @@ minusButtonTime01.addEventListener("mousedown", () => {
 });
 document.addEventListener("mouseup", () => clearInterval(intervalIDTime01));
 
-const posicoesLeftT1 = [0, 55, 55, 55, 0, 0, 0];
-const posicoesTopT1 = [75, 75, 37.5, 2, 2, 37.5, 55];
-function updateTime01 (){
+const posiocaoLeftT1 = [ 0, 55,   55, 55, 0,    0];
+const posiocaoTopT1 =  [75, 75, 37.5,  2, 2, 37.5];
+const liberoT1 = [0, 55]
+
+function updateTime01() {
 	if (controlet1 == "semponto" && rotacaot1 == "mantem") {
 		//Altera posição dos jogadores.
-		moveLeft(posiocaoLeftT1);
-		moveLeft(posiocaoTopT1);
+		moveRight(posiocaoLeftT1);
+		moveRight(posiocaoTopT1);
 
-		JogadorEsquerda0.style.left = `${posiocaoLeftT1[5]}%`;
-		JogadorEsquerda0.style.top = `${posiocaoTopT1[5]}%`;
-		JogadorEsquerda1.style.left = `${posiocaoLeftT1[4]}%`;
-		JogadorEsquerda1.style.top = `${posiocaoTopT1[4]}%`;
-		JogadorEsquerda2.style.left = `${posiocaoLeftT1[3]}%`;
-		JogadorEsquerda2.style.top = `${posiocaoTopT1[3]}%`;
-		JogadorEsquerda3.style.left = `${posiocaoLeftT1[2]}%`;
-		JogadorEsquerda3.style.top = `${posiocaoTopT1[2]}%`;
-		JogadorEsquerda4.style.left = `${posiocaoLeftT1[1]}%`;
-		JogadorEsquerda4.style.top = `${posiocaoTopT1[1]}%`;
-		JogadorEsquerda5.style.left = `${posiocaoLeftT1[0]}%`;
-		JogadorEsquerda5.style.top = `${posiocaoTopT1[0]}%`;
+		JogadorEsquerda0.style.left = `${posiocaoLeftT1[0]}%`;
+		JogadorEsquerda0.style.top   = `${posiocaoTopT1[0]}%`;
+		JogadorEsquerda1.style.left = `${posiocaoLeftT1[1]}%`;
+		JogadorEsquerda1.style.top   = `${posiocaoTopT1[1]}%`;
+		JogadorEsquerda2.style.left = `${posiocaoLeftT1[2]}%`;
+		JogadorEsquerda2.style.top   = `${posiocaoTopT1[2]}%`;
+		JogadorEsquerda3.style.left = `${posiocaoLeftT1[3]}%`;
+		JogadorEsquerda3.style.top   = `${posiocaoTopT1[3]}%`;
+		JogadorEsquerda4.style.left = `${posiocaoLeftT1[4]}%`;
+		JogadorEsquerda4.style.top   = `${posiocaoTopT1[4]}%`;
+		JogadorEsquerda5.style.left = `${posiocaoLeftT1[5]}%`;
+		JogadorEsquerda5.style.top   = `${posiocaoTopT1[5]}%`;
 		rotacaot1 = "rotacionou";
 		rotacaot2 = "mantem";
 	} else {
 		rotacaot1 = "mantem";
 	}
 };
-function updateMenusTime01 (){
+function updateMenusTime01() {
 	if (controlet1 == "ponto" && rotacaot1 == "rotacionou") {
 		//Altera posição dos jogadores.
 		moveRight(posiocaoLeftT1);
 		moveRight(posiocaoTopT1);
-		JogadorEsquerda0.style.left = `${posiocaoLeftT1[5]}%`;
-		JogadorEsquerda0.style.top = `${posiocaoTopT1[5]}%`;
-		JogadorEsquerda1.style.left = `${posiocaoLeftT1[4]}%`;
-		JogadorEsquerda1.style.top = `${posiocaoTopT1[4]}%`;
-		JogadorEsquerda2.style.left = `${posiocaoLeftT1[3]}%`;
-		JogadorEsquerda2.style.top = `${posiocaoTopT1[3]}%`;
-		JogadorEsquerda3.style.left = `${posiocaoLeftT1[2]}%`;
-		JogadorEsquerda3.style.top = `${posiocaoTopT1[2]}%`;
-		JogadorEsquerda4.style.left = `${posiocaoLeftT1[1]}%`;
-		JogadorEsquerda4.style.top = `${posiocaoTopT1[1]}%`;
-		JogadorEsquerda5.style.left = `${posiocaoLeftT1[0]}%`;
-		JogadorEsquerda5.style.top = `${posiocaoTopT1[0]}%`;
+		JogadorEsquerda0.style.left = `${posiocaoLeftT1[0]}%`;
+		JogadorEsquerda0.style.top   = `${posiocaoTopT1[0]}%`;
+		JogadorEsquerda1.style.left = `${posiocaoLeftT1[1]}%`;
+		JogadorEsquerda1.style.top   = `${posiocaoTopT1[1]}%`;
+		JogadorEsquerda2.style.left = `${posiocaoLeftT1[2]}%`;
+		JogadorEsquerda2.style.top   = `${posiocaoTopT1[2]}%`;
+		JogadorEsquerda3.style.left = `${posiocaoLeftT1[3]}%`;
+		JogadorEsquerda3.style.top   = `${posiocaoTopT1[3]}%`;
+		JogadorEsquerda4.style.left = `${posiocaoLeftT1[4]}%`;
+		JogadorEsquerda4.style.top   = `${posiocaoTopT1[4]}%`;
+		JogadorEsquerda5.style.left = `${posiocaoLeftT1[5]}%`;
+		JogadorEsquerda5.style.top   = `${posiocaoTopT1[5]}%`;
 		controlet1 = "semponto";
 		rotacaot1 = "mantem";
 		rotacaot2 = "rotacionou";
@@ -627,50 +625,51 @@ minusButtonTime02.addEventListener("mousedown", () => {
 document.addEventListener("mouseup", () => clearInterval(intervalIDTime02));
 
 
-const posicoesLeftT2 = [75, 25, 25, 25, 75, 75, 85];
-const posicoesTopT2 = [0, 0, 37.5, 75, 75, 37.5, 55];
-function updateTime02 () {
+const posiocaoLeftT2 = [75, 25,   25, 25, 75,   75];
+const posiocaoTopT2  = [0,   0, 37.5, 75, 75, 37.5];
+const liberoT2 = [85, 55]
+function updateTime02() {
 	if (controlet2 == "semponto" && rotacaot2 == "mantem") {
 		//Altera posição dos jogadores.
 		moveRight(posiocaoLeftT2);
 		moveRight(posiocaoTopT2);
 
 		JogadorDireita0.style.left = `${posiocaoLeftT2[0]}%`;
-		JogadorDireita0.style.top = `${posiocaoTopT2[0]}%`;
+		JogadorDireita0.style.top   = `${posiocaoTopT2[0]}%`;
 		JogadorDireita1.style.left = `${posiocaoLeftT2[1]}%`;
-		JogadorDireita1.style.top = `${posiocaoTopT2[1]}%`;
+		JogadorDireita1.style.top   = `${posiocaoTopT2[1]}%`;
 		JogadorDireita2.style.left = `${posiocaoLeftT2[2]}%`;
-		JogadorDireita2.style.top = `${posiocaoTopT2[2]}%`;
+		JogadorDireita2.style.top   = `${posiocaoTopT2[2]}%`;
 		JogadorDireita3.style.left = `${posiocaoLeftT2[3]}%`;
-		JogadorDireita3.style.top = `${posiocaoTopT2[3]}%`;
+		JogadorDireita3.style.top   = `${posiocaoTopT2[3]}%`;
 		JogadorDireita4.style.left = `${posiocaoLeftT2[4]}%`;
-		JogadorDireita4.style.top = `${posiocaoTopT2[4]}%`;
+		JogadorDireita4.style.top   = `${posiocaoTopT2[4]}%`;
 		JogadorDireita5.style.left = `${posiocaoLeftT2[5]}%`;
-		JogadorDireita5.style.top = `${posiocaoTopT2[5]}%`;
+		JogadorDireita5.style.top   = `${posiocaoTopT2[5]}%`;
 		rotacaot2 = "rotacionou";
 		rotacaot1 = "mantem";
 	} else {
 		rotacaot2 = "mantem";
 	}
 };
-function updateMenusTime02 () {
+function updateMenusTime02() {
 	if (controlet2 == "ponto" && rotacaot2 == "rotacionou") {
 		//Altera posição dos jogadores.
 		moveRight(posiocaoLeftT2);
 		moveRight(posiocaoTopT2);
 
 		JogadorDireita0.style.left = `${posiocaoLeftT2[0]}%`;
-		JogadorDireita0.style.top = `${posiocaoTopT2[0]}%`;
+		JogadorDireita0.style.top   = `${posiocaoTopT2[0]}%`;
 		JogadorDireita1.style.left = `${posiocaoLeftT2[1]}%`;
-		JogadorDireita1.style.top = `${posiocaoTopT2[1]}%`;
+		JogadorDireita1.style.top   = `${posiocaoTopT2[1]}%`;
 		JogadorDireita2.style.left = `${posiocaoLeftT2[2]}%`;
-		JogadorDireita2.style.top = `${posiocaoTopT2[2]}%`;
+		JogadorDireita2.style.top   = `${posiocaoTopT2[2]}%`;
 		JogadorDireita3.style.left = `${posiocaoLeftT2[3]}%`;
-		JogadorDireita3.style.top = `${posiocaoTopT2[3]}%`;
+		JogadorDireita3.style.top   = `${posiocaoTopT2[3]}%`;
 		JogadorDireita4.style.left = `${posiocaoLeftT2[4]}%`;
-		JogadorDireita4.style.top = `${posiocaoTopT2[4]}%`;
+		JogadorDireita4.style.top   = `${posiocaoTopT2[4]}%`;
 		JogadorDireita5.style.left = `${posiocaoLeftT2[5]}%`;
-		JogadorDireita5.style.top = `${posiocaoTopT2[5]}%`;
+		JogadorDireita5.style.top   = `${posiocaoTopT2[5]}%`;
 		controlet2 = "semponto";
 		rotacaot2 = "mantem";
 		rotacaot1 = "rotacionou";
@@ -754,8 +753,16 @@ function renderizarPlacar(partidaResponse, partida) {
 
 	if (timeEsquerda === timeSaque) {
 		updateBola01();
+		controlet1 = "ponto";
+		controlet2 = "semponto";
+		rotacaot1 = "rotacionou";
+		rotacaot2 = "mantem";
 	} else if (timeDireita === timeSaque) {
 		updateBola02();
+		controlet1 = "semponto";
+		controlet2 = "ponto";
+		rotacaot1 = "mantem";
+		rotacaot2 = "rotacionou";
 	}
 
 	updateValueTime01();
@@ -973,38 +980,31 @@ function adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, tim
 	const containerEsquerda = document.querySelector(".jogadoresTime01");
 	const containerDireita = document.querySelector(".jogadoresTime02");
 
-	console.log("debug Jogadores titulares Esquerda", jogadoresEmQuadraEsquerda);
-	console.log("debug Jogadores titulares Direita", jogadoresEmQuadraDireita);
-
 	// Limpar os containers antes de adicionar novos jogadores
 	containerEsquerda.innerHTML = "";
 	containerDireita.innerHTML = "";
 
-	// Definir as posições para os jogadores em cada lado
-	const posicoesLeftT1 = [0, 55, 55, 55, 0, 0, 0];
-	const posicoesTopT1 = [75, 75, 37.5, 2, 2, 37.5, 55];
-	const posicoesLeftT2 = [75, 25, 25, 25, 75, 75, 85];
-	const posicoesTopT2 = [0, 0, 37.5, 75, 75, 37.5, 55];
-
 	// Função auxiliar para criar e posicionar jogadores
-	function criarJogador(id, numeroCamiseta, lado, posicoesLeft, posicoesTop) {
+	function criarJogador(id, numeroCamiseta, lado, posicoesLeft, posicoesTop,libero) {
 		const jogadorDiv = document.createElement("div");
 		jogadorDiv.id = `Jogador${lado}${id}`;
 		if (id == 6) {
 			jogadorDiv.classList.add(`bolinha${lado === "Direita" ? "2" : ""}`);
 			jogadorDiv.classList.add("libero");
-		} else {
+			jogadorDiv.style.left = `${libero[0]}%`;
+			jogadorDiv.style.top = `${libero[1]}%`;
+		} else if (id !== 6) {
 			jogadorDiv.classList.add(`bolinha${lado === "Direita" ? "2" : ""}`);
+			jogadorDiv.style.left = `${posicoesLeft[id]}%`;
+			jogadorDiv.style.top = `${posicoesTop[id]}%`;
 		}
 		jogadorDiv.innerText = numeroCamiseta;
-		jogadorDiv.style.left = `${posicoesLeft[id]}%`;
-		jogadorDiv.style.top = `${posicoesTop[id]}%`;
 
 		return jogadorDiv;
 	}
 
 	// Função para adicionar jogadores ao lado correto
-	function adicionarJogadores(jogadoresTitulares, timecompleto, lado, posicoesLeft, posicoesTop) {
+	function adicionarJogadores(jogadoresTitulares, timecompleto, lado, posicoesLeft, posicoesTop,libero) {
 		jogadoresTitulares.forEach((idJogador, index) => {
 			let jogador = timecompleto.find(j => j.idJogador === idJogador);
 			/* // Loop simples com logs para encontrar o jogador
@@ -1019,7 +1019,7 @@ function adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, tim
 			} */
 
 			if (jogador) {
-				const jogadorDiv = criarJogador(index, jogador.numeroCamiseta, lado, posicoesLeft, posicoesTop);
+				const jogadorDiv = criarJogador(index, jogador.numeroCamiseta, lado, posicoesLeft, posicoesTop,libero);
 				if (lado === "Esquerda") {
 					containerEsquerda.appendChild(jogadorDiv);
 				} else {
@@ -1034,13 +1034,28 @@ function adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, tim
 	// Verificar qual time é da esquerda e qual é da direita
 	if (jogadoresTime1.idTime === timeEsquerda) {
 		console.log('Time 1 é da esquerda');
-		adicionarJogadores(jogadoresEmQuadraEsquerda, jogadoresTime1.Jogadors, "Esquerda", posicoesLeftT1, posicoesTopT1);
-		adicionarJogadores(jogadoresEmQuadraDireita, jogadoresTime2.Jogadors, "Direita", posicoesLeftT2, posicoesTopT2);
+		adicionarJogadores(jogadoresEmQuadraEsquerda, jogadoresTime1.Jogadors, "Esquerda", posiocaoLeftT1, posiocaoTopT1,liberoT1);
+		adicionarJogadores(jogadoresEmQuadraDireita, jogadoresTime2.Jogadors, "Direita", posiocaoLeftT2, posiocaoTopT2,liberoT2);
 	} else {
 		console.log('Time 1 é da direita');
-		adicionarJogadores(jogadoresEmQuadraDireita, jogadoresTime1.Jogadors, "Direita", posicoesLeftT2, posicoesTopT2);
-		adicionarJogadores(jogadoresEmQuadraEsquerda, jogadoresTime2.Jogadors, "Esquerda", posicoesLeftT1, posicoesTopT1);
+		adicionarJogadores(jogadoresEmQuadraDireita, jogadoresTime1.Jogadors, "Direita", posiocaoLeftT2, posiocaoTopT2,liberoT2);
+		adicionarJogadores(jogadoresEmQuadraEsquerda, jogadoresTime2.Jogadors, "Esquerda", posiocaoLeftT1, posiocaoTopT1,liberoT1);
 	}
+
+	const JogadorEsquerda0 = document.getElementById("JogadorEsquerda0");
+	const JogadorEsquerda1 = document.getElementById("JogadorEsquerda1");
+	const JogadorEsquerda2 = document.getElementById("JogadorEsquerda2");
+	const JogadorEsquerda3 = document.getElementById("JogadorEsquerda3");
+	const JogadorEsquerda4 = document.getElementById("JogadorEsquerda4");
+	const JogadorEsquerda5 = document.getElementById("JogadorEsquerda5");
+
+	//Jogadores para substituição do time 02
+	const JogadorDireita0 = document.getElementById("JogadorDireita0");
+	const JogadorDireita1 = document.getElementById("JogadorDireita1");
+	const JogadorDireita2 = document.getElementById("JogadorDireita2");
+	const JogadorDireita3 = document.getElementById("JogadorDireita3");
+	const JogadorDireita4 = document.getElementById("JogadorDireita4");
+	const JogadorDireita5 = document.getElementById("JogadorDireita5");
 }
 
 function AtualizarDadosPartida(response) {
