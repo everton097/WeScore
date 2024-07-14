@@ -241,7 +241,7 @@ if (partidaID) {
 													timer: 1500,
 												}).then(() => {
 													closeModal("modalDefinicaoJogadores");
-													adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, timeEsquerda, timeDireita, jogadoresEmQuadraEsquerda,jogadoresEmQuadraDireita)
+													adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, timeEsquerda, timeDireita, jogadoresEmQuadraEsquerda, jogadoresEmQuadraDireita)
 												});
 											})
 											.catch((error) => {
@@ -301,6 +301,37 @@ if (partidaID) {
 				console.log(timeEsquerda);
 				console.log(nomeTimeDireita);
 				console.log(nomeTimeEsquerda);
+
+				// Fazer uma solicitação POST para buscar jogadores em suas posições
+				axios
+					.get(`${url}posicao/allLastByPoint/${partida.idPonto}`, config)
+					.then((response) => {
+						AtualizarDadosPartida(response);
+						console.log("Jogadores titulares Esquerda", jogadoresEmQuadraEsquerda);
+						console.log("Jogadores titulares Direita", jogadoresEmQuadraDireita);
+						adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, timeEsquerda, timeDireita, jogadoresEmQuadraEsquerda, jogadoresEmQuadraDireita)
+
+					})
+					.catch((error) => {
+						console.error(error);
+						if (error.response) {
+							const { data, status } = error.response;
+							Swal.fire({
+								icon: "error",
+								title: `${data.error}`,
+								text: `Erro ${status} ` || "Erro desconhecido",
+							});
+						} else if (error.request) {
+							// A solicitação foi feita, mas não houve resposta do servidor
+							console.error("Sem resposta do servidor");
+						} else {
+							// Algo aconteceu durante a configuração da solicitação que acionou um erro
+							console.error(
+								"Erro na configuração da solicitação",
+								error.message
+							);
+						}
+					});
 			}
 		})
 		.catch((error) => {
@@ -373,42 +404,11 @@ closecard.addEventListener("click", () => {
 subsJogadorEsquerda5.addEventListener("click", () => {
 	AlterStatusCard("time01");
 });
-subsJogadorEsquerda4.addEventListener("click", () => {
-	AlterStatusCard("time01");
-});
-subsJogadorEsquerda3.addEventListener("click", () => {
-	AlterStatusCard("time01");
-});
-subsJogadorEsquerda2.addEventListener("click", () => {
-	AlterStatusCard("time01");
-});
-subsJogadorEsquerda1.addEventListener("click", () => {
-	AlterStatusCard("time01");
-});
-subsJogadorEsquerda0.addEventListener("click", () => {
-	AlterStatusCard("time01");
-	//document.getElementById("popupcard").style.display = "flex";
-});
 //Jogadores para substituição do time 02
 subsJogadorDireita5.addEventListener("click", () => {
 	AlterStatusCard("time02");
 });
-subsJogadorDireita4.addEventListener("click", () => {
-	AlterStatusCard("time02");
-});
-subsJogadorDireita3.addEventListener("click", () => {
-	AlterStatusCard("time02");
-});
-subsJogadorDireita2.addEventListener("click", () => {
-	AlterStatusCard("time02");
-});
-subsJogadorDireita1.addEventListener("click", () => {
-	AlterStatusCard("time02");
-});
-subsJogadorDireita0.addEventListener("click", () => {
-	AlterStatusCard("time02");
-	//document.getElementById("popupcard").style.display = "flex";
-}); */
+*/
 
 const updateValueTime01 = () => {
 	if (countTime01 <= 9) {
@@ -510,8 +510,8 @@ minusButtonTime01.addEventListener("mousedown", () => {
 });
 document.addEventListener("mouseup", () => clearInterval(intervalIDTime01));
 
-const posicoesLeftT1 = [ 0, 55,   55, 55, 0,    0,  0];
-const posicoesTopT1 =  [75, 75, 37.5,  2, 2, 37.5, 55];
+const posicoesLeftT1 = [0, 55, 55, 55, 0, 0, 0];
+const posicoesTopT1 = [75, 75, 37.5, 2, 2, 37.5, 55];
 const updateTime01 = () => {
 	if (controlet1 == "semponto" && rotacaot1 == "mantem") {
 		//Altera posição dos jogadores.
@@ -627,8 +627,8 @@ minusButtonTime02.addEventListener("mousedown", () => {
 document.addEventListener("mouseup", () => clearInterval(intervalIDTime02));
 
 
-const posicoesLeftT2 = [75, 25,   25, 25, 75,   75, 85];
-const posicoesTopT2 =  [ 0,  0, 37.5, 75, 75, 37.5, 55];
+const posicoesLeftT2 = [75, 25, 25, 25, 75, 75, 85];
+const posicoesTopT2 = [0, 0, 37.5, 75, 75, 37.5, 55];
 const updateTime02 = () => {
 	if (controlet2 == "semponto" && rotacaot2 == "mantem") {
 		//Altera posição dos jogadores.
@@ -869,9 +869,6 @@ function renderizarJogadores(jogadoresTime1, jogadoresTime2, timeEsquerda, timeD
 					).innerHTML = `${jogador.numeroCamiseta}`;
 					jogadorDiv.classList.add("jogadorSelecionado");
 				}
-				console.log("Esquerda:", jogadoresEmQuadraEsquerda); // Verificar jogadores adicionados
-				console.log("Direita:", jogadoresEmQuadraDireita); // Verificar jogadores adicionados
-				console.log("Posições Disponíveis:", posicoesDisponiveis); // Verificar posições disponíveis
 			});
 
 			container.appendChild(jogadorDiv);
@@ -976,15 +973,18 @@ function adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, tim
 	const containerEsquerda = document.querySelector(".jogadoresTime01");
 	const containerDireita = document.querySelector(".jogadoresTime02");
 
+	console.log("debug Jogadores titulares Esquerda", jogadoresEmQuadraEsquerda);
+	console.log("debug Jogadores titulares Direita", jogadoresEmQuadraDireita);
+
 	// Limpar os containers antes de adicionar novos jogadores
 	containerEsquerda.innerHTML = "";
 	containerDireita.innerHTML = "";
 
 	// Definir as posições para os jogadores em cada lado
-	const posicoesLeftT1 = [ 0, 55,   55, 55, 0,    0,  0];
-	const posicoesTopT1 =  [75, 75, 37.5,  2, 2, 37.5, 55];
-	const posicoesLeftT2 = [75, 25,   25, 25, 75,   75, 85];
-	const posicoesTopT2 =  [ 0,  0, 37.5, 75, 75, 37.5, 55];
+	const posicoesLeftT1 = [0, 55, 55, 55, 0, 0, 0];
+	const posicoesTopT1 = [75, 75, 37.5, 2, 2, 37.5, 55];
+	const posicoesLeftT2 = [75, 25, 25, 25, 75, 75, 85];
+	const posicoesTopT2 = [0, 0, 37.5, 75, 75, 37.5, 55];
 
 	// Função auxiliar para criar e posicionar jogadores
 	function criarJogador(id, numeroCamiseta, lado, posicoesLeft, posicoesTop) {
@@ -993,7 +993,7 @@ function adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, tim
 		if (id == 6) {
 			jogadorDiv.classList.add(`bolinha${lado === "Direita" ? "2" : ""}`);
 			jogadorDiv.classList.add("libero");
-		}else{
+		} else {
 			jogadorDiv.classList.add(`bolinha${lado === "Direita" ? "2" : ""}`);
 		}
 		jogadorDiv.innerText = numeroCamiseta;
@@ -1007,16 +1007,26 @@ function adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, tim
 	function adicionarJogadores(jogadoresTitulares, timecompleto, lado, posicoesLeft, posicoesTop) {
 		jogadoresTitulares.forEach((idJogador, index) => {
 			let jogador = timecompleto.find(j => j.idJogador === idJogador);
+			/* // Loop simples com logs para encontrar o jogador
+			let jogador = null;
+			for (let i = 0; i < timecompleto.length; i++) {
+				const jogadorVerificando = timecompleto[i];
+				console.log(`Verificando jogador com idJogador ${idJogador}:`, jogadorVerificando);
+				if (jogadorVerificando.idJogador === idJogador) {
+					jogador = jogadorVerificando;
+					break; // Interrompe o loop assim que o jogador é encontrado
+				}
+			} */
 
 			if (jogador) {
-					const jogadorDiv = criarJogador(index, jogador.numeroCamiseta, lado, posicoesLeft, posicoesTop);
-					if (lado === "Esquerda") {
-							containerEsquerda.appendChild(jogadorDiv);
-					} else {
-							containerDireita.appendChild(jogadorDiv);
-					}
+				const jogadorDiv = criarJogador(index, jogador.numeroCamiseta, lado, posicoesLeft, posicoesTop);
+				if (lado === "Esquerda") {
+					containerEsquerda.appendChild(jogadorDiv);
+				} else {
+					containerDireita.appendChild(jogadorDiv);
+				}
 			} else {
-					console.warn(`Jogador com ID ${idJogador} não encontrado no time completo.`);
+				console.warn(`Jogador com ID ${idJogador} não encontrado no time completo.`);
 			}
 		});
 	}
@@ -1031,4 +1041,29 @@ function adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, tim
 		adicionarJogadores(jogadoresEmQuadraDireita, jogadoresTime1.Jogadors, "Direita", posicoesLeftT2, posicoesTopT2);
 		adicionarJogadores(jogadoresEmQuadraEsquerda, jogadoresTime2.Jogadors, "Esquerda", posicoesLeftT1, posicoesTopT1);
 	}
+}
+
+function AtualizarDadosPartida(response) {
+	const posicoes = response.data;
+	jogadoresEmQuadraEsquerda = [];
+	jogadoresEmQuadraDireita = [];
+
+	posicoes.forEach(posicao => {
+		const jogador = {
+			idJogador: posicao.idJogador,
+			nomeJogador: posicao.posicaoes_partida.nomeJogador,
+			sobrenome: posicao.posicaoes_partida.sobrenome,
+			cpf: posicao.posicaoes_partida.cpf,
+			telefone: posicao.posicaoes_partida.telefone,
+			numeroCamiseta: posicao.posicaoes_partida.numeroCamiseta,
+			idTime: posicao.posicaoes_partida.idTime,
+			local: posicao.local
+		};
+
+		if (posicao.ladoQuadra === "Esquerda") {
+			jogadoresEmQuadraEsquerda.push(jogador.idJogador);
+		} else if (posicao.ladoQuadra === "Direita") {
+			jogadoresEmQuadraDireita.push(jogador.idJogador);
+		}
+	});
 }
