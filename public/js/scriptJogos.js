@@ -512,7 +512,7 @@ document.addEventListener("mouseup", () => clearInterval(intervalIDTime01));
 
 const posicoesLeftT1 = [0, 55, 55, 55, 0, 0, 0];
 const posicoesTopT1 = [75, 75, 37.5, 2, 2, 37.5, 55];
-const updateTime01 = () => {
+function updateTime01 (){
 	if (controlet1 == "semponto" && rotacaot1 == "mantem") {
 		//Altera posição dos jogadores.
 		moveLeft(posiocaoLeftT1);
@@ -536,7 +536,7 @@ const updateTime01 = () => {
 		rotacaot1 = "mantem";
 	}
 };
-const updateMenusTime01 = () => {
+function updateMenusTime01 (){
 	if (controlet1 == "ponto" && rotacaot1 == "rotacionou") {
 		//Altera posição dos jogadores.
 		moveRight(posiocaoLeftT1);
@@ -629,7 +629,7 @@ document.addEventListener("mouseup", () => clearInterval(intervalIDTime02));
 
 const posicoesLeftT2 = [75, 25, 25, 25, 75, 75, 85];
 const posicoesTopT2 = [0, 0, 37.5, 75, 75, 37.5, 55];
-const updateTime02 = () => {
+function updateTime02 () {
 	if (controlet2 == "semponto" && rotacaot2 == "mantem") {
 		//Altera posição dos jogadores.
 		moveRight(posiocaoLeftT2);
@@ -653,7 +653,7 @@ const updateTime02 = () => {
 		rotacaot2 = "mantem";
 	}
 };
-const updateMenusTime02 = () => {
+function updateMenusTime02 () {
 	if (controlet2 == "ponto" && rotacaot2 == "rotacionou") {
 		//Altera posição dos jogadores.
 		moveRight(posiocaoLeftT2);
