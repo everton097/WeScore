@@ -121,8 +121,7 @@ function removerCaracteresEspeciais(element) {
 }
 
 // Evento quando o botão "Salvar" de criação é clicado
-document
-  .querySelector("#saveJogadorForm")
+document.querySelector("#saveJogadorForm")
   .addEventListener("click", function () {
     // Obter os dados do formulário de criação
     const formData = new FormData(document.querySelector("#editJogadorForm"));
@@ -131,7 +130,7 @@ document
       "idTime",
       document.querySelector("#editJogadorForm").dataset.timeId
     );
-	// Atualiza os valores de telefone e cpf no formData
+	  // Atualiza os valores de telefone e cpf no formData
     formData.set('telefone', removerCaracteresEspeciais(telefoneInput.value));
     formData.set('cpf', removerCaracteresEspeciais(cpfInput.value));
 
@@ -153,37 +152,35 @@ document
           "Content-Type": "application/x-www-form-urlencoded",
         },
       };
-      console.log(idJogadorEdit);
-      // Fazer uma solicitação POST para vincular um novo time
-      axios
-        .put(`${url}jogador/${idJogadorEdit}`, formParams, config)
-        .then((response) => {
-          Swal.fire({
-            icon: "success",
-            title: "Jogador atualizado com sucesso",
-            showConfirmButton: false,
-            timer: 1500,
-          }).then(() => {
-            // Após o tempo definido (1500 ms), redirecione para a página cursos
-            window.location.href = `/painelws/`;
-          });
-        })
-        .catch((error) => {
-          console.error(error);
-          if (error.response) {
-            const { data, status } = error.response;
-            Swal.fire({
-              icon: "error",
-              title: `${data.error}`,
-              text: `Erro ${status} ` || "Erro desconhecido",
-            });
-          } else if (error.request) {
-            // A solicitação foi feita, mas não houve resposta do servidor
-            console.error("Sem resposta do servidor");
-          } else {
-            // Algo aconteceu durante a configuração da solicitação que acionou um erro
-            console.error("Erro na configuração da solicitação", error.message);
-          }
+      // Fazer uma solicitação POST para atualizar o jogador
+      axios.put(`${url}jogador/${idJogadorEdit}`, formParams, config)
+      .then((response) => {
+        Swal.fire({
+          icon: "success",
+          title: "Jogador atualizado com sucesso",
+          showConfirmButton: false,
+          timer: 1500,
+        }).then(() => {
+          // Após o tempo definido (1500 ms), redirecione para a página cursos
+          window.location.href = `/painelws/`;
         });
+      })
+      .catch((error) => {
+        console.error(error);
+        if (error.response) {
+          const { data, status } = error.response;
+          Swal.fire({
+            icon: "error",
+            title: `Error para atualizar o jogador.\n${data.error}`,
+            text: `Erro ${status} ` || "Erro desconhecido",
+          });
+        } else if (error.request) {
+          // A solicitação foi feita, mas não houve resposta do servidor
+          console.error("Sem resposta do servidor");
+        } else {
+          // Algo aconteceu durante a configuração da solicitação que acionou um erro
+          console.error("Erro na configuração da solicitação", error.message);
+        }
+      });
     }
   });
