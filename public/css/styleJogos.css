@@ -171,19 +171,19 @@ button {
   justify-content: center;
   cursor: pointer;
 }
-.bolinhaSubistituicao.jogadorSelecionado,
+.jogadoresSubistituicaoLadoEsquerdo.jogadorSelecionado,
 .bolinhaEscolhaJogadores.jogadorSelecionado{
   background-color: var(--nav-bar-a-color-active);
 }
-.subtime02,
+.jogadoresSubistituicaoLadoDireito .bolinhaEscolhaJogadores,
 .escolhaJogadoresLadoDireito .bolinhaEscolhaJogadores{
   background-color: var(--nav-bar-a-color-border-solid);
 }
-.subtime02.jogadorSelecionado,
+.jogadoresSubistituicaoLadoDireito .jogadorSelecionado,
 .escolhaJogadoresLadoDireito .bolinhaEscolhaJogadores.jogadorSelecionado{
   background-color: var(--nav-bar-a-color-border-solid-active);
 }
-.jogadoresSubistituicaoTime01,
+.jogadoresSubistituicaoLadoEsquerdo,
 .escolhaJogadoresLadoEsquerdo{
   width: 95%;
   aspect-ratio: 16 / 9;
@@ -195,13 +195,15 @@ button {
   gap: 0.3em 5%;
   font-size: 2.5vw;
 }
-#escolhaJogadoresLadoEsquerdo.escolhaJogadoresLadoEsquerdo{
+#escolhaJogadoresLadoEsquerdo.escolhaJogadoresLadoEsquerdo,
+#jogadoresSubistituicao.jogadoresSubistituicaoLadoEsquerdo{
   aspect-ratio: initial;
 }
-#escolhaJogadoresLadoDireito.escolhaJogadoresLadoDireito{
+#escolhaJogadoresLadoDireito.escolhaJogadoresLadoDireito,
+#jogadoresSubistituicao.jogadoresSubistituicaoLadoDireito{
   aspect-ratio: initial;
 }
-.jogadoresSubistituicaoTime02,
+.jogadoresSubistituicaoLadoDireito,
 .escolhaJogadoresLadoDireito{
   width: 95%;
   aspect-ratio: 16 / 9;

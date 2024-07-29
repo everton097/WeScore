@@ -51,7 +51,7 @@ function openModal(idmodel) {
 	modal.classList.remove("modal-close");
 	// Evento para fechar o modal quando o usuário clica no botão "Fechar"
 	document
-		.getElementById("btnFecharModal")
+		.getElementById("btnFecharModal"+idmodel)
 		.addEventListener("click", function () {
 			closeModal(idmodel);
 		});
@@ -65,6 +65,6 @@ function closeModal(idmodel) {
 	modal.addEventListener("animationend", function handleAnimationEnd() {
 		modal.style.display = "none";
 		modal.classList.remove("modal-close");
-		modal.removeEventListener("animationend", handleAnimationEnd);
+		modal.remove("animationend", handleAnimationEnd);
 	});
 }

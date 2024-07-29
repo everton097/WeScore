@@ -78,6 +78,11 @@
   width: 45%;
   font-size: 50%;
 }
+#subselectorContainer .bolinha.libero,
+#subselectorContainer .bolinha2.libero{
+  width: 10%;
+  font-size: 30%;
+}
 .volleyball-court {
   width: 50%;
   aspect-ratio: 16 / 9;

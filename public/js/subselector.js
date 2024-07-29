@@ -1,4 +1,4 @@
-function subselector(idobjeto) {
+function timeDefinicaoladoQuadraEvent(idobjeto) {
 	// Evento quando time é clicado
 	document
 		.getElementById(idobjeto)
@@ -71,7 +71,7 @@ function subselector(idobjeto) {
 			}
 		});
 }
-function submultselector() {
+function timeDefinicaoSaqueEvent() {
 	// Evento quando time é clicado
 	var elements = document.querySelectorAll('[id^="TimesNewPartida"]');
 	elements.forEach(function (element) {

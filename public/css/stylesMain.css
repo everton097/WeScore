@@ -341,15 +341,27 @@ section .footer-content span {
 	width: 80%;
 	max-width: 32em;
 	border-radius: 0.3125em;
+	gap: 15px;
 	text-align: center;
 	animation: model-show 0.3s;
 }
 .modal-close {
 	animation: modal-hide 0.3s forwards;
 }
-
+.modal-content-header{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 15px;
+}
 .modal-content h2 {
+	font-size: 1.2em;
+  font-weight: 800;
 	color: rgb(89, 89, 89);
+}
+.modal-content .modalDescription {
+	font-size: 1em;
+	color: rgb(99, 99, 99);
 }
 
 .close {
