@@ -106,7 +106,7 @@ if (partidaID) {
 								</form>
 							</div>
 							<div class="modal-footer">
-									<button id="btnFecharModalmodalDefinicaoLado" class="btn btn-cancel">Fechar</button>
+									<button id="btnFecharModalmodalDefinicaoLado" class="btn btn-cancel" style="display: none;">Fechar</button>
 									<button id="btnSalvarModalmodalDefinicaoLado" class="btn btn-primary">Salvar</button>
 							</div>
 					</div>
@@ -210,7 +210,7 @@ if (partidaID) {
 												</form>
 											</div>
 											<div class="modal-footer">
-													<button id="btnFecharModalmodalDefinicaoJogadores" class="btn btn-cancel">Fechar</button>
+													<button id="btnFecharModalmodalDefinicaoJogadores" class="btn btn-cancel" style="display: none;">Fechar</button>
 													<button id="btnSalvarModalmodalDefinicaoJogadores" class="btn btn-primary">Salvar</button>
 											</div>
 									</div>
