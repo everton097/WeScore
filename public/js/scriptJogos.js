@@ -130,14 +130,12 @@ if (partidaID) {
 							</div>
 					</div>
 				`
-
 				document.body.appendChild(newModelPartida)
 				openModal("modalDefinicaoLado")
 				timeDefinicaoladoQuadraEvent("subselectorContainer")
 				timeDefinicaoSaqueEvent()
 				// Evento para salvar os dados quando o usuário clica no botão "Salvar"
-				document
-					.getElementById("btnSalvarModalmodalDefinicaoLado")
+				document.getElementById("btnSalvarModalmodalDefinicaoLado")
 					.addEventListener("click", function () {
 						const dadosParaEnviarAPI = prepararDadosParaAPIDefinicaoTimes(
 							partidaResponse,
@@ -202,24 +200,24 @@ if (partidaID) {
 																		<div class="quadraVolei">
 																			<div class="ballplayer">
 																				<div class="jogadoresTime01 quadra">
-																					<div id="JogadorEsquerda0" class="bolinha" style="left: 10% top: 78%"></div>
-																					<div id="JogadorEsquerda1" class="bolinha" style="left: 65% top: 78%"></div>
-																					<div id="JogadorEsquerda2" class="bolinha" style="left: 65% top: 40%"></div>
-																					<div id="JogadorEsquerda3" class="bolinha" style="left: 65% top: 8%"></div>
-																					<div id="JogadorEsquerda4" class="bolinha" style="left: 10% top: 8%"></div>
-																					<div id="JogadorEsquerda5" class="bolinha" style="left: 10% top: 40%"></div>
-																					<div id="JogadorEsquerda6" class="bolinha libero" style="left: 10% top: 55%"></div>
+																					<div id="JogadorEsquerda0" class="bolinha" style="left: 10%; top: 78%;"></div>
+																					<div id="JogadorEsquerda1" class="bolinha" style="left: 65%; top: 78%;"></div>
+																					<div id="JogadorEsquerda2" class="bolinha" style="left: 65%; top: 40%;"></div>
+																					<div id="JogadorEsquerda3" class="bolinha" style="left: 65%; top:  8%;"></div>
+																					<div id="JogadorEsquerda4" class="bolinha" style="left: 10%; top:  8%;"></div>
+																					<div id="JogadorEsquerda5" class="bolinha" style="left: 10%; top: 40%;"></div>
+																					<div id="JogadorEsquerda6" class="bolinha libero" style="left: 10%; top: 55%;"></div>
 																				</div>
 																			</div>
 																			<div class="ballplayer">
 																				<div class="jogadoresTime02 quadra">
-																					<div id="JogadorDireita0" class="bolinha2" style="left: 75% top: 8%"></div>
-																					<div id="JogadorDireita1" class="bolinha2" style="left: 25% top: 8%"></div>
-																					<div id="JogadorDireita2" class="bolinha2" style="left: 25% top: 40%"></div>
-																					<div id="JogadorDireita3" class="bolinha2" style="left: 25% top: 78%"></div>
-																					<div id="JogadorDireita4" class="bolinha2" style="left: 75% top: 78%"></div>
-																					<div id="JogadorDireita5" class="bolinha2" style="left: 75% top: 40%"></div>
-																					<div id="JogadorDireita6" class="bolinha2 libero" style="left: 85% top: 55%"></div>
+																					<div id="JogadorDireita0" class="bolinha2" style="left: 75%; top:  8%;"></div>
+																					<div id="JogadorDireita1" class="bolinha2" style="left: 25%; top:  8%;"></div>
+																					<div id="JogadorDireita2" class="bolinha2" style="left: 25%; top: 40%;"></div>
+																					<div id="JogadorDireita3" class="bolinha2" style="left: 25%; top: 78%;"></div>
+																					<div id="JogadorDireita4" class="bolinha2" style="left: 75%; top: 78%;"></div>
+																					<div id="JogadorDireita5" class="bolinha2" style="left: 75%; top: 40%;"></div>
+																					<div id="JogadorDireita6" class="bolinha2 libero" style="left: 85%; top: 55%;"></div>
 																				</div>
 																			</div>
 																		</div>
@@ -309,8 +307,6 @@ if (partidaID) {
 			} else {
 				countTime01 = partida.ptTime1
 				countTime02 = partida.ptTime2
-				updateValueTime01()
-				updateValueTime02()
 				renderizarPlacar(partidaResponse, partida)
 				// Fazer uma solicitação POST para buscar jogadores em suas posições
 				axios.get(`${url}posicao/allLastByPoint/${partida.idPonto}`, config)
@@ -824,11 +820,7 @@ function renderizarJogadores(jogadoresTime1, jogadoresTime2, timeEsquerda, timeD
 					).innerHTML = `${jogador.numeroCamiseta}`
 					jogadorDiv.classList.add("jogadorSelecionado")
 				}
-				console.log("Esquerda:", jogadoresEmQuadraEsquerda) // Verificar jogadores adicionados
-				console.log("Direita:", jogadoresEmQuadraDireita) // Verificar jogadores adicionados
-				console.log("Posições Disponíveis:", posicoesDisponiveis) // Verificar posições disponíveis
 			})
-
 			container.appendChild(jogadorDiv)
 		})
 	}
@@ -888,135 +880,6 @@ function renderizarJogadores(jogadoresTime1, jogadoresTime2, timeEsquerda, timeD
 		console.error("Os IDs dos times não correspondem aos IDs dos lados fornecidos.")
 	}
 }
-
-function renderizarJogadores(jogadoresTime1, jogadoresTime2, timeEsquerda, timeDireita) {
-	// Função auxiliar para adicionar jogadores ao lado correto
-	function adicionarJogadores(
-		lado,
-		jogadores,
-		arrayLado,
-		ladojogador,
-		posicoesDisponiveis,
-		posicoesJogadores
-	) {
-		const container = document.getElementById(lado)
-
-		// Verificar se jogadores é um array
-		if (!Array.isArray(jogadores)) {
-			console.error(
-				`Esperado um array de jogadores, mas recebeu: ${typeof jogadores}`
-			)
-			return
-		}
-
-		jogadores.forEach((jogador) => {
-			const jogadorDiv = document.createElement("div")
-			jogadorDiv.id = `jogador${jogador.idJogador}`
-			jogadorDiv.classList.add("bolinhaEscolhaJogadores")
-			jogadorDiv.innerText = jogador.numeroCamiseta
-
-			// Adicionar ouvinte de clique
-			jogadorDiv.addEventListener("click", () => {
-				if (arrayLado.includes(jogador.idJogador)) {
-					// Se já estiver no array, remover
-					const index = arrayLado.indexOf(jogador.idJogador)
-					const posicaoRemovida = posicoesJogadores[jogador.idJogador]
-					arrayLado.splice(index, 1)
-					delete posicoesJogadores[jogador.idJogador]
-					jogadorDiv.classList.remove("jogadorSelecionado")
-
-					// Limpar a posição correta e devolver a posição ao array de posições disponíveis
-					document.querySelector(
-						`#Jogador${ladojogador}${posicaoRemovida}`
-					).innerHTML = ""
-
-					// Inserir a posição de volta no início do array de posições disponíveis
-					posicoesDisponiveis.push(posicaoRemovida)
-					posicoesDisponiveis.sort((a, b) => a - b) // Ordenar as posições disponíveis
-				} else {
-					// Verificar se o usuário está tentando selecionar mais que 6 jogadores para o time
-					if (arrayLado.length >= 7) {
-						// Exibir mensagem de erro
-						Swal.fire({
-							icon: "error",
-							title: `Você já selecionou 7 jogadores`,
-							text: `Não é possível selecionar mais.`,
-							showConfirmButton: false,
-							timer: 2000,
-						})
-						return
-					}
-					// Se não estiver no array, adicionar
-					const posicaoAdicionada = posicoesDisponiveis.shift()
-					arrayLado.push(jogador.idJogador)
-					posicoesJogadores[jogador.idJogador] = posicaoAdicionada
-					document.querySelector(
-						`#Jogador${ladojogador}${posicaoAdicionada}`
-					).innerHTML = `${jogador.numeroCamiseta}`
-					jogadorDiv.classList.add("jogadorSelecionado")
-				}
-			})
-
-			container.appendChild(jogadorDiv)
-		})
-	}
-
-	// Verificar se jogadoresTime1 e jogadoresTime2 são objetos com a propriedade Jogadors
-	if (!jogadoresTime1.Jogadors || !jogadoresTime2.Jogadors) {
-		console.error(
-			"Esperado objetos com a propriedade Jogadors para jogadoresTime1 e jogadoresTime2."
-		)
-		return
-	}
-
-	// Arrays para manter as posições disponíveis e mapa de posições dos jogadores
-	const posicoesDisponiveisEsquerda = [0, 1, 2, 3, 4, 5, 6]
-	const posicoesDisponiveisDireita = [0, 1, 2, 3, 4, 5, 6]
-	const posicoesJogadoresEsquerda = {}
-	const posicoesJogadoresDireita = {}
-
-	// Determinar qual time é da esquerda e qual é da direita
-	if (jogadoresTime1.idTime === timeEsquerda) {
-		// Renderizar jogadores do time 1 à esquerda e jogadores do time 2 à direita
-		adicionarJogadores(
-			"escolhaJogadoresLadoEsquerdo",
-			jogadoresTime1.Jogadors,
-			jogadoresEmQuadraEsquerda,
-			"Esquerda",
-			posicoesDisponiveisEsquerda,
-			posicoesJogadoresEsquerda
-		)
-		adicionarJogadores(
-			"escolhaJogadoresLadoDireito",
-			jogadoresTime2.Jogadors,
-			jogadoresEmQuadraDireita,
-			"Direita",
-			posicoesDisponiveisDireita,
-			posicoesJogadoresDireita
-		)
-	} else if (jogadoresTime2.idTime === timeEsquerda) {
-		// Renderizar jogadores do time 2 à esquerda e jogadores do time 1 à direita
-		adicionarJogadores(
-			"escolhaJogadoresLadoEsquerdo",
-			jogadoresTime2.Jogadors,
-			jogadoresEmQuadraEsquerda,
-			"Esquerda",
-			posicoesDisponiveisEsquerda,
-			posicoesJogadoresEsquerda
-		)
-		adicionarJogadores(
-			"escolhaJogadoresLadoDireito",
-			jogadoresTime1.Jogadors,
-			jogadoresEmQuadraDireita,
-			"Direita",
-			posicoesDisponiveisDireita,
-			posicoesJogadoresDireita
-		)
-	} else {
-		console.error("Os IDs dos times não correspondem aos IDs dos lados fornecidos.")
-	}
-}
-
 function escolhaJogadores() {
 	closeModal("modalDefinicaoLado")
 	renderizarPlacar(partidaResponse, partida)
@@ -1391,24 +1254,24 @@ function exibirMensagemVencedor(timeVencedor,set) {
 														<div class="quadraVolei">
 															<div class="ballplayer">
 																<div class="jogadoresTime01 quadra">
-																	<div id="JogadorEsquerda0" class="bolinha" style="left: 10% top: 78%"></div>
-																	<div id="JogadorEsquerda1" class="bolinha" style="left: 65% top: 78%"></div>
-																	<div id="JogadorEsquerda2" class="bolinha" style="left: 65% top: 40%"></div>
-																	<div id="JogadorEsquerda3" class="bolinha" style="left: 65% top: 8%"></div>
-																	<div id="JogadorEsquerda4" class="bolinha" style="left: 10% top: 8%"></div>
-																	<div id="JogadorEsquerda5" class="bolinha" style="left: 10% top: 40%"></div>
-																	<div id="JogadorEsquerda6" class="bolinha libero" style="left: 10% top: 55%"></div>
+																	<div id="JogadorEsquerda0" class="bolinha" style="left: 10%; top: 78%;"></div>
+																	<div id="JogadorEsquerda1" class="bolinha" style="left: 65%; top: 78%;"></div>
+																	<div id="JogadorEsquerda2" class="bolinha" style="left: 65%; top: 40%;"></div>
+																	<div id="JogadorEsquerda3" class="bolinha" style="left: 65%; top: 8%";></div>
+																	<div id="JogadorEsquerda4" class="bolinha" style="left: 10%; top: 8%";></div>
+																	<div id="JogadorEsquerda5" class="bolinha" style="left: 10%; top: 40%;"></div>
+																	<div id="JogadorEsquerda6" class="bolinha libero" style="left: 10%; top: 55%;"></div>
 																</div>
 															</div>
 															<div class="ballplayer">
 																<div class="jogadoresTime02 quadra">
-																	<div id="JogadorDireita0" class="bolinha2" style="left: 75% top: 8%"></div>
-																	<div id="JogadorDireita1" class="bolinha2" style="left: 25% top: 8%"></div>
-																	<div id="JogadorDireita2" class="bolinha2" style="left: 25% top: 40%"></div>
-																	<div id="JogadorDireita3" class="bolinha2" style="left: 25% top: 78%"></div>
-																	<div id="JogadorDireita4" class="bolinha2" style="left: 75% top: 78%"></div>
-																	<div id="JogadorDireita5" class="bolinha2" style="left: 75% top: 40%"></div>
-																	<div id="JogadorDireita6" class="bolinha2 libero" style="left: 85% top: 55%"></div>
+																	<div id="JogadorDireita0" class="bolinha2" style="left: 75%; top: 8%";></div>
+																	<div id="JogadorDireita1" class="bolinha2" style="left: 25%; top: 8%";></div>
+																	<div id="JogadorDireita2" class="bolinha2" style="left: 25%; top: 40%;"></div>
+																	<div id="JogadorDireita3" class="bolinha2" style="left: 25%; top: 78%;"></div>
+																	<div id="JogadorDireita4" class="bolinha2" style="left: 75%; top: 78%;"></div>
+																	<div id="JogadorDireita5" class="bolinha2" style="left: 75%; top: 40%;"></div>
+																	<div id="JogadorDireita6" class="bolinha2 libero" style="left: 85%; top: 55%;"></div>
 																</div>
 															</div>
 														</div>
