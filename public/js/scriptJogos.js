@@ -360,47 +360,48 @@ const plusButtonTime01 = document.getElementById("plusTime01")
 const minusButtonTime01 = document.getElementById("minusTime01")
 const bola01 = document.getElementById("bolavolei01").style.opacity
 
+const indicadorPonto = () => {
+  const timeQueMarcou = partida.idTime || partida.saqueInicial;
+  if (timeQueMarcou === timeEsquerda) {
+    document.getElementById("bolavolei01").style.opacity = "1";
+    document.getElementById("bolavolei02").style.opacity = "0";
+  } else if (timeQueMarcou === timeDireita) {
+    document.getElementById("bolavolei01").style.opacity = "0";
+    document.getElementById("bolavolei02").style.opacity = "1";
+  }
+};
 const updateValueTime01 = () => {
 	if (countTime01 <= 9) {
 		valueTime01.innerHTML = "0" + countTime01
 	} else if (countTime01 > 9) {
 		valueTime01.innerHTML = countTime01
 		if (countTime01 > 24 && countTime01 >= countTime02 + 2) {
-			console.log("time 1 ganhou")
 			exibirMensagemVencedor(nomeTimeEsquerda,partida.set)
 		}
 	}
+	indicadorPonto();
 }
-const updateBola01 = () => {
-	document.getElementById("bolavolei01").style.opacity = "1"
-	document.getElementById("bolavolei02").style.opacity = "0"
-}
-const updateBola02 = () => {
-	document.getElementById("bolavolei01").style.opacity = "0"
-	document.getElementById("bolavolei02").style.opacity = "1"
-}
-
-const valueTime02 = document.getElementById("valueTime02")
-const plusButtonTime02 = document.getElementById("plusTime02")
-const minusButtonTime02 = document.getElementById("minusTime02")
 const updateValueTime02 = () => {
 	if (countTime02 <= 9) {
 		valueTime02.innerHTML = "0" + countTime02
 	} else if (countTime02 > 9) {
 		valueTime02.innerHTML = countTime02
 		if (countTime02 > 24 && countTime02 >= countTime01 + 2) {
-			console.log("time 2 ganhou")
 			exibirMensagemVencedor(nomeTimeDireita,partida.set)
 		}
 	}
+	indicadorPonto();
 }
+
+const valueTime02 = document.getElementById("valueTime02")
+const plusButtonTime02 = document.getElementById("plusTime02")
+const minusButtonTime02 = document.getElementById("minusTime02")
 
 plusButtonTime01.addEventListener("click", () => {
 	if (countTime01 >= 0 && countTime01 < 40) {
 		countTime01 += 1
 		updateTime01()
 		updateValueTime01()
-		updateBola01()
 		controlet1 = "ponto"
 		controlet2 = "semponto"
 	}
@@ -412,7 +413,6 @@ document.addEventListener("keydown", () => {
 		countTime01 += 1
 		updateTime01()
 		updateValueTime01()
-		updateBola01()
 		controlet1 = "ponto"
 		controlet2 = "semponto"
 	}
@@ -423,7 +423,7 @@ plusButtonTime01.addEventListener("mousedown", () => {
 			countTime01 += 1
 			updateTime01()
 			updateValueTime01()
-			updateBola01()
+
 			controlet1 = "ponto"
 			controlet2 = "semponto"
 			if (countTime01 == 40) {
@@ -433,7 +433,6 @@ plusButtonTime01.addEventListener("mousedown", () => {
 	}
 })
 minusButtonTime01.addEventListener("click", () => {
-	console.log(countTime01, countTime02) //Chamda de rota redução ponto api
 	if (countTime01 > 0 && countTime01 <= 40) {
 		countTime01 -= 1
 		updateMenusTime01()
@@ -521,7 +520,6 @@ plusButtonTime02.addEventListener("click", () => {
 		countTime02 += 1
 		updateTime02()
 		updateValueTime02()
-		updateBola02()
 		controlet2 = "ponto"
 		controlet1 = "semponto"
 	}
@@ -533,7 +531,6 @@ document.addEventListener("keydown", () => {
 		countTime02 += 1
 		updateTime02()
 		updateValueTime02()
-		updateBola02()
 		controlet2 = "ponto"
 		controlet1 = "semponto"
 	}
@@ -544,7 +541,7 @@ plusButtonTime02.addEventListener("mousedown", () => {
 			countTime02 += 1
 			updateTime02()
 			updateValueTime02()
-			updateBola02()
+
 			controlet2 = "ponto"
 			controlet1 = "semponto"
 			if (countTime02 == 40) {
@@ -641,7 +638,6 @@ function moveRight(arr) {
 	const lastElement = arr.pop()
 	arr.unshift(lastElement)
 }
-
 // Função para mover os elementos do vetor para a esquerda
 function moveLeft(arr) {
 	const firstElement = arr.shift()
@@ -695,13 +691,11 @@ function renderizarPlacar(partidaResponse, partida) {
 	const timeSaque = partida.idTime || partida.saqueInicial
 
 	if (timeEsquerda === timeSaque) {
-		updateBola01()
 		controlet1 = "ponto"
 		controlet2 = "semponto"
 		rotacaot1 = "rotacionou"
 		rotacaot2 = "mantem"
 	} else if (timeDireita === timeSaque) {
-		updateBola02()
 		controlet1 = "semponto"
 		controlet2 = "ponto"
 		rotacaot1 = "mantem"
@@ -949,30 +943,20 @@ function adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, tim
 				event.stopPropagation() // Impede a propagação do evento para o jogador pai
 			}
 			let jogadorId = Number(this.dataset.jogadorId)
-			console.log(lado)
-			console.log(jogadorId)
 
 			const jogadorEmQuadra = lado === "Esquerda"
 				? jogadoresEmQuadraEsquerda
 				: jogadoresEmQuadraDireita
-			console.log(jogadorEmQuadra)
 			// Verificar se o jogador está na
 			if (lado === "Esquerda") {
-				console.log("Entrou no if Esquerda")
 				if(jogadorEmQuadra.includes(jogadorId)){
-					console.log(`jogador ${jogadorId} da Esquerda em quadra!! `+id)
 					openModalSubstituicaoJogador(lado,id,jogadorId,jogadorEmQuadra)
 				}
 			} else if (lado === "Direita"){
-				console.log("Entrou no if Direita")
 				if(jogadorEmQuadra.includes(jogadorId)){
-					console.log(`jogador ${jogadorId} da Direita em quadra!!` +id)
 					openModalSubstituicaoJogador(lado,id,jogadorId,jogadorEmQuadra)
 				}
 			}
-
-			console.log(jogadoresEmQuadraEsquerda)
-			console.log(jogadoresEmQuadraDireita)
 		})
 
 		return jogadorDiv
@@ -1019,11 +1003,9 @@ function adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, tim
 	}
 	// Verificar qual time é da esquerda e qual é da direita
 	if (jogadoresTime1.idTime === timeEsquerda) {
-		console.log('Time 1 é da esquerda')
 		adicionarJogadores(jogadoresEmQuadraEsquerda, jogadoresTime1.Jogadors, "Esquerda", posiocaoLeftT1, posiocaoTopT1, liberoT1)
 		adicionarJogadores(jogadoresEmQuadraDireita, jogadoresTime2.Jogadors, "Direita", posiocaoLeftT2, posiocaoTopT2, liberoT2)
 	} else {
-		console.log('Time 1 é da direita')
 		adicionarJogadores(jogadoresEmQuadraDireita, jogadoresTime1.Jogadors, "Direita", posiocaoLeftT2, posiocaoTopT2, liberoT2)
 		adicionarJogadores(jogadoresEmQuadraEsquerda, jogadoresTime2.Jogadors, "Esquerda", posiocaoLeftT1, posiocaoTopT1, liberoT1)
 	}
