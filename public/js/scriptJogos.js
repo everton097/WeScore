@@ -241,12 +241,7 @@ if (partidaID) {
 									.getElementById("btnSalvarModalmodalDefinicaoJogadores")
 									.addEventListener("click", function () {
 										const dadosParaEnviarAPI =
-											prepararDadosParaAPIDefinicaoJogadores(
-												partidaResponse,
-												partida,
-												jogadoresEmQuadraDireita,
-												jogadoresEmQuadraEsquerda
-											)
+											prepararDadosParaAPIDefinicaoJogadores()
 										// Fazer uma solicitação POST para vincular jogadores em suas posições
 										axios
 											.post(`${url}posicao/create`, dadosParaEnviarAPI, config)
@@ -359,18 +354,101 @@ const valueTime01 = document.getElementById("valueTime01")
 const plusButtonTime01 = document.getElementById("plusTime01")
 const minusButtonTime01 = document.getElementById("minusTime01")
 const bola01 = document.getElementById("bolavolei01").style.opacity
-
-const indicadorPonto = () => {
-  const timeQueMarcou = partida.idTime || partida.saqueInicial;
-  if (timeQueMarcou === timeEsquerda) {
-    document.getElementById("bolavolei01").style.opacity = "1";
-    document.getElementById("bolavolei02").style.opacity = "0";
-  } else if (timeQueMarcou === timeDireita) {
-    document.getElementById("bolavolei01").style.opacity = "0";
-    document.getElementById("bolavolei02").style.opacity = "1";
+const chamadaAPINewPonto = (timeMarcouPonto) => {
+	let ptTime1, ptTime2, ladoQuadraTime1, ladoQuadraTime2
+  const isTime1Esquerda = partida.ladoQuadraTime1 === "Esquerda"
+  // Verificar qual time está à esquerda para determinar os pontos e lados corretamente
+  if (isTime1Esquerda) {
+    ptTime1 = countTime01
+    ptTime2 = countTime02
+    ladoQuadraTime1 = "Esquerda"
+    ladoQuadraTime2 = "Direita"
+  } else {
+    ptTime1 = countTime02
+    ptTime2 = countTime01
+    ladoQuadraTime1 = "Direita"
+    ladoQuadraTime2 = "Esquerda"
   }
-};
-const updateValueTime01 = () => {
+	// busca o token armazenado no login
+	var token = localStorage.getItem("token")
+	// Configurar o cabeçalho com a autorização do token
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+			"Content-Type": "application/x-www-form-urlencoded",
+		},
+	}
+  axios
+		.post(
+			`${url}ponto/plus/${partidaID}`,
+			{
+				ptTime1: ptTime1,
+				ptTime2: ptTime2,
+				ladoQuadraTime1: ladoQuadraTime1,
+				ladoQuadraTime2: ladoQuadraTime2,
+				idTime: timeMarcouPonto,
+				set: partida.set,
+				saqueInicial: partida.saqueInicial,
+				idPartida: partida.idPartida,
+			},
+			config
+		)
+		.then((response) => {
+			partida=response.data
+			const dadosParaEnviarAPI = prepararDadosParaAPIDefinicaoJogadores()
+			axios
+			.post(`${url}posicao/create`, dadosParaEnviarAPI, config)
+				.then((response) => {
+				})
+				.catch((error) => {
+					if (error.response) {
+						const { data, status } = error.response
+						Swal.fire({
+							icon: "error",
+							title: `Erro ao atualizar rodízio dos jogadores.\n${data.error}`,
+							text: `Erro ${status} ` || "Erro desconhecido",
+						})
+						console.error(error)
+					} else if (error.request) {
+						console.error("A solicitação foi feita, mas não houve resposta da API")
+					} else {
+						console.error(
+							"Algo aconteceu durante a configuração da solicitação que acionou um erro",
+							error.message
+						)
+					}
+				})
+		})
+		.catch((error) => {
+			console.error(error)
+			if (error.response) {
+				const { data, status } = error.response
+				Swal.fire({
+					icon: "error",
+					title: `Erro ao atualizar ponto da Partida.\n${data.error}`,
+					text: `Erro ${status} ` || "Erro desconhecido",
+				})
+			} else if (error.request) {
+				console.error("A solicitação foi feita, mas não houve resposta da API")
+			} else {
+				console.error(
+					"Algo aconteceu durante a configuração da solicitação que acionou um erro",
+					error.message
+				)
+			}
+		})
+}
+const indicadorPonto = () => {
+  const timeQueMarcou = partida.idTime || partida.saqueInicial
+  if (timeQueMarcou === timeEsquerda) {
+    document.getElementById("bolavolei01").style.opacity = "1"
+    document.getElementById("bolavolei02").style.opacity = "0"
+  } else if (timeQueMarcou === timeDireita) {
+    document.getElementById("bolavolei01").style.opacity = "0"
+    document.getElementById("bolavolei02").style.opacity = "1"
+  }
+}
+const updateValueTime01 = (inicial) => {
 	if (countTime01 <= 9) {
 		valueTime01.innerHTML = "0" + countTime01
 	} else if (countTime01 > 9) {
@@ -379,9 +457,19 @@ const updateValueTime01 = () => {
 			exibirMensagemVencedor(nomeTimeEsquerda,partida.set)
 		}
 	}
+	if (!inicial) {
+		const isTime1Esquerda = partida.ladoQuadraTime1 === "Esquerda"
+		let timeMarcou
+		if (isTime1Esquerda) {
+			timeMarcou = partidaResponse.idTime1
+		} else {
+			timeMarcou = partidaResponse.idTime2
+		}
+		chamadaAPINewPonto(timeMarcou)
+	}
 	indicadorPonto();
 }
-const updateValueTime02 = () => {
+const updateValueTime02 = (inicial) => {
 	if (countTime02 <= 9) {
 		valueTime02.innerHTML = "0" + countTime02
 	} else if (countTime02 > 9) {
@@ -389,6 +477,16 @@ const updateValueTime02 = () => {
 		if (countTime02 > 24 && countTime02 >= countTime01 + 2) {
 			exibirMensagemVencedor(nomeTimeDireita,partida.set)
 		}
+	}
+	if (!inicial) {
+		const isTime1Direita = partida.ladoQuadraTime1 === "Direita"
+		let timeMarcou
+		if (isTime1Direita) {
+			timeMarcou = partidaResponse.idTime1
+		} else {
+			timeMarcou = partidaResponse.idTime2
+		}
+		chamadaAPINewPonto(timeMarcou)
 	}
 	indicadorPonto();
 }
@@ -400,8 +498,8 @@ const minusButtonTime02 = document.getElementById("minusTime02")
 plusButtonTime01.addEventListener("click", () => {
 	if (countTime01 >= 0 && countTime01 < 40) {
 		countTime01 += 1
-		updateTime01()
-		updateValueTime01()
+		rotacaoJogadoresEsquerda()
+		updateValueTime01(false)
 		controlet1 = "ponto"
 		controlet2 = "semponto"
 	}
@@ -411,8 +509,8 @@ document.addEventListener("keydown", () => {
 	// Verifique se a tecla pressionada é a tecla desejada (por exemplo, tecla 'A' com código 65)
 	if (countTime01 >= 0 && countTime01 < 40 && event.key === "q") {
 		countTime01 += 1
-		updateTime01()
-		updateValueTime01()
+		rotacaoJogadoresEsquerda()
+		updateValueTime01(false)
 		controlet1 = "ponto"
 		controlet2 = "semponto"
 	}
@@ -421,9 +519,8 @@ plusButtonTime01.addEventListener("mousedown", () => {
 	if (countTime01 >= 0 && countTime01 < 40) {
 		intervalIDTime01 = setInterval(() => {
 			countTime01 += 1
-			updateTime01()
-			updateValueTime01()
-
+			rotacaoJogadoresEsquerda()
+			updateValueTime01(false)
 			controlet1 = "ponto"
 			controlet2 = "semponto"
 			if (countTime01 == 40) {
@@ -435,24 +532,24 @@ plusButtonTime01.addEventListener("mousedown", () => {
 minusButtonTime01.addEventListener("click", () => {
 	if (countTime01 > 0 && countTime01 <= 40) {
 		countTime01 -= 1
-		updateMenusTime01()
-		updateValueTime01()
+		desfazerRotacaoJogadoresEsquerda()
+		updateValueTime01(false)
 	}
 })
 document.addEventListener("keydown", () => {
 	// Verifique se a tecla pressionada é a tecla desejada (por exemplo, tecla 'A' com código 65)
 	if (countTime01 > 0 && countTime01 <= 40 && event.key === "a") {
 		countTime01 -= 1
-		updateMenusTime01()
-		updateValueTime01()
+		desfazerRotacaoJogadoresEsquerda()
+		updateValueTime01(false)
 	}
 })
 minusButtonTime01.addEventListener("mousedown", () => {
 	if (countTime01 > 0 && countTime01 <= 40) {
 		intervalIDTime01 = setInterval(() => {
 			countTime01 -= 1
-			updateMenusTime01()
-			updateValueTime01()
+			desfazerRotacaoJogadoresEsquerda()
+			updateValueTime01(false)
 			if (countTime01 == 40 || countTime01 == 0) {
 				clearInterval(intervalIDTime01)
 			}
@@ -465,13 +562,13 @@ const posiocaoLeftT1 = [0, 55, 55, 55, 0, 0]
 const posiocaoTopT1 = [75, 75, 37.5, 2, 2, 37.5]
 const liberoT1 = [-10, 55]
 
-function updateTime01() {
+function rotacaoJogadoresEsquerda() {
 	if (controlet1 == "semponto" && rotacaot1 == "mantem") {
 		//Altera posição dos jogadores.
 		moveRight(posiocaoLeftT1)
 		moveRight(posiocaoTopT1)
 		// Altera array de jogadoresTitulares do jogo
-		moveRight(jogadoresEmQuadraEsquerda)
+		moveLeftTimeCompleto(jogadoresEmQuadraEsquerda)
 		JogadorEsquerda0.style.left = `${posiocaoLeftT1[0]}%`
 		JogadorEsquerda0.style.top = `${posiocaoTopT1[0]}%`
 		JogadorEsquerda1.style.left = `${posiocaoLeftT1[1]}%`
@@ -490,7 +587,7 @@ function updateTime01() {
 		rotacaot1 = "mantem"
 	}
 }
-function updateMenusTime01() {
+function desfazerRotacaoJogadoresEsquerda() {
 	if (controlet1 == "ponto" && rotacaot1 == "rotacionou") {
 		//Altera posição dos jogadores.
 		moveLeft(posiocaoLeftT1)
@@ -518,8 +615,8 @@ function updateMenusTime01() {
 plusButtonTime02.addEventListener("click", () => {
 	if (countTime02 >= 0 && countTime02 < 40) {
 		countTime02 += 1
-		updateTime02()
-		updateValueTime02()
+		rotacaoJogadoresDireita()
+		updateValueTime02(false)
 		controlet2 = "ponto"
 		controlet1 = "semponto"
 	}
@@ -529,8 +626,8 @@ document.addEventListener("keydown", () => {
 	// Verifique se a tecla pressionada é a tecla desejada (por exemplo, tecla 'A' com código 65)
 	if (countTime02 >= 0 && countTime02 < 40 && event.key === "e") {
 		countTime02 += 1
-		updateTime02()
-		updateValueTime02()
+		rotacaoJogadoresDireita()
+		updateValueTime02(false)
 		controlet2 = "ponto"
 		controlet1 = "semponto"
 	}
@@ -539,8 +636,8 @@ plusButtonTime02.addEventListener("mousedown", () => {
 	if (countTime02 >= 0 && countTime02 < 40) {
 		intervalIDTime02 = setInterval(() => {
 			countTime02 += 1
-			updateTime02()
-			updateValueTime02()
+			rotacaoJogadoresDireita()
+			updateValueTime02(false)
 
 			controlet2 = "ponto"
 			controlet1 = "semponto"
@@ -553,24 +650,24 @@ plusButtonTime02.addEventListener("mousedown", () => {
 minusButtonTime02.addEventListener("click", () => {
 	if (countTime02 > 0 && countTime02 <= 40) {
 		countTime02 -= 1
-		updateMenusTime02()
-		updateValueTime02()
+		desfazerRotacaoJogadoresDireita()
+		updateValueTime02(false)
 	}
 })
 document.addEventListener("keydown", () => {
 	// Verifique se a tecla pressionada é a tecla desejada (por exemplo, tecla 'A' com código 65)
 	if (countTime02 > 0 && countTime02 <= 40 && event.key === "d") {
 		countTime02 -= 1
-		updateMenusTime02()
-		updateValueTime02()
+		desfazerRotacaoJogadoresDireita()
+		updateValueTime02(false)
 	}
 })
 minusButtonTime02.addEventListener("mousedown", () => {
 	if (countTime02 > 0 && countTime02 <= 40) {
 		intervalIDTime02 = setInterval(() => {
 			countTime02 -= 1
-			updateMenusTime02()
-			updateValueTime02()
+			desfazerRotacaoJogadoresDireita()
+			updateValueTime02(false)
 			if (countTime02 == 40 || countTime02 == 0) {
 				clearInterval(intervalIDTime02)
 			}
@@ -583,13 +680,13 @@ document.addEventListener("mouseup", () => clearInterval(intervalIDTime02))
 const posiocaoLeftT2 = [75, 25, 25, 25, 75, 75]
 const posiocaoTopT2 = [0, 0, 37.5, 75, 75, 37.5]
 const liberoT2 = [70, 55]
-function updateTime02() {
+function rotacaoJogadoresDireita() {
 	if (controlet2 == "semponto" && rotacaot2 == "mantem") {
 		//Altera posição dos jogadores.
 		moveRight(posiocaoLeftT2)
 		moveRight(posiocaoTopT2)
 		// Altera array de jogadoresTitulares do jogo
-		moveRight(jogadoresEmQuadraDireita)
+		moveLeftTimeCompleto(jogadoresEmQuadraDireita)
 		JogadorDireita0.style.left = `${posiocaoLeftT2[0]}%`
 		JogadorDireita0.style.top = `${posiocaoTopT2[0]}%`
 		JogadorDireita1.style.left = `${posiocaoLeftT2[1]}%`
@@ -608,13 +705,13 @@ function updateTime02() {
 		rotacaot2 = "mantem"
 	}
 }
-function updateMenusTime02() {
+function desfazerRotacaoJogadoresDireita() {
 	if (controlet2 == "ponto" && rotacaot2 == "rotacionou") {
 		//Altera posição dos jogadores.
 		moveLeft(posiocaoLeftT2)
 		moveLeft(posiocaoTopT2)
 		// Altera array de jogadoresTitulares do jogo
-		moveLeft(jogadoresEmQuadraDireita)
+		moveLeftTimeCompleto(jogadoresEmQuadraDireita)
 		JogadorDireita0.style.left = `${posiocaoLeftT2[0]}%`
 		JogadorDireita0.style.top = `${posiocaoTopT2[0]}%`
 		JogadorDireita1.style.left = `${posiocaoLeftT2[1]}%`
@@ -642,6 +739,19 @@ function moveRight(arr) {
 function moveLeft(arr) {
 	const firstElement = arr.shift()
 	arr.push(firstElement)
+}
+
+// Função para mover os elementos do vetor para a direita
+function moveRightTimeCompleto(arr) {
+	const secondLastElement = arr.splice(5, 1)[0]
+	arr.unshift(secondLastElement)
+  const lastElement = arr.pop()
+  arr.push(lastElement)
+}
+// Função para mover os elementos do vetor para a esquerda
+function moveLeftTimeCompleto(arr) {
+	const firstElement = arr.shift()
+	arr.splice(5, 0, firstElement)
 }
 
 
@@ -702,8 +812,8 @@ function renderizarPlacar(partidaResponse, partida) {
 		rotacaot2 = "rotacionou"
 	}
 
-	updateValueTime01()
-	updateValueTime02()
+	updateValueTime01(true)
+	updateValueTime02(true)
 }
 // Função para encontrar os lados e preparar os dados para a API
 function prepararDadosParaAPIDefinicaoTimes(partidaResponse, selectedTimes) {
@@ -731,12 +841,7 @@ function prepararDadosParaAPIDefinicaoTimes(partidaResponse, selectedTimes) {
 	return dadosParaAPI
 }
 // Função para encontrar os lados e preparar os dados para a API
-function prepararDadosParaAPIDefinicaoJogadores(
-	partidaResponse,
-	partida,
-	jogadoresEmQuadraDireita,
-	jogadoresEmQuadraEsquerda
-) {
+function prepararDadosParaAPIDefinicaoJogadores() {
 	// Preparar objeto para enviar à API
 	const dadosParaAPI = {
 		idPartida: partidaResponse.idPartida,
@@ -746,7 +851,6 @@ function prepararDadosParaAPIDefinicaoJogadores(
 	}
 	return dadosParaAPI
 }
-
 // Função para encontrar os lados e preparar os dados para a API
 function renderizarJogadores(jogadoresTime1, jogadoresTime2, timeEsquerda, timeDireita) {
 	// Função auxiliar para adicionar jogadores ao lado correto
@@ -976,7 +1080,7 @@ function adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, tim
 					break // Interrompe o loop assim que o jogador é encontrado
 				}
 			} */
-
+			
 			if (jogador) {
 				const jogadorDiv = criarJogador(index, jogador.idJogador, jogador.numeroCamiseta, lado, posicoesLeft, posicoesTop, libero)
 				if (lado === "Esquerda") {
@@ -988,6 +1092,8 @@ function adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, tim
 						containerEsquerda.appendChild(jogadorDiv)
 					}
 				} else {
+					console.log(jogador);
+					console.log(index);
 					// Verifica se é o libero, se for, adiciona o jogador junto ao jogador5
 					if (index == 6) {
 						const liberoDireita = document.querySelector("#JogadorDireita5")
@@ -1044,9 +1150,9 @@ function AtualizarDadosPartida(response) {
 		}
 
 		if (posicao.ladoQuadra === "Esquerda") {
-			jogadoresEmQuadraEsquerda.push(jogador.idJogador)
+			jogadoresEmQuadraEsquerda[jogador.local] = jogador.idJogador;
 		} else if (posicao.ladoQuadra === "Direita") {
-			jogadoresEmQuadraDireita.push(jogador.idJogador)
+			jogadoresEmQuadraDireita[jogador.local] = jogador.idJogador;
 		}
 	})
 }
@@ -1171,6 +1277,7 @@ function exibirMensagemVencedor(timeVencedor,set) {
     icon: 'success',
     showCancelButton: isUltimoSet,
 		showConfirmButton: !isUltimoSet,
+		allowOutsideClick: false,
     cancelButtonText: 'Finalizar Partida',
     confirmButtonText: 'Próximo Set',
   }).then((result) => {
@@ -1239,16 +1346,16 @@ function exibirMensagemVencedor(timeVencedor,set) {
 																	<div id="JogadorEsquerda0" class="bolinha" style="left: 10%; top: 78%;"></div>
 																	<div id="JogadorEsquerda1" class="bolinha" style="left: 65%; top: 78%;"></div>
 																	<div id="JogadorEsquerda2" class="bolinha" style="left: 65%; top: 40%;"></div>
-																	<div id="JogadorEsquerda3" class="bolinha" style="left: 65%; top: 8%";></div>
-																	<div id="JogadorEsquerda4" class="bolinha" style="left: 10%; top: 8%";></div>
+																	<div id="JogadorEsquerda3" class="bolinha" style="left: 65%; top:  8%;"></div>
+																	<div id="JogadorEsquerda4" class="bolinha" style="left: 10%; top:  8%;"></div>
 																	<div id="JogadorEsquerda5" class="bolinha" style="left: 10%; top: 40%;"></div>
 																	<div id="JogadorEsquerda6" class="bolinha libero" style="left: 10%; top: 55%;"></div>
 																</div>
 															</div>
 															<div class="ballplayer">
 																<div class="jogadoresTime02 quadra">
-																	<div id="JogadorDireita0" class="bolinha2" style="left: 75%; top: 8%";></div>
-																	<div id="JogadorDireita1" class="bolinha2" style="left: 25%; top: 8%";></div>
+																	<div id="JogadorDireita0" class="bolinha2" style="left: 75%; top:  8%;"></div>
+																	<div id="JogadorDireita1" class="bolinha2" style="left: 25%; top:  8%;"></div>
 																	<div id="JogadorDireita2" class="bolinha2" style="left: 25%; top: 40%;"></div>
 																	<div id="JogadorDireita3" class="bolinha2" style="left: 25%; top: 78%;"></div>
 																	<div id="JogadorDireita4" class="bolinha2" style="left: 75%; top: 78%;"></div>
@@ -1277,12 +1384,7 @@ function exibirMensagemVencedor(timeVencedor,set) {
 					.getElementById("btnSalvarModalmodalDefinicaoJogadores")
 					.addEventListener("click", function () {
 						const dadosParaEnviarAPI =
-							prepararDadosParaAPIDefinicaoJogadores(
-								partidaResponse,
-								partida,
-								jogadoresEmQuadraDireita,
-								jogadoresEmQuadraEsquerda
-							)
+							prepararDadosParaAPIDefinicaoJogadores()
 						// Fazer uma solicitação POST para vincular jogadores em suas posições
 						axios
 							.post(`${url}posicao/create`, dadosParaEnviarAPI, config)
