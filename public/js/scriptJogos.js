@@ -705,7 +705,6 @@ minusButtonTime02.addEventListener("mousedown", () => {
 })
 document.addEventListener("mouseup", () => clearInterval(intervalIDTime02))
 
-
 const posiocaoLeftT2 = [75, 25, 25, 25, 75, 75]
 const posiocaoTopT2 = [0, 0, 37.5, 75, 75, 37.5]
 const posiocaoLiberoT2 = [88, 13, 50, 88]
@@ -781,7 +780,6 @@ function desfazerRotacaoJogadoresDireita() {
 		rotacaot1 = "rotacionou"
 	}
 }
-
 // Função para mover os elementos do vetor para a direita
 function moveRight(arr) {
 	const lastElement = arr.pop()
