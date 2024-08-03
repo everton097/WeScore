@@ -11,7 +11,9 @@ let countTime02 = 0,
 let timeDireita = 0,
 	timeEsquerda = 0,
 	nomeTimeDireita = "",
-	nomeTimeEsquerda = ""
+	nomeTimeEsquerda = "",
+	rotacaoliberoDireita,
+	rotacaoliberoEsquerda
 // Controle de estado para armazenar os IDs dos times selecionados
 let selectedTimes = [],
 	partida = {},
@@ -253,6 +255,7 @@ if (partidaID) {
 													timer: 1500,
 												}).then(() => {
 													closeModal("modalDefinicaoJogadores")
+													AtualizarDadosPartida(response)
 													adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, timeEsquerda, timeDireita, jogadoresEmQuadraEsquerda,jogadoresEmQuadraDireita)
 												})
 											})
@@ -393,10 +396,10 @@ const chamadaAPINewPonto = (timeMarcouPonto) => {
 			},
 			config
 		)
-		.then((response) => {
+		.then((response) => {			
 			partida=response.data
 			const dadosParaEnviarAPI = prepararDadosParaAPIDefinicaoJogadores()
-			axios
+			axios			
 			.post(`${url}posicao/create`, dadosParaEnviarAPI, config)
 				.then((response) => {
 				})
@@ -420,12 +423,11 @@ const chamadaAPINewPonto = (timeMarcouPonto) => {
 				})
 		})
 		.catch((error) => {
-			console.error(error)
 			if (error.response) {
 				const { data, status } = error.response
 				Swal.fire({
 					icon: "error",
-					title: `Erro ao atualizar ponto da Partida.\n${data.error}`,
+					title: `Erro ao atualizar ponto da Partida.\n${data.error || data.message}`,
 					text: `Erro ${status} ` || "Erro desconhecido",
 				})
 			} else if (error.request) {
@@ -436,6 +438,7 @@ const chamadaAPINewPonto = (timeMarcouPonto) => {
 					error.message
 				)
 			}
+			console.error(error)
 		})
 }
 const indicadorPonto = () => {
@@ -560,13 +563,15 @@ document.addEventListener("mouseup", () => clearInterval(intervalIDTime01))
 
 const posiocaoLeftT1 = [0, 55, 55, 55, 0, 0]
 const posiocaoTopT1 = [75, 75, 37.5, 2, 2, 37.5]
-const liberoT1 = [-10, 55]
+const posiocaoLiberoT1 = [-10, 55]
+const rotacaoLiberoT1 = [5,4,0]
 
 function rotacaoJogadoresEsquerda() {
 	if (controlet1 == "semponto" && rotacaot1 == "mantem") {
 		//Altera posição dos jogadores.
 		moveRight(posiocaoLeftT1)
 		moveRight(posiocaoTopT1)
+		moveLeft(rotacaoliberoEsquerda)
 		// Altera array de jogadoresTitulares do jogo
 		moveLeftTimeCompleto(jogadoresEmQuadraEsquerda)
 		JogadorEsquerda0.style.left = `${posiocaoLeftT1[0]}%`
@@ -592,8 +597,9 @@ function desfazerRotacaoJogadoresEsquerda() {
 		//Altera posição dos jogadores.
 		moveLeft(posiocaoLeftT1)
 		moveLeft(posiocaoTopT1)
+		moveRight(rotacaoliberoEsquerda)
 		// Altera array de jogadoresTitulares do jogo
-		moveLeft(jogadoresEmQuadraEsquerda)
+		moveRightTimeCompleto(jogadoresEmQuadraEsquerda)
 		JogadorEsquerda0.style.left = `${posiocaoLeftT1[0]}%`
 		JogadorEsquerda0.style.top = `${posiocaoTopT1[0]}%`
 		JogadorEsquerda1.style.left = `${posiocaoLeftT1[1]}%`
@@ -679,12 +685,14 @@ document.addEventListener("mouseup", () => clearInterval(intervalIDTime02))
 
 const posiocaoLeftT2 = [75, 25, 25, 25, 75, 75]
 const posiocaoTopT2 = [0, 0, 37.5, 75, 75, 37.5]
-const liberoT2 = [70, 55]
+const posiocaoLiberoT2 = [70, 55]
+const rotacaoLiberoT2 = [5,4,0]
 function rotacaoJogadoresDireita() {
 	if (controlet2 == "semponto" && rotacaot2 == "mantem") {
 		//Altera posição dos jogadores.
 		moveRight(posiocaoLeftT2)
 		moveRight(posiocaoTopT2)
+		moveLeft(rotacaoliberoDireita)
 		// Altera array de jogadoresTitulares do jogo
 		moveLeftTimeCompleto(jogadoresEmQuadraDireita)
 		JogadorDireita0.style.left = `${posiocaoLeftT2[0]}%`
@@ -710,8 +718,9 @@ function desfazerRotacaoJogadoresDireita() {
 		//Altera posição dos jogadores.
 		moveLeft(posiocaoLeftT2)
 		moveLeft(posiocaoTopT2)
+		moveRight(rotacaoliberoDireita)
 		// Altera array de jogadoresTitulares do jogo
-		moveLeftTimeCompleto(jogadoresEmQuadraDireita)
+		moveRightTimeCompleto(jogadoresEmQuadraDireita)
 		JogadorDireita0.style.left = `${posiocaoLeftT2[0]}%`
 		JogadorDireita0.style.top = `${posiocaoTopT2[0]}%`
 		JogadorDireita1.style.left = `${posiocaoLeftT2[1]}%`
@@ -753,7 +762,6 @@ function moveLeftTimeCompleto(arr) {
 	const firstElement = arr.shift()
 	arr.splice(5, 0, firstElement)
 }
-
 
 // Fução para renderizar placar de acordo com escolha de lados
 function renderizarPlacar(partidaResponse, partida) {
@@ -842,13 +850,20 @@ function prepararDadosParaAPIDefinicaoTimes(partidaResponse, selectedTimes) {
 }
 // Função para encontrar os lados e preparar os dados para a API
 function prepararDadosParaAPIDefinicaoJogadores() {
+	// Extrair apenas os IDs dos jogadores dos arrays
+	const idsJogadoresEmQuadraDireita = jogadoresEmQuadraDireita.map(jogador => jogador.idJogador);
+	const idsJogadoresEmQuadraEsquerda = jogadoresEmQuadraEsquerda.map(jogador => jogador.idJogador);
+	
 	// Preparar objeto para enviar à API
 	const dadosParaAPI = {
-		idPartida: partidaResponse.idPartida,
+		idPartida: partida.idPartida,
 		idPonto: partida.idPonto,
-		jogadoresEmQuadraDireita: jogadoresEmQuadraDireita,
-		jogadoresEmQuadraEsquerda: jogadoresEmQuadraEsquerda,
+		jogadoresEmQuadraDireita: idsJogadoresEmQuadraDireita,
+		liberoD: rotacaoliberoDireita[0],//sapoha esta fudendo
+		jogadoresEmQuadraEsquerda: idsJogadoresEmQuadraEsquerda,
+		liberoE: rotacaoliberoEsquerda[0]
 	}
+	
 	return dadosParaAPI
 }
 // Função para encontrar os lados e preparar os dados para a API
@@ -860,17 +875,9 @@ function renderizarJogadores(jogadoresTime1, jogadoresTime2, timeEsquerda, timeD
 		arrayLado,
 		ladojogador,
 		posicoesDisponiveis,
-		posicoesJogadores
+		posicoesJogadores,
 	) {
 		const container = document.getElementById(lado)
-
-		// Verificar se jogadores é um array
-		if (!Array.isArray(jogadores)) {
-			console.error(
-				`Esperado um array de jogadores, mas recebeu: ${typeof jogadores}`
-			)
-			return
-		}
 
 		jogadores.forEach((jogador) => {
 			const jogadorDiv = document.createElement("div")
@@ -880,9 +887,9 @@ function renderizarJogadores(jogadoresTime1, jogadoresTime2, timeEsquerda, timeD
 
 			// Adicionar ouvinte de clique
 			jogadorDiv.addEventListener("click", () => {
-				if (arrayLado.includes(jogador.idJogador)) {
+				if (arrayLado.some(item => item.idJogador === jogador.idJogador)) {
 					// Se já estiver no array, remover
-					const index = arrayLado.indexOf(jogador.idJogador)
+					const index = arrayLado.findIndex(item => item.idJogador === jogador.idJogador)
 					const posicaoRemovida = posicoesJogadores[jogador.idJogador]
 					arrayLado.splice(index, 1)
 					delete posicoesJogadores[jogador.idJogador]
@@ -911,7 +918,7 @@ function renderizarJogadores(jogadoresTime1, jogadoresTime2, timeEsquerda, timeD
 					}
 					// Se não estiver no array, adicionar
 					const posicaoAdicionada = posicoesDisponiveis.shift()
-					arrayLado.push(jogador.idJogador)
+					arrayLado.push({ idJogador: jogador.idJogador, local: posicaoAdicionada })
 					posicoesJogadores[jogador.idJogador] = posicaoAdicionada
 					document.querySelector(
 						`#Jogador${ladojogador}${posicaoAdicionada}`
@@ -923,14 +930,6 @@ function renderizarJogadores(jogadoresTime1, jogadoresTime2, timeEsquerda, timeD
 		})
 	}
 
-	// Verificar se jogadoresTime1 e jogadoresTime2 são objetos com a propriedade Jogadors
-	if (!jogadoresTime1.Jogadors || !jogadoresTime2.Jogadors) {
-		console.error(
-			"Esperado objetos com a propriedade Jogadors para jogadoresTime1 e jogadoresTime2."
-		)
-		return
-	}
-
 	// Arrays para manter as posições disponíveis e mapa de posições dos jogadores
 	const posicoesDisponiveisEsquerda = [0, 1, 2, 3, 4, 5, 6]
 	const posicoesDisponiveisDireita = [0, 1, 2, 3, 4, 5, 6]
@@ -939,6 +938,8 @@ function renderizarJogadores(jogadoresTime1, jogadoresTime2, timeEsquerda, timeD
 
 	// Determinar qual time é da esquerda e qual é da direita
 	if (jogadoresTime1.idTime === timeEsquerda) {
+		rotacaoliberoEsquerda=rotacaoLiberoT1
+		rotacaoliberoDireita=rotacaoLiberoT2
 		// Renderizar jogadores do time 1 à esquerda e jogadores do time 2 à direita
 		adicionarJogadores(
 			"escolhaJogadoresLadoEsquerdo",
@@ -946,7 +947,7 @@ function renderizarJogadores(jogadoresTime1, jogadoresTime2, timeEsquerda, timeD
 			jogadoresEmQuadraEsquerda,
 			"Esquerda",
 			posicoesDisponiveisEsquerda,
-			posicoesJogadoresEsquerda
+			posicoesJogadoresEsquerda,
 		)
 		adicionarJogadores(
 			"escolhaJogadoresLadoDireito",
@@ -954,9 +955,11 @@ function renderizarJogadores(jogadoresTime1, jogadoresTime2, timeEsquerda, timeD
 			jogadoresEmQuadraDireita,
 			"Direita",
 			posicoesDisponiveisDireita,
-			posicoesJogadoresDireita
+			posicoesJogadoresDireita,
 		)
 	} else if (jogadoresTime2.idTime === timeEsquerda) {
+		rotacaoliberoEsquerda=rotacaoLiberoT2
+		rotacaoliberoDireita=rotacaoLiberoT1
 		// Renderizar jogadores do time 2 à esquerda e jogadores do time 1 à direita
 		adicionarJogadores(
 			"escolhaJogadoresLadoEsquerdo",
@@ -964,7 +967,7 @@ function renderizarJogadores(jogadoresTime1, jogadoresTime2, timeEsquerda, timeD
 			jogadoresEmQuadraEsquerda,
 			"Esquerda",
 			posicoesDisponiveisEsquerda,
-			posicoesJogadoresEsquerda
+			posicoesJogadoresEsquerda,
 		)
 		adicionarJogadores(
 			"escolhaJogadoresLadoDireito",
@@ -972,48 +975,48 @@ function renderizarJogadores(jogadoresTime1, jogadoresTime2, timeEsquerda, timeD
 			jogadoresEmQuadraDireita,
 			"Direita",
 			posicoesDisponiveisDireita,
-			posicoesJogadoresDireita
-		)
+			posicoesJogadoresDireita,
+		)		
 	} else {
 		console.error("Os IDs dos times não correspondem aos IDs dos lados fornecidos.")
 	}
 }
 function escolhaJogadores() {
-	closeModal("modalDefinicaoLado")
-	renderizarPlacar(partidaResponse, partida)
-	const newModelPartida = document.createElement("div")
-	newModelPartida.id = `modalDefinicaoJogadores`
-	newModelPartida.classList.add("modal")
-	newModelPartida.innerHTML = `
-									<div class="modal-content">
-											<h2>Definição de jogadores titulares</h2>
-											<div class="modal-body">
-												<form id="selecaoJogadoresForm" enctype="multipart/form-data" class="form">
-													<div class="group">
-															<div id="subselectorContainer" class="subselector_container">
-																	<label for="timesCadastrados"><strong>${nomeTimeEsquerda}</strong></label>
-																	<div id="escolhaJogadoresLadoEsquerdo" class="escolhaJogadoresLadoEsquerdo"></div>
-															</div>
-													</div>
+closeModal("modalDefinicaoLado")
+renderizarPlacar(partidaResponse, partida)
+const newModelPartida = document.createElement("div")
+newModelPartida.id = `modalDefinicaoJogadores`
+newModelPartida.classList.add("modal")
+newModelPartida.innerHTML = `
+								<div class="modal-content">
+										<h2>Definição de jogadores titulares</h2>
+										<div class="modal-body">
+											<form id="selecaoJogadoresForm" enctype="multipart/form-data" class="form">
+												<div class="group">
+														<div id="subselectorContainer" class="subselector_container">
+																<label for="timesCadastrados"><strong>${nomeTimeEsquerda}</strong></label>
+																<div id="escolhaJogadoresLadoEsquerdo" class="escolhaJogadoresLadoEsquerdo"></div>
+														</div>
+												</div>
 
-													<div class="group">
-															<div id="subselectorContainer" class="subselector_container">
-																	<label for="timesCadastrados"><strong>${nomeTimeDireita}</strong></label>
-																	<div id="escolhaJogadoresLadoDireito" class="escolhaJogadoresLadoDireito"></div>
-															</div>
-													</div>
-												</form>
-											</div>
-											<div class="modal-footer">
-													<button id="btnFecharModal" class="btn btn-cancel">Fechar</button>
-													<button id="btnSalvarModal" class="btn btn-primary">Salvar</button>
-											</div>
-									</div>
-								`
+												<div class="group">
+														<div id="subselectorContainer" class="subselector_container">
+																<label for="timesCadastrados"><strong>${nomeTimeDireita}</strong></label>
+																<div id="escolhaJogadoresLadoDireito" class="escolhaJogadoresLadoDireito"></div>
+														</div>
+												</div>
+											</form>
+										</div>
+										<div class="modal-footer">
+												<button id="btnFecharModal" class="btn btn-cancel">Fechar</button>
+												<button id="btnSalvarModal" class="btn btn-primary">Salvar</button>
+										</div>
+								</div>
+							`
 
-	document.body.appendChild(newModelPartida)
-	renderizarJogadores(jogadoresTime1, jogadoresTime2)
-	openModal("modalDefinicaoJogadores")
+document.body.appendChild(newModelPartida)
+renderizarJogadores(jogadoresTime1, jogadoresTime2)
+openModal("modalDefinicaoJogadores")
 }
 // Fazendo parte de substituição
 function adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, timeEsquerda, timeDireita, jogadoresEmQuadraEsquerda, jogadoresEmQuadraDireita) {
@@ -1068,8 +1071,8 @@ function adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, tim
 
 	// Função para adicionar jogadores ao lado correto
 	function adicionarJogadores(jogadoresTitulares, timecompleto, lado, posicoesLeft, posicoesTop, libero) {
-		jogadoresTitulares.forEach((idJogador, index) => {
-			let jogador = timecompleto.find(j => j.idJogador === idJogador)
+		jogadoresTitulares.forEach((elemento, index) => {
+			let jogador = timecompleto.find(j => j.idJogador === elemento.idJogador)
 			/* // Loop simples com logs para encontrar o jogador
 			let jogador = null
 			for (let i = 0 i < timecompleto.length i++) {
@@ -1086,34 +1089,38 @@ function adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, tim
 				if (lado === "Esquerda") {
 					// Verifica se é o libero, se for, adiciona o jogador junto ao jogador5
 					if (index == 6) {
-						const liberoEsquerda = document.querySelector("#JogadorEsquerda5")
+						rotacaoliberoEsquerda = atualizarRotacaoLibero(rotacaoliberoEsquerda, elemento.local)
+						const liberoEsquerda = document.querySelector(`#JogadorEsquerda${elemento.local}`)
 						liberoEsquerda.appendChild(jogadorDiv)
 					} else {
 						containerEsquerda.appendChild(jogadorDiv)
 					}
 				} else {
-					console.log(jogador);
-					console.log(index);
 					// Verifica se é o libero, se for, adiciona o jogador junto ao jogador5
 					if (index == 6) {
-						const liberoDireita = document.querySelector("#JogadorDireita5")
+						rotacaoliberoDireita = atualizarRotacaoLibero(rotacaoliberoDireita, elemento.local)
+						const liberoDireita = document.querySelector(`#JogadorDireita${elemento.local}`)
 						liberoDireita.appendChild(jogadorDiv)
 					} else {
 						containerDireita.appendChild(jogadorDiv)
 					}
 				}
 			} else {
-				console.warn(`Jogador com ID ${idJogador} não encontrado no time completo.`)
+				console.warn(`Jogador com ID ${elemento.idJogador} não encontrado no time completo.`)
 			}
 		})
 	}
 	// Verificar qual time é da esquerda e qual é da direita
 	if (jogadoresTime1.idTime === timeEsquerda) {
-		adicionarJogadores(jogadoresEmQuadraEsquerda, jogadoresTime1.Jogadors, "Esquerda", posiocaoLeftT1, posiocaoTopT1, liberoT1)
-		adicionarJogadores(jogadoresEmQuadraDireita, jogadoresTime2.Jogadors, "Direita", posiocaoLeftT2, posiocaoTopT2, liberoT2)
+		rotacaoliberoEsquerda=rotacaoLiberoT1
+		rotacaoliberoDireita=rotacaoLiberoT2
+		adicionarJogadores(jogadoresEmQuadraEsquerda, jogadoresTime1.Jogadors, "Esquerda", posiocaoLeftT1, posiocaoTopT1, posiocaoLiberoT1)
+		adicionarJogadores(jogadoresEmQuadraDireita, jogadoresTime2.Jogadors, "Direita", posiocaoLeftT2, posiocaoTopT2, posiocaoLiberoT2)
 	} else {
-		adicionarJogadores(jogadoresEmQuadraDireita, jogadoresTime1.Jogadors, "Direita", posiocaoLeftT2, posiocaoTopT2, liberoT2)
-		adicionarJogadores(jogadoresEmQuadraEsquerda, jogadoresTime2.Jogadors, "Esquerda", posiocaoLeftT1, posiocaoTopT1, liberoT1)
+		rotacaoliberoEsquerda=rotacaoLiberoT2
+		rotacaoliberoDireita=rotacaoLiberoT1
+		adicionarJogadores(jogadoresEmQuadraDireita, jogadoresTime1.Jogadors, "Direita", posiocaoLeftT2, posiocaoTopT2, posiocaoLiberoT2)
+		adicionarJogadores(jogadoresEmQuadraEsquerda, jogadoresTime2.Jogadors, "Esquerda", posiocaoLeftT1, posiocaoTopT1, posiocaoLiberoT1)
 	}
 
 	const JogadorEsquerda0 = document.getElementById("JogadorEsquerda0")
@@ -1137,54 +1144,17 @@ function AtualizarDadosPartida(response) {
 	jogadoresEmQuadraEsquerda = []
 	jogadoresEmQuadraDireita = []
 
-	posicoes.forEach(posicao => {
+	posicoes.forEach((posicao, index) => {
 		const jogador = {
-			idJogador: posicao.idJogador,
-			nomeJogador: posicao.posicaoes_partida.nomeJogador,
-			sobrenome: posicao.posicaoes_partida.sobrenome,
-			cpf: posicao.posicaoes_partida.cpf,
-			telefone: posicao.posicaoes_partida.telefone,
-			numeroCamiseta: posicao.posicaoes_partida.numeroCamiseta,
-			idTime: posicao.posicaoes_partida.idTime,
+			idJogador: Number(posicao.idJogador),
 			local: posicao.local
 		}
-
 		if (posicao.ladoQuadra === "Esquerda") {
-			jogadoresEmQuadraEsquerda[jogador.local] = jogador.idJogador;
+			jogadoresEmQuadraEsquerda.push(jogador)
 		} else if (posicao.ladoQuadra === "Direita") {
-			jogadoresEmQuadraDireita[jogador.local] = jogador.idJogador;
+			jogadoresEmQuadraDireita.push(jogador)
 		}
 	})
-}
-function openModalSubstituicaoJogador(lado,idPosicaoJogador,jogadorId,jogadorEmQuadra){
-	const modalSubstituicao = document.createElement("div")
-				modalSubstituicao.id = `modalSubstituicaoJogador`
-				modalSubstituicao.classList.add("modal")
-				modalSubstituicao.innerHTML = `
-									<div class="modal-content">
-											<div class="modal-content-header">
-												<h2>Substituição de jogador</h2>
-												<h4 class="modalDescription">Escolha um jogador para substituir.</h4>
-											</div>
-											<div class="modal-body">
-												<form id="selecaoJogadoresForm" enctype="multipart/form-data" class="form">
-													<div class="group">
-															<div id="subselectorContainer" class="subselector_container">
-																	<label for="timesCadastrados"><strong>Jogadores</strong></label>
-																	<div id="jogadoresSubistituicao"></div>
-															</div>
-													</div>
-												</form>
-											</div>
-											<div class="modal-footer">
-													<button id="btnFecharModal" class="btn btn-cancel">Fechar</button>
-													<button id="btnSalvarModal-DefinicaoJogadores" class="btn btn-primary">Salvar</button>
-											</div>
-									</div>
-								`
-				document.body.appendChild(modalSubstituicao)
-				openModal("modalSubstituicaoJogador")
-				renderizarSubstituicaoJogadores(lado,idPosicaoJogador,jogadorId,jogadorEmQuadra)
 }
 function openModalSubstituicaoJogador(lado,idPosicaoJogador,jogadorId,jogadorEmQuadra){
 	const modalSubstituicao = document.createElement("div")
@@ -1445,4 +1415,21 @@ function exibirMensagemVencedor(timeVencedor,set) {
       // Lógica para finalizar a partida
     }
   })
+}
+function atualizarRotacaoLibero(rotacao, posicaoAtual) {	
+	const index = rotacao.indexOf(posicaoAtual);
+
+	if (index === -1) {
+			console.warn(`Posição atual ${posicaoAtual} não encontrada na rotação.`);
+			return rotacao;
+	}
+
+	// Reorganizar o array para que a posição atual fique no início
+	let novaRotacao = rotacao.slice(index).concat(rotacao.slice(0, index));	
+	/* // Ajustar o array para ficar uma casa a frente
+	const lastElement = novaRotacao.shift();
+	console.log("novaRotacao pop: ", novaRotacao);
+	novaRotacao.push(lastElement);
+	console.log("novaRotacao casa a frente: ", novaRotacao); */
+	return novaRotacao;
 }
