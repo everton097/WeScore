@@ -1113,8 +1113,6 @@ function adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, tim
 
 		// Adicionar ouvinte de clique
 		jogadorDiv.addEventListener("click", function(event) {
-			console.log("clicado em jogador!");
-			
 			if (id == 6) {
 				event.stopPropagation() // Impede a propagação do evento para o jogador pai
 			}
@@ -1123,14 +1121,15 @@ function adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, tim
 			const jogadorEmQuadra = lado === "Esquerda"
 				? jogadoresEmQuadraEsquerda
 				: jogadoresEmQuadraDireita
+				const idsjogadorEmQuadra = jogadorEmQuadra.map(jogador => jogador.idJogador)
 			// Verificar se o jogador está na
 			if (lado === "Esquerda") {
-				if(jogadorEmQuadra.includes(jogadorId)){
-					openModalSubstituicaoJogador(lado,id,jogadorId,jogadorEmQuadra)
+				if(idsjogadorEmQuadra.includes(jogadorId)){
+					openModalSubstituicaoJogador(lado,id,jogadorId,idsjogadorEmQuadra)
 				}
 			} else if (lado === "Direita"){
-				if(jogadorEmQuadra.includes(jogadorId)){
-					openModalSubstituicaoJogador(lado,id,jogadorId,jogadorEmQuadra)
+				if(idsjogadorEmQuadra.includes(jogadorId)){
+					openModalSubstituicaoJogador(lado,id,jogadorId,idsjogadorEmQuadra)
 				}
 			}
 		})
@@ -1306,7 +1305,9 @@ function renderizarSubstituicaoJogadores(lado, idPosicaoJogador, jogadorId, joga
 	})
 	
 	function jogadorEstaEmQuadra(jogador) {
-		return !jogadoresEmQuadraEsquerda.includes(jogador.idJogador) && !jogadoresEmQuadraDireita.includes(jogador.idJogador)
+		const idsJogadoresEmQuadraDireita = jogadoresEmQuadraDireita.map(jogador => jogador.idJogador);
+		const idsJogadoresEmQuadraEsquerda = jogadoresEmQuadraEsquerda.map(jogador => jogador.idJogador);
+		return !idsJogadoresEmQuadraEsquerda.includes(jogador.idJogador) && !idsJogadoresEmQuadraDireita.includes(jogador.idJogador)
 	}
 }
 function exibirMensagemVencedor(timeVencedor,set) {
