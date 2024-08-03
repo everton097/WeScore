@@ -45,7 +45,7 @@ logoutButton.addEventListener("click", function () {
 });
 
 // Função para abrir o modal
-function openModal(idmodel) {
+function openModal(idmodel,click) {
 	const modal = document.getElementById(idmodel);
 	modal.style.display = "flex";
 	modal.classList.remove("modal-close");
@@ -55,6 +55,14 @@ function openModal(idmodel) {
 		.addEventListener("click", function () {
 			closeModal(idmodel);
 		});
+		if (click) {
+			// Evento para fechar o modal quando o usuário clica fora do conteúdo do modal
+			modal.addEventListener("click", function (event) {
+				if (event.target === modal) {
+						closeModal(idmodel);
+				}
+		});
+		}
 }
 
 // Função para fechar o modal

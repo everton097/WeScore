@@ -1252,7 +1252,7 @@ function openModalSubstituicaoJogador(lado,idPosicaoJogador,jogadorId,jogadorEmQ
 			</div>
 	`
 	document.body.appendChild(modalSubstituicao)
-	openModal("modalSubstituicaoJogador")
+	openModal("modalSubstituicaoJogador",true)
 	renderizarSubstituicaoJogadores(lado,idPosicaoJogador,jogadorId,jogadorEmQuadra)
 }
 function renderizarSubstituicaoJogadores(lado, idPosicaoJogador, jogadorId, jogadorEmQuadra) {
