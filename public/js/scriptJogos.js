@@ -1321,6 +1321,16 @@ function exibirMensagemVencedor(timeVencedor,set) {
     confirmButtonText: 'Próximo Set',
   }).then((result) => {
     if (result.isConfirmed) {
+			// busca o token armazenado no login
+			var token = localStorage.getItem("token")
+			// Configurar o cabeçalho com a autorização do token
+			const config = {
+				headers: {
+					Authorization: `Bearer ${token}`,
+					"Content-Type": "application/x-www-form-urlencoded",
+				},
+			}
+			
       // Lógica para ir para o próximo set
 			const saqueSet = partidaResponse.saqueInicial === partidaResponse.idTime1
 			? partidaResponse.idTime2
@@ -1332,12 +1342,17 @@ function exibirMensagemVencedor(timeVencedor,set) {
 					ladoQuadraTime2: partida.ladoQuadraTime1,
 					ladoQuadraTime1: partida.ladoQuadraTime2,
 					saqueInicial: saqueSet,
-					set: partida.set++,
+					set: partida.set+1,
 				},
 				config
 			)
 			.then((response) => {
-				partida = response
+				partida = response.data
+				jogadoresEmQuadraEsquerda = []
+				jogadoresEmQuadraDireita = []
+				document.getElementsByClassName("jogadoresTime01")[0].innerHTML=''
+				document.getElementsByClassName("jogadoresTime02")[0].innerHTML=''
+
 				renderizarPlacar(partidaResponse, partida)
 				const newModelPartida = document.createElement("div")
 				newModelPartida.id = `modalDefinicaoJogadores`
