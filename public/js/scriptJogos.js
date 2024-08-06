@@ -456,7 +456,7 @@ const updateValueTime01 = (inicial) => {
 	} else if (countTime01 > 9) {
 		valueTime01.innerHTML = countTime01
 		if (countTime01 > 24 && countTime01 >= countTime02 + 2) {
-			exibirMensagemVencedor(nomeTimeEsquerda,partida.set)
+			exibirMensagemVencedor(timeEsquerda,nomeTimeEsquerda,partida.set,partida.placarTime1++,partida.placarTime2)
 		}
 	}
 	if (!inicial) {
@@ -479,7 +479,7 @@ const updateValueTime02 = (inicial) => {
 	} else if (countTime02 > 9) {
 		valueTime02.innerHTML = countTime02
 		if (countTime02 > 24 && countTime02 >= countTime01 + 2) {
-			exibirMensagemVencedor(nomeTimeDireita,partida.set)
+			exibirMensagemVencedor(timeDireita,nomeTimeDireita,partida.set,partida.placarTime1,partida.placarTime2++)
 		}
 	}
 	if (!inicial) {
@@ -1308,7 +1308,48 @@ function renderizarSubstituicaoJogadores(lado, idPosicaoJogador, jogadorId, joga
 		return !idsJogadoresEmQuadraEsquerda.includes(jogador.idJogador) && !idsJogadoresEmQuadraDireita.includes(jogador.idJogador)
 	}
 }
-function exibirMensagemVencedor(timeVencedor,set) {
+function exibirMensagemVencedor(idTimeVencedor,timeVencedor,set,placarTime1,placarTime2) {
+	// busca o token armazenado no login
+	var token = localStorage.getItem("token")
+	// Configurar o cabeçalho com a autorização do token
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+			"Content-Type": "application/x-www-form-urlencoded",
+		},
+	}
+	if (!partida.vencedor) {
+		axios.put(
+				`${url}ponto/finish/${partidaID}`,
+				{
+					set: set,
+					vencedor: idTimeVencedor,
+					placarTime1: placarTime1,
+					placarTime2: placarTime2,
+				},
+				config
+			)
+			.catch((error) => {
+				console.error(error)
+				if (error.response) {
+					const { data, status } = error.response
+					Swal.fire({
+						icon: "error",
+						title: `Erro ao atualizar ponto final da Partida.\n${data.error}`,
+						text: `Erro ${status} ` || "Erro desconhecido",
+					})
+				} else if (error.request) {
+					// A solicitação foi feita, mas não houve resposta do servidor
+					console.error("Sem resposta do servidor")
+				} else {
+					// Algo aconteceu durante a configuração da solicitação que acionou um erro
+					console.error(
+						"Erro na configuração da solicitação",
+						error.message
+					)
+				}
+			})
+	}
   const isUltimoSet = set === partidaResponse.qtdeSets
   Swal.fire({
     title: 'Fim do Set!',
@@ -1321,16 +1362,6 @@ function exibirMensagemVencedor(timeVencedor,set) {
     confirmButtonText: 'Próximo Set',
   }).then((result) => {
     if (result.isConfirmed) {
-			// busca o token armazenado no login
-			var token = localStorage.getItem("token")
-			// Configurar o cabeçalho com a autorização do token
-			const config = {
-				headers: {
-					Authorization: `Bearer ${token}`,
-					"Content-Type": "application/x-www-form-urlencoded",
-				},
-			}
-			
       // Lógica para ir para o próximo set
 			const saqueSet = partidaResponse.saqueInicial === partidaResponse.idTime1
 			? partidaResponse.idTime2
