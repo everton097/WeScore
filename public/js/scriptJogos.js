@@ -826,16 +826,24 @@ function renderizarPlacar(partidaResponse, partida) {
 	const logoTimeDireita = isTime1Esquerda
 		? partidaResponse.logoTime2
 		: partidaResponse.logoTime1
+	const setTimeEsquerda = isTime1Esquerda
+		? partida.placarTime1
+		: partida.placarTime2
+	const setTimeDireita = isTime1Esquerda
+		? partida.placarTime2
+		: partida.placarTime1
 
 	// Atualizar os elementos no DOM
 	document.getElementById(
 		"logoTimeEsquerda"
 	).src = `http://localhost:3001/public/upload/img/time/${logoTimeEsquerda}`
 	document.getElementById("nomeTimeEsquerda").innerText = nomeTimeEsquerda
+	document.getElementById("setTimeEsquerda").innerText = setTimeEsquerda
 	document.getElementById(
 		"logoTimeDireita"
 	).src = `http://localhost:3001/public/upload/img/time/${logoTimeDireita}`
 	document.getElementById("nomeTimeDireita").innerText = nomeTimeDireita
+	document.getElementById("setTimeDireita").innerText = setTimeDireita
 
 	// Definir os pontos dos times
 	if (isTime1Esquerda) {

@@ -48,12 +48,14 @@
   margin: 0 auto;
   gap: 8px;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
 }
 .mural .vs {
+  display: flex;
   font-size: 30px;
   font-weight: bold;
   color: black;
+  align-items: center;
 }
 .mural .pontostime {
   font-size: 85px;
@@ -61,6 +63,17 @@
   color: white;
   min-width: 100px;
   text-align: center;
+}
+.mural .pontostime.set {
+  font-size: 35px;
+  min-width: 5px;
+  min-height: 100%;
+  text-align: start;
+}
+.divPontostime{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 .time02 {
   display: flex;
@@ -91,10 +104,12 @@
 .controlTime01 {
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 .controlTime02 {
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 .count-button {
   margin: 4px 0;
@@ -181,6 +196,56 @@ button {
   gap: 0.3em 5%;
   font-size: 2.5vw;
 }
+.container_menu{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.tabs {
+  display: flex;
+  position: relative;
+  background-color: #fff;
+  box-shadow: 0 0 1px 0 rgba(24, 94, 224, 0.15), 0 6px 12px 0 rgba(24, 94, 224, 0.15);
+  padding: 0.75rem 0.95rem;
+  border-radius: 99px;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 350px;
+}
+
+.container_menu input[type="radio"] {
+  display: none;
+}
+
+.tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  padding: 0 10px;
+  font-size: .8rem;
+  color: black;
+  font-weight: 500;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: color 0.15s ease-in;
+}
+.tab i{
+  font-size: 1rem;
+}
+
+.container_menu input[type="radio"]:checked + label {
+  color: #185ee0;
+  font-weight: 600;
+}
+
+@media (max-width: 700px) {
+  .tabs {
+    transform: scale(0.6);
+  }
+}
 
 
 @media only screen and (max-width: 950px) {
@@ -223,6 +288,9 @@ button {
     font-size: 65px;
     min-width: 75px;
     transition: 0.5s;
+  }
+  .mural .pontostime.set {
+    font-size: 25px;
   }
   .mural .bolavolei01 {
     width: 25px;
@@ -273,6 +341,9 @@ button {
     font-size: 55px;
     min-width: 60px;
     transition: 0.5s;
+  }
+  .mural .pontostime.set {
+    font-size: 25px;
   }
   .mural .bolavolei01 {
     width: 20px;

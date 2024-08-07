@@ -14,9 +14,15 @@
 				<button id="plusTime01" class="count-button">+</button>
 				<button id="minusTime01" class="count-button">-</button>
 			</div>
-			<span id="valueTime01" class="pontostime">00</span>
+			<div class="divPontostime">
+				<span id="valueTime01" class="pontostime">00</span>
+				<span id="setTimeEsquerda" class="pontostime set">0</span>
+			</div>
 			<p class="vs">X</p>
-			<span id="valueTime02" class="pontostime">00</span>
+			<div class="divPontostime">
+				<span id="setTimeDireita" class="pontostime set">0</span>
+				<span id="valueTime02" class="pontostime">00</span>
+			</div>
 			<div class="controlTime02">
 				<button id="plusTime02" class="count-button">+</button>
 				<button id="minusTime02" class="count-button">-</button>
@@ -34,10 +40,17 @@
 	</div>
 </section>
 
-<button id="testeonclick2" data-target="quadradejogos">Mostrar Quadra</button>
-<button id="testeonclick" data-target="cartoes">Mostrar Cartões</button>
-<button id="testeonclickc" data-target="substituicao">Mostrar Substituição</button>
-</nav>
+<div class="container_menu">
+	<div class="tabs">
+		<input type="radio" id="radio-1" name="tabs" checked="">
+		<label class="tab" for="radio-1" data-target="quadradejogos"><i class="ri-team-line"></i>posições</label>
+		<input type="radio" id="radio-2" name="tabs">
+		<label class="tab" for="radio-2" data-target="cartoes"><i class="ri-tablet-line"></i>Cartões</label>
+		<input type="radio" id="radio-3" name="tabs">
+		<label class="tab" for="radio-3" data-target="substituicao"><i class="ri-arrow-up-down-line"></i>Substituição</label>
+	</div>
+</div>
+
 <section id="cartoes" style="display: none;">
 	<div>cartoes</div>
 </section>
