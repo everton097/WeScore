@@ -54,7 +54,7 @@ if (partidaID) {
 	axios
 		.get(`${url}ponto/last/${partidaID}`, config)
 		.then((response) => {
-			partida = response.data			
+			partida = response.data
 			if (
 				partida.ptTime1 === 0 &&
 				partida.ptTime2 === 0 &&
@@ -393,6 +393,8 @@ const chamadaAPINewPonto = (timeMarcouPonto) => {
 				set: partida.set,
 				saqueInicial: partida.saqueInicial,
 				idPartida: partida.idPartida,
+				placarTime1: partida.placarTime1,
+				placarTime2: partida.placarTime2,
 			},
 			config
 		)
@@ -510,7 +512,7 @@ plusButtonTime01.addEventListener("click", () => {
 	}
 })
 // Adicione um ouvinte de evento ao documento
-document.addEventListener("keydown", () => {
+document.addEventListener("keydown", (event) => {
 	// Verifique se a tecla pressionada é a tecla desejada (por exemplo, tecla 'A' com código 65)
 	if (countTime01 >= 0 && countTime01 < 40 && event.key === "q") {
 		countTime01 += 1
@@ -541,7 +543,7 @@ minusButtonTime01.addEventListener("click", () => {
 		updateValueTime01(false)
 	}
 })
-document.addEventListener("keydown", () => {
+document.addEventListener("keydown", (event) => {
 	// Verifique se a tecla pressionada é a tecla desejada (por exemplo, tecla 'A' com código 65)
 	if (countTime01 > 0 && countTime01 <= 40 && event.key === "a") {
 		countTime01 -= 1
@@ -650,7 +652,7 @@ plusButtonTime02.addEventListener("click", () => {
 	}
 })
 // Adicione um ouvinte de evento ao documento
-document.addEventListener("keydown", () => {
+document.addEventListener("keydown", (event) => {
 	// Verifique se a tecla pressionada é a tecla desejada (por exemplo, tecla 'A' com código 65)
 	if (countTime02 >= 0 && countTime02 < 40 && event.key === "e") {
 		countTime02 += 1
@@ -682,7 +684,7 @@ minusButtonTime02.addEventListener("click", () => {
 		updateValueTime02(false)
 	}
 })
-document.addEventListener("keydown", () => {
+document.addEventListener("keydown", (event) => {
 	// Verifique se a tecla pressionada é a tecla desejada (por exemplo, tecla 'A' com código 65)
 	if (countTime02 > 0 && countTime02 <= 40 && event.key === "d") {
 		countTime02 -= 1
