@@ -237,7 +237,7 @@ button {
 }
 
 .container_menu input[type="radio"]:checked + label {
-  color: #185ee0;
+  color: var(--nav-bar-a-color-border-solid);
   font-weight: 600;
 }
 

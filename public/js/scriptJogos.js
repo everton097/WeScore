@@ -54,7 +54,7 @@ if (partidaID) {
 	axios
 		.get(`${url}ponto/last/${partidaID}`, config)
 		.then((response) => {
-			partida = response.data
+			partida = response.data			
 			if (
 				partida.ptTime1 === 0 &&
 				partida.ptTime2 === 0 &&
@@ -147,7 +147,7 @@ if (partidaID) {
 						partida.ladoQuadraTime2 = dadosParaEnviarAPI.ladoQuadraTime2
 						partida.saqueInicial = dadosParaEnviarAPI.saqueInicial
 
-						renderizarPlacar(partidaResponse, partida)
+						renderizarPlacar()
 
 						// Fazer uma atualização PUT para atualizar o ponto inicial da partida
 						axios
@@ -158,7 +158,7 @@ if (partidaID) {
 							)
 							.then((response) => {
 								closeModal("modalDefinicaoLado")
-								renderizarPlacar(partidaResponse, partida)
+								renderizarPlacar()
 								const newModelPartida = document.createElement("div")
 								newModelPartida.id = `modalDefinicaoJogadores`
 								newModelPartida.classList.add("modal")
@@ -305,7 +305,7 @@ if (partidaID) {
 			} else {
 				countTime01 = partida.ptTime1
 				countTime02 = partida.ptTime2
-				renderizarPlacar(partidaResponse, partida)
+				renderizarPlacar()
 				// Fazer uma solicitação POST para buscar jogadores em suas posições
 				axios.get(`${url}posicao/allLastByPoint/${partida.idPonto}`, config)
 				.then((response) => {
@@ -397,7 +397,12 @@ const chamadaAPINewPonto = (timeMarcouPonto) => {
 			config
 		)
 		.then((response) => {
-			partida=response.data			
+			if (countTime01 > 24 && countTime01 >= countTime02 + 2) {
+				exibirMensagemVencedor(timeEsquerda,nomeTimeEsquerda,partida.set,partida.placarTime1,partida.placarTime2)
+			}
+			if (countTime02 > 24 && countTime02 >= countTime01 + 2) {
+				exibirMensagemVencedor(timeDireita,nomeTimeDireita,partida.set,partida.placarTime1,partida.placarTime2)
+			}		
 			const dadosParaEnviarAPI = prepararDadosParaAPIDefinicaoJogadores()
 			axios			
 			.post(`${url}posicao/create`, dadosParaEnviarAPI, config)
@@ -455,9 +460,6 @@ const updateValueTime01 = (inicial) => {
 		valueTime01.innerHTML = "0" + countTime01
 	} else if (countTime01 > 9) {
 		valueTime01.innerHTML = countTime01
-		if (countTime01 > 24 && countTime01 >= countTime02 + 2) {
-			exibirMensagemVencedor(timeEsquerda,nomeTimeEsquerda,partida.set,partida.placarTime1++,partida.placarTime2)
-		}
 	}
 	if (!inicial) {
 		const isTime1Esquerda = partida.ladoQuadraTime1 === "Esquerda"
@@ -478,9 +480,6 @@ const updateValueTime02 = (inicial) => {
 		valueTime02.innerHTML = "0" + countTime02
 	} else if (countTime02 > 9) {
 		valueTime02.innerHTML = countTime02
-		if (countTime02 > 24 && countTime02 >= countTime01 + 2) {
-			exibirMensagemVencedor(timeDireita,nomeTimeDireita,partida.set,partida.placarTime1,partida.placarTime2++)
-		}
 	}
 	if (!inicial) {
 		const isTime1Direita = partida.ladoQuadraTime1 === "Direita"
@@ -803,9 +802,8 @@ function moveLeftTimeCompleto(arr) {
 	const firstElement = arr.shift()
 	arr.splice(5, 0, firstElement)
 }
-
 // Fução para renderizar placar de acordo com escolha de lados
-function renderizarPlacar(partidaResponse, partida) {
+function renderizarPlacar() {
 	const isTime1Esquerda = partida.ladoQuadraTime1 === "Esquerda"
 	// Definir os dados do time da esquerda
 	timeEsquerda = isTime1Esquerda
@@ -868,6 +866,13 @@ function renderizarPlacar(partidaResponse, partida) {
 		rotacaot1 = "mantem"
 		rotacaot2 = "rotacionou"
 	}
+	
+	if (countTime01 > 24 && countTime01 >= countTime02 + 2) {
+		exibirMensagemVencedor(timeEsquerda,nomeTimeEsquerda,partida.set,partida.placarTime1,partida.placarTime2)
+	}
+	if (countTime02 > 24 && countTime02 >= countTime01 + 2) {
+		exibirMensagemVencedor(timeDireita,nomeTimeDireita,partida.set,partida.placarTime1,partida.placarTime2)
+	}	
 
 	updateValueTime01(true)
 	updateValueTime02(true)
@@ -1032,7 +1037,7 @@ function renderizarJogadores(jogadoresTime1, jogadoresTime2, timeEsquerda, timeD
 }
 function escolhaJogadores() {
 	closeModal("modalDefinicaoLado")
-	renderizarPlacar(partidaResponse, partida)
+	renderizarPlacar()
 	const newModelPartida = document.createElement("div")
 	newModelPartida.id = `modalDefinicaoJogadores`
 	newModelPartida.classList.add("modal")
@@ -1327,13 +1332,18 @@ function exibirMensagemVencedor(idTimeVencedor,timeVencedor,set,placarTime1,plac
 		},
 	}
 	if (!partida.vencedor) {
+		if (partidaResponse.idTime1 == idTimeVencedor){
+			partida.placarTime1++
+		}else if(partidaResponse.idTime2 == idTimeVencedor){
+			partida.placarTime2++
+		}
 		axios.put(
 				`${url}ponto/finish/${partidaID}`,
 				{
 					set: set,
 					vencedor: idTimeVencedor,
-					placarTime1: placarTime1,
-					placarTime2: placarTime2,
+					placarTime1: partida.placarTime1,
+					placarTime2: partida.placarTime2,
 				},
 				config
 			)
@@ -1380,8 +1390,10 @@ function exibirMensagemVencedor(idTimeVencedor,timeVencedor,set,placarTime1,plac
 				{
 					ladoQuadraTime2: partida.ladoQuadraTime1,
 					ladoQuadraTime1: partida.ladoQuadraTime2,
-					saqueInicial: saqueSet,
-					set: partida.set+1,
+					saqueInicial: saqueSet,					
+					set: ++partida.set,
+					placarTime1: partida.placarTime1,
+					placarTime2: partida.placarTime2,
 				},
 				config
 			)
@@ -1392,7 +1404,7 @@ function exibirMensagemVencedor(idTimeVencedor,timeVencedor,set,placarTime1,plac
 				document.getElementsByClassName("jogadoresTime01")[0].innerHTML=''
 				document.getElementsByClassName("jogadoresTime02")[0].innerHTML=''
 
-				renderizarPlacar(partidaResponse, partida)
+				renderizarPlacar()
 				const newModelPartida = document.createElement("div")
 				newModelPartida.id = `modalDefinicaoJogadores`
 				newModelPartida.classList.add("modal")
