@@ -1496,15 +1496,8 @@ function exibirMensagemVencedor(idTimeVencedor,timeVencedor,set,placarTime1,plac
 						axios
 							.post(`${url}posicao/create`, dadosParaEnviarAPI, config)
 							.then((response) => {
-								Swal.fire({
-									icon: "success",
-									title: "Jogadores vinculados com sucesso",
-									showConfirmButton: false,
-									timer: 1500,
-								}).then(() => {
-									closeModal("modalDefinicaoJogadores")
-									adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, timeEsquerda, timeDireita, jogadoresEmQuadraEsquerda,jogadoresEmQuadraDireita)
-								})
+								closeModal("modalDefinicaoJogadores")
+								adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, timeEsquerda, timeDireita, jogadoresEmQuadraEsquerda,jogadoresEmQuadraDireita)
 							})
 							.catch((error) => {
 								console.error(error)

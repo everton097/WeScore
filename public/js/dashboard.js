@@ -388,7 +388,7 @@ document.getElementById("campeonatosContainer").addEventListener("click", async 
 		}
 });
 // ouvinte para elementos com ID partidasContainer, renderizado pelo handlebars
-addEventListenersToPartidasContainer();
+addEventListenersToPartidasContainer()
 // Adicione um ouvinte de evento para os itens de times, renderizado pelo handlebars
 document.getElementById("timesContainer").addEventListener("click", async function (event) {
 	// Obtenha o ID do campeonato clicado
@@ -510,6 +510,8 @@ function addEventListenersToPartidasContainer(){
 			// Obtenha o ID da partida associado a este botão
 			const partidaId = button.closest(".cardDashboard_division").id.replace("partida_", "");
 			if (button.id === `startPartida${partidaId}`) {
+				// Desativar o botão para evitar múltiplos cliques
+				button.disabled = true;
 				// Busca o token armazenado no login
 				var token = localStorage.getItem("token");
 	
@@ -545,6 +547,8 @@ function addEventListenersToPartidasContainer(){
 						window.location.href = `/painelws/partida/${partidaId}`;
 					})
 				} catch (error) {
+					// Reativar o botão em caso de erro
+					button.disabled = false;
 					console.error(error);
 				}
 			} else if (button.id === `turnBackPartida${partidaId}`) {
@@ -636,7 +640,6 @@ function addEventListenersToPartidasContainer(){
 				} catch (error) {
 					console.error(error);
 				}
-				
 			}
 		}
 	})
