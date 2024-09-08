@@ -1339,11 +1339,11 @@ function exibirMensagemVencedor(idTimeVencedor,timeVencedor,set,placarTime1,plac
 		}else if(partidaResponse.idTime2 == idTimeVencedor){
 			partida.placarTime2++
 		}
+		console.log("debug: tentativa de atualizar set");
 		//Proxima alteração aqui, realizar ajuste de time vencedor no set, e criar novo set.
 		axios.put(
-				`${url}ponto/finish/${partidaID}`,
+				`${url}set/${partida.idSet}`,
 				{
-					set: set,
 					vencedor: idTimeVencedor,
 					placarTime1: partida.placarTime1,
 					placarTime2: partida.placarTime2,
