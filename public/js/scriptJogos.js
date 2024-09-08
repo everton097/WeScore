@@ -390,15 +390,14 @@ const chamadaAPINewPonto = (timeMarcouPonto) => {
 				ladoQuadraTime1: ladoQuadraTime1,
 				ladoQuadraTime2: ladoQuadraTime2,
 				idTime: timeMarcouPonto,
-				set: partida.set,
+				idSet: partida.idSet,
 				saqueInicial: partida.saqueInicial,
 				idPartida: partida.idPartida,
-				placarTime1: partida.placarTime1,
-				placarTime2: partida.placarTime2,
 			},
 			config
 		)
 		.then((response) => {
+			partida = response.data
 			if (countTime01 > 24 && countTime01 >= countTime02 + 2) {
 				exibirMensagemVencedor(timeEsquerda,nomeTimeEsquerda,partida.set,partida.placarTime1,partida.placarTime2)
 			}
@@ -901,6 +900,7 @@ function prepararDadosParaAPIDefinicaoTimes(partidaResponse, selectedTimes) {
 		ladoQuadraTime1,
 		ladoQuadraTime2,
 		saqueInicial: parseInt(selectedTimes[2]),
+		idSet: partida.idSet,
 	}
 	return dadosParaAPI
 }
@@ -1339,6 +1339,7 @@ function exibirMensagemVencedor(idTimeVencedor,timeVencedor,set,placarTime1,plac
 		}else if(partidaResponse.idTime2 == idTimeVencedor){
 			partida.placarTime2++
 		}
+		//Proxima alteração aqui, realizar ajuste de time vencedor no set, e criar novo set.
 		axios.put(
 				`${url}ponto/finish/${partidaID}`,
 				{
