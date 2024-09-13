@@ -248,16 +248,9 @@ if (partidaID) {
 										axios
 											.post(`${url}posicao/create`, dadosParaEnviarAPI, config)
 											.then((response) => {
-												Swal.fire({
-													icon: "success",
-													title: "Jogadores vinculados com sucesso",
-													showConfirmButton: false,
-													timer: 1500,
-												}).then(() => {
-													closeModal("modalDefinicaoJogadores")
-													AtualizarDadosPartida(response)
-													adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, timeEsquerda, timeDireita, jogadoresEmQuadraEsquerda,jogadoresEmQuadraDireita)
-												})
+												closeModal("modalDefinicaoJogadores")
+												AtualizarDadosPartida(response)
+												adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, timeEsquerda, timeDireita, jogadoresEmQuadraEsquerda,jogadoresEmQuadraDireita)
 											})
 											.catch((error) => {
 												console.error(error)
