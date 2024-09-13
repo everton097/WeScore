@@ -16,7 +16,6 @@ const routesCampeonato = require('./src/routes/campeonatoRoutes')
 const routesTime = require('./src/routes/timeRoutes')
 const routesJogador = require('./src/routes/jogadorRoutes')
 const routesPartida = require("./src/routes/partidaRoutes")
-// Lê as configurações do .env 
 // todos os helpers fornecidos por handlebars-helpers:
 const { eq } = handlebars.helpers;
 

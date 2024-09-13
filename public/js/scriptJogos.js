@@ -20,7 +20,7 @@ let selectedTimes = [],
 	jogadoresEmQuadraDireita = [],
 	jogadoresEmQuadraEsquerda = []
 
-	// Obtenha todos os botões com atributo 'data-target'
+// Obtenha todos os botões com atributo 'data-target'
 const alterCards = document.querySelectorAll("[data-target]")
 
 // Adicione um evento de clique a cada botão
