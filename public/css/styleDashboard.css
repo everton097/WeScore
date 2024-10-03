@@ -464,7 +464,8 @@
 #campeonatosContainer p,
 #partidasContainer p,
 #timesContainer p,
-#jogadoresContainer p {
+#jogadoresContainer p,
+#substituicaoContainer p {
 	justify-content: center;
 }
 /* inversão do tooltip */

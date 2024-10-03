@@ -3,6 +3,58 @@
   aspect-ratio: 16 / 9;
   margin: 5px auto;
 }
+.vl {
+  border-left: 4px solid var(--nav-bar-a-color-border-solid);
+  height: calc(100%);
+  top: 0;
+  position: sticky;
+}
+.scorePartidaSubstituicao{
+  background-color: var(--nav-bar-a-color-border-solid);
+  border-radius: 5px;
+  padding: 5px;
+  color: #fff;
+}
+.cardPartidaSubstituicao{
+  width: 50%;
+  aspect-ratio: 16 / 9;
+  background: #e8eaea;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 5px auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.cardPartidaSubstituicao .cardDashboard_division_text,
+.cardPartidaSubstituicao .container__{
+  display: flex;
+  flex-direction: row;
+  width: calc(100%);
+  justify-content: space-evenly;
+}
+.cardPartidaSubstituicao .cardDashboard_division_text{
+  align-items: center;
+}
+.cardPartidaSubstituicao #substituicaoContainer{
+  width: calc(100%);
+}
+.cardPartidaSubstituicao .cardDashboard_division_name{
+  width: auto;
+  display: flex;
+  align-items: center;
+}
+.ri-arrow-up-double-line{
+  color: green;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+.ri-arrow-down-double-line{
+  color: red;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
 .quadraVolei {
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -199,6 +251,10 @@
     width: 50%;
     transition: 0.5s;
   }
+  .cardPartidaSubstituicao{
+    width: 50%;
+    transition: 0.5s;
+  }
   .attack-line.left {
     left: 34.3%;
   }
@@ -223,6 +279,10 @@
     width: 70%;
     transition: 0.5s;
   }
+  .cardPartidaSubstituicao{
+    width: 70%;
+    transition: 0.5s;
+  }
 }
 @media only screen and (max-width: 950px) {
   .volleyball-court {
@@ -230,6 +290,10 @@
     transition: 0.5s;
   }
   .quadradejogo{
+    width: 80%;
+    transition: 0.5s;
+  }
+  .cardPartidaSubstituicao{
     width: 80%;
     transition: 0.5s;
   }
@@ -250,6 +314,10 @@
     transition: 0.5s;
   }
   .quadradejogo{
+    width: 90%;
+    transition: 0.5s;
+  }
+  .cardPartidaSubstituicao{
     width: 90%;
     transition: 0.5s;
   }
