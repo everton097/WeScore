@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const express = require("express")
 const dotenv  = require('dotenv')
 dotenv.config()
+const { green } = require('kleur');
 const path = require("path")
 const app = express()
 const port = 3002
@@ -115,6 +116,21 @@ app.use(function(req,res){
   res.render('404')
 })
 
-app.listen(port, ()=>{
-    console.log(`Servidor rodando: http://localhost:${port}`)
-})
+let boxen;
+// Importação dinâmica imediata
+(async () => {
+  const { default: importedBoxen } = await import('boxen');
+  boxen = importedBoxen;
+
+  app.listen(port, ()=>{
+    console.log(green(boxen(
+      `WeScore website Rodando: http://localhost:${port}`,
+      {
+        title: 'WeScore',
+        titleAlignment: 'center',
+        padding: 1,
+        margin: 1,
+        borderColor: 'green'
+      })));
+  })
+})();
