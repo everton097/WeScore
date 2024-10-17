@@ -1260,6 +1260,41 @@ function openModalSubstituicaoJogador(lado,idPosicaoJogador,jogadorId,jogadorEmQ
 	document.body.appendChild(modalSubstituicao)
 	openModal("modalSubstituicaoJogador",true)
 	renderizarSubstituicaoJogadores(lado,idPosicaoJogador,jogadorId,jogadorEmQuadra)
+	// Evento para salvar os dados quando o usuário clica no botão "Salvar"
+	document
+	.getElementById("btnSalvarModalmodalSubstituicaoJogador")
+	.addEventListener("click", function () {
+		console.log(lado,idPosicaoJogador,jogadorId,jogadorEmQuadra);
+		
+		/*
+		const dadosParaEnviarAPI =
+			prepararDadosParaAPIDefinicaoJogadores()
+		// Fazer uma solicitação POST para vincular jogadores em suas posições
+		axios
+			.post(`${url}posicao/create`, dadosParaEnviarAPI, config)
+			.then((response) => {
+				closeModal("modalDefinicaoJogadores")
+				adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, timeEsquerda, timeDireita, jogadoresEmQuadraEsquerda,jogadoresEmQuadraDireita)
+			})
+			.catch((error) => {
+				console.error(error)
+				if (error.response) {
+					const { data, status } = error.response
+					Swal.fire({
+						icon: "error",
+						title: `${data.error}`,
+						text: `Erro ${status} ` || "Erro desconhecido",
+					})
+				} else if (error.request) {
+					// A solicitação foi feita, mas não houve resposta do servidor
+					console.error("Sem resposta do servidor")
+				} else {
+					// Algo aconteceu durante a configuração da solicitação que acionou um erro
+					console.error("Erro na configuração da solicitação",error.message)
+				}
+			})
+			*/
+	})
 }
 function renderizarSubstituicaoJogadores(lado, idPosicaoJogador, jogadorId, jogadorEmQuadra) {
 	let JogadoresSubstituicao
