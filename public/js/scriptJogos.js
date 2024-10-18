@@ -18,7 +18,8 @@ let timeDireita = 0,
 let selectedTimes = [],
 	partida = {},
 	jogadoresEmQuadraDireita = [],
-	jogadoresEmQuadraEsquerda = []
+	jogadoresEmQuadraEsquerda = [],
+	idJogadorEntrouSubstituicao = null
 
 // Obtenha todos os botões com atributo 'data-target'
 const alterCards = document.querySelectorAll("[data-target]")
@@ -250,7 +251,7 @@ if (partidaID) {
 											.then((response) => {
 												closeModal("modalDefinicaoJogadores")
 												AtualizarDadosPartida(response)
-												adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, timeEsquerda, timeDireita, jogadoresEmQuadraEsquerda,jogadoresEmQuadraDireita)
+												adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, timeEsquerda, timeDireita, jogadoresEmQuadraEsquerda, jogadoresEmQuadraDireita)
 											})
 											.catch((error) => {
 												console.error(error)
@@ -301,30 +302,30 @@ if (partidaID) {
 				renderizarPlacar()
 				// Fazer uma solicitação POST para buscar jogadores em suas posições
 				axios.get(`${url}posicao/allLastByPoint/${partida.idPonto}`, config)
-				.then((response) => {
-					AtualizarDadosPartida(response)
-					adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, timeEsquerda, timeDireita, jogadoresEmQuadraEsquerda, jogadoresEmQuadraDireita)
-				})
-				.catch((error) => {
-					console.error(error)
-					if (error.response) {
-						const { data, status } = error.response
-						Swal.fire({
-							icon: "error",
-							title: `Erro ao buscar jogadores em suas posições.\n${data.error}`,
-							text: `Erro ${status} ` || "Erro desconhecido",
-						})
-					} else if (error.request) {
-						// A solicitação foi feita, mas não houve resposta do servidor
-						console.error("Sem resposta do servidor")
-					} else {
-						// Algo aconteceu durante a configuração da solicitação que acionou um erro
-						console.error(
-							"Erro na configuração da solicitação",
-							error.message
-						)
-					}
-				})
+					.then((response) => {
+						AtualizarDadosPartida(response)
+						adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, timeEsquerda, timeDireita, jogadoresEmQuadraEsquerda, jogadoresEmQuadraDireita)
+					})
+					.catch((error) => {
+						console.error(error)
+						if (error.response) {
+							const { data, status } = error.response
+							Swal.fire({
+								icon: "error",
+								title: `Erro ao buscar jogadores em suas posições.\n${data.error}`,
+								text: `Erro ${status} ` || "Erro desconhecido",
+							})
+						} else if (error.request) {
+							// A solicitação foi feita, mas não houve resposta do servidor
+							console.error("Sem resposta do servidor")
+						} else {
+							// Algo aconteceu durante a configuração da solicitação que acionou um erro
+							console.error(
+								"Erro na configuração da solicitação",
+								error.message
+							)
+						}
+					})
 			}
 		})
 		.catch((error) => {
@@ -352,19 +353,19 @@ const minusButtonTime01 = document.getElementById("minusTime01")
 const bola01 = document.getElementById("bolavolei01").style.opacity
 const chamadaAPINewPonto = (timeMarcouPonto) => {
 	let ptTime1, ptTime2, ladoQuadraTime1, ladoQuadraTime2
-  const isTime1Esquerda = partida.ladoQuadraTime1 === "Esquerda"
-  // Verificar qual time está à esquerda para determinar os pontos e lados corretamente
-  if (isTime1Esquerda) {
-    ptTime1 = countTime01
-    ptTime2 = countTime02
-    ladoQuadraTime1 = "Esquerda"
-    ladoQuadraTime2 = "Direita"
-  } else {
-    ptTime1 = countTime02
-    ptTime2 = countTime01
-    ladoQuadraTime1 = "Direita"
-    ladoQuadraTime2 = "Esquerda"
-  }
+	const isTime1Esquerda = partida.ladoQuadraTime1 === "Esquerda"
+	// Verificar qual time está à esquerda para determinar os pontos e lados corretamente
+	if (isTime1Esquerda) {
+		ptTime1 = countTime01
+		ptTime2 = countTime02
+		ladoQuadraTime1 = "Esquerda"
+		ladoQuadraTime2 = "Direita"
+	} else {
+		ptTime1 = countTime02
+		ptTime2 = countTime01
+		ladoQuadraTime1 = "Direita"
+		ladoQuadraTime2 = "Esquerda"
+	}
 	// busca o token armazenado no login
 	var token = localStorage.getItem("token")
 	// Configurar o cabeçalho com a autorização do token
@@ -374,7 +375,7 @@ const chamadaAPINewPonto = (timeMarcouPonto) => {
 			"Content-Type": "application/x-www-form-urlencoded",
 		},
 	}
-  axios
+	axios
 		.post(
 			`${url}ponto/plus/${partidaID}`,
 			{
@@ -392,14 +393,14 @@ const chamadaAPINewPonto = (timeMarcouPonto) => {
 		.then((response) => {
 			partida = response.data
 			if (countTime01 > 24 && countTime01 >= countTime02 + 2) {
-				exibirMensagemVencedor(timeEsquerda,nomeTimeEsquerda,partida.set,partida.placarTime1,partida.placarTime2)
+				exibirMensagemVencedor(timeEsquerda, nomeTimeEsquerda, partida.set, partida.placarTime1, partida.placarTime2)
 			}
 			if (countTime02 > 24 && countTime02 >= countTime01 + 2) {
-				exibirMensagemVencedor(timeDireita,nomeTimeDireita,partida.set,partida.placarTime1,partida.placarTime2)
-			}		
+				exibirMensagemVencedor(timeDireita, nomeTimeDireita, partida.set, partida.placarTime1, partida.placarTime2)
+			}
 			const dadosParaEnviarAPI = prepararDadosParaAPIDefinicaoJogadores()
-			axios			
-			.post(`${url}posicao/create`, dadosParaEnviarAPI, config)
+			axios
+				.post(`${url}posicao/create`, dadosParaEnviarAPI, config)
 				.then((response) => {
 				})
 				.catch((error) => {
@@ -440,14 +441,14 @@ const chamadaAPINewPonto = (timeMarcouPonto) => {
 			console.error(error)
 		})
 }
-const indicadorPonto = (timeQueMarcou) => {		
-  if (timeQueMarcou === timeEsquerda) {		
-    document.getElementById("bolavolei01").style.opacity = "1"
-    document.getElementById("bolavolei02").style.opacity = "0"
-  } else if (timeQueMarcou === timeDireita) {
-    document.getElementById("bolavolei01").style.opacity = "0"
-    document.getElementById("bolavolei02").style.opacity = "1"
-  }
+const indicadorPonto = (timeQueMarcou) => {
+	if (timeQueMarcou === timeEsquerda) {
+		document.getElementById("bolavolei01").style.opacity = "1"
+		document.getElementById("bolavolei02").style.opacity = "0"
+	} else if (timeQueMarcou === timeDireita) {
+		document.getElementById("bolavolei01").style.opacity = "0"
+		document.getElementById("bolavolei02").style.opacity = "1"
+	}
 }
 const updateValueTime01 = (inicial) => {
 	if (countTime01 <= 9) {
@@ -465,7 +466,7 @@ const updateValueTime01 = (inicial) => {
 		}
 		chamadaAPINewPonto(timeMarcou)
 		indicadorPonto(timeMarcou);
-	}else{
+	} else {
 		indicadorPonto(partida.saqueInicial);
 	}
 }
@@ -485,7 +486,7 @@ const updateValueTime02 = (inicial) => {
 		}
 		chamadaAPINewPonto(timeMarcou)
 		indicadorPonto(timeMarcou)
-	}else{
+	} else {
 		indicadorPonto(partida.saqueInicial)
 	}
 }
@@ -559,8 +560,8 @@ document.addEventListener("mouseup", () => clearInterval(intervalIDTime01))
 
 const posiocaoLeftT1 = [0, 55, 55, 55, 0, 0]
 const posiocaoTopT1 = [75, 75, 37.5, 2, 2, 37.5]
-const posiocaoLiberoT1 = [-3,  13, 50, 88]
-const rotacaoLiberoT1 = [5,4,0]
+const posiocaoLiberoT1 = [-3, 13, 50, 88]
+const rotacaoLiberoT1 = [5, 4, 0]
 
 function rotacaoJogadoresEsquerda() {
 	if (controlet1 == "semponto" && rotacaot1 == "mantem") {
@@ -585,7 +586,7 @@ function rotacaoJogadoresEsquerda() {
 		if (rotacaoliberoEsquerda[0] == 0) {
 			JogadorEsquerda6.style.left = `${posiocaoLiberoT1[0]}%`
 			JogadorEsquerda6.style.top = `${posiocaoLiberoT1[3]}%`
-		}else if (rotacaoliberoEsquerda[0] == 5) {
+		} else if (rotacaoliberoEsquerda[0] == 5) {
 			JogadorEsquerda6.style.left = `${posiocaoLiberoT1[0]}%`
 			JogadorEsquerda6.style.top = `${posiocaoLiberoT1[2]}%`
 		} else if (rotacaoliberoEsquerda[0] == 4) {
@@ -621,7 +622,7 @@ function desfazerRotacaoJogadoresEsquerda() {
 		if (rotacaoliberoEsquerda[0] == 0) {
 			JogadorEsquerda6.style.left = `${posiocaoLiberoT1[0]}%`
 			JogadorEsquerda6.style.top = `${posiocaoLiberoT1[3]}%`
-		}else if (rotacaoliberoEsquerda[0] == 5) {
+		} else if (rotacaoliberoEsquerda[0] == 5) {
 			JogadorEsquerda6.style.left = `${posiocaoLiberoT1[0]}%`
 			JogadorEsquerda6.style.top = `${posiocaoLiberoT1[2]}%`
 		} else if (rotacaoliberoEsquerda[0] == 4) {
@@ -701,13 +702,13 @@ document.addEventListener("mouseup", () => clearInterval(intervalIDTime02))
 const posiocaoLeftT2 = [75, 25, 25, 25, 75, 75]
 const posiocaoTopT2 = [0, 0, 37.5, 75, 75, 37.5]
 const posiocaoLiberoT2 = [88, 13, 50, 88]
-const rotacaoLiberoT2 = [5,4,0]
+const rotacaoLiberoT2 = [5, 4, 0]
 function rotacaoJogadoresDireita() {
 	if (controlet2 == "semponto" && rotacaot2 == "mantem") {
 		//Altera posição dos jogadores.
 		moveRight(posiocaoLeftT2)
 		moveRight(posiocaoTopT2)
-		moveLeft(rotacaoliberoDireita)		
+		moveLeft(rotacaoliberoDireita)
 		// Altera array de jogadoresTitulares do jogo
 		moveLeftTimeCompleto(jogadoresEmQuadraDireita)
 		JogadorDireita0.style.left = `${posiocaoLeftT2[0]}%`
@@ -725,7 +726,7 @@ function rotacaoJogadoresDireita() {
 		if (rotacaoliberoDireita[0] === 0) {
 			JogadorDireita6.style.left = `${posiocaoLiberoT2[0]}%`
 			JogadorDireita6.style.top = `${posiocaoLiberoT2[1]}%`
-		}else if (rotacaoliberoDireita[0] === 5) {
+		} else if (rotacaoliberoDireita[0] === 5) {
 			JogadorDireita6.style.left = `${posiocaoLiberoT2[0]}%`
 			JogadorDireita6.style.top = `${posiocaoLiberoT2[2]}%`
 		} else if (rotacaoliberoDireita[0] === 4) {
@@ -761,7 +762,7 @@ function desfazerRotacaoJogadoresDireita() {
 		if (rotacaoliberoDireita[0] == 0) {
 			JogadorDireita6.style.left = `${posiocaoLiberoT2[0]}%`
 			JogadorDireita6.style.top = `${posiocaoLiberoT2[1]}%`
-		}else if (rotacaoliberoDireita[0] == 5) {
+		} else if (rotacaoliberoDireita[0] == 5) {
 			JogadorDireita6.style.left = `${posiocaoLiberoT2[0]}%`
 			JogadorDireita6.style.top = `${posiocaoLiberoT2[2]}%`
 		} else if (rotacaoliberoDireita[0] == 4) {
@@ -788,8 +789,8 @@ function moveLeft(arr) {
 function moveRightTimeCompleto(arr) {
 	const secondLastElement = arr.splice(5, 1)[0]
 	arr.unshift(secondLastElement)
-  const lastElement = arr.pop()
-  arr.push(lastElement)
+	const lastElement = arr.pop()
+	arr.push(lastElement)
 }
 // Função para mover os elementos do vetor para a esquerda
 function moveLeftTimeCompleto(arr) {
@@ -860,13 +861,13 @@ function renderizarPlacar() {
 		rotacaot1 = "mantem"
 		rotacaot2 = "rotacionou"
 	}
-	
+
 	if (countTime01 > 24 && countTime01 >= countTime02 + 2) {
-		exibirMensagemVencedor(timeEsquerda,nomeTimeEsquerda,partida.set,partida.placarTime1,partida.placarTime2)
+		exibirMensagemVencedor(timeEsquerda, nomeTimeEsquerda, partida.set, partida.placarTime1, partida.placarTime2)
 	}
 	if (countTime02 > 24 && countTime02 >= countTime01 + 2) {
-		exibirMensagemVencedor(timeDireita,nomeTimeDireita,partida.set,partida.placarTime1,partida.placarTime2)
-	}	
+		exibirMensagemVencedor(timeDireita, nomeTimeDireita, partida.set, partida.placarTime1, partida.placarTime2)
+	}
 
 	updateValueTime01(true)
 	updateValueTime02(true)
@@ -902,7 +903,7 @@ function prepararDadosParaAPIDefinicaoJogadores() {
 	// Extrair apenas os IDs dos jogadores dos arrays
 	const idsJogadoresEmQuadraDireita = jogadoresEmQuadraDireita.map(jogador => jogador.idJogador);
 	const idsJogadoresEmQuadraEsquerda = jogadoresEmQuadraEsquerda.map(jogador => jogador.idJogador);
-	
+
 	// Preparar objeto para enviar à API
 	const dadosParaAPI = {
 		idPartida: partida.idPartida,
@@ -912,7 +913,7 @@ function prepararDadosParaAPIDefinicaoJogadores() {
 		jogadoresEmQuadraEsquerda: idsJogadoresEmQuadraEsquerda,
 		liberoE: rotacaoliberoEsquerda[0]
 	}
-	
+
 	return dadosParaAPI
 }
 // Função para encontrar os lados e preparar os dados para a API
@@ -987,8 +988,8 @@ function renderizarJogadores(jogadoresTime1, jogadoresTime2, timeEsquerda, timeD
 
 	// Determinar qual time é da esquerda e qual é da direita
 	if (jogadoresTime1.idTime === timeEsquerda) {
-		rotacaoliberoEsquerda=rotacaoLiberoT1
-		rotacaoliberoDireita=rotacaoLiberoT2
+		rotacaoliberoEsquerda = rotacaoLiberoT1
+		rotacaoliberoDireita = rotacaoLiberoT2
 		// Renderizar jogadores do time 1 à esquerda e jogadores do time 2 à direita
 		adicionarJogadores(
 			"escolhaJogadoresLadoEsquerdo",
@@ -1007,8 +1008,8 @@ function renderizarJogadores(jogadoresTime1, jogadoresTime2, timeEsquerda, timeD
 			posicoesJogadoresDireita,
 		)
 	} else if (jogadoresTime2.idTime === timeEsquerda) {
-		rotacaoliberoEsquerda=rotacaoLiberoT2
-		rotacaoliberoDireita=rotacaoLiberoT1
+		rotacaoliberoEsquerda = rotacaoLiberoT2
+		rotacaoliberoDireita = rotacaoLiberoT1
 		// Renderizar jogadores do time 2 à esquerda e jogadores do time 1 à direita
 		adicionarJogadores(
 			"escolhaJogadoresLadoEsquerdo",
@@ -1025,7 +1026,7 @@ function renderizarJogadores(jogadoresTime1, jogadoresTime2, timeEsquerda, timeD
 			"Direita",
 			posicoesDisponiveisDireita,
 			posicoesJogadoresDireita,
-		)		
+		)
 	} else {
 		console.error("Os IDs dos times não correspondem aos IDs dos lados fornecidos.")
 	}
@@ -1085,23 +1086,23 @@ function adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, tim
 			jogadorDiv.classList.add(`bolinha${lado === "Direita" ? "2" : ""}`)
 			jogadorDiv.classList.add("libero")
 			jogadorDiv.style.left = `${libero[0]}%`
-			jogadorDiv.style.top = `${libero[2]}%`			
+			jogadorDiv.style.top = `${libero[2]}%`
 			if (lado === "Direita") {
 				if (posicaoLibero === 0) {
 					jogadorDiv.style.left = `${libero[0]}%`
 					jogadorDiv.style.top = `${libero[1]}%`
-				}else if (posicaoLibero === 5) {
+				} else if (posicaoLibero === 5) {
 					jogadorDiv.style.left = `${libero[0]}%`
 					jogadorDiv.style.top = `${libero[2]}%`
 				} else if (posicaoLibero === 4) {
 					jogadorDiv.style.left = `${libero[0]}%`
 					jogadorDiv.style.top = `${libero[3]}%`
 				}
-			}else{
+			} else {
 				if (posicaoLibero === 0) {
 					jogadorDiv.style.left = `${libero[0]}%`
 					jogadorDiv.style.top = `${libero[3]}%`
-				}else if (posicaoLibero === 5) {
+				} else if (posicaoLibero === 5) {
 					jogadorDiv.style.left = `${libero[0]}%`
 					jogadorDiv.style.top = `${libero[2]}%`
 				} else if (posicaoLibero === 4) {
@@ -1109,7 +1110,7 @@ function adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, tim
 					jogadorDiv.style.top = `${libero[1]}%`
 				}
 			}
-			
+
 		} else if (id !== 6) {
 			jogadorDiv.classList.add(`bolinha${lado === "Direita" ? "2" : ""}`)
 			jogadorDiv.style.left = `${posicoesLeft[id]}%`
@@ -1118,7 +1119,7 @@ function adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, tim
 		jogadorDiv.innerText = numeroCamiseta
 
 		// Adicionar ouvinte de clique
-		jogadorDiv.addEventListener("click", function(event) {
+		jogadorDiv.addEventListener("click", function (event) {
 			if (id == 6) {
 				event.stopPropagation() // Impede a propagação do evento para o jogador pai
 			}
@@ -1127,15 +1128,15 @@ function adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, tim
 			const jogadorEmQuadra = lado === "Esquerda"
 				? jogadoresEmQuadraEsquerda
 				: jogadoresEmQuadraDireita
-				const idsjogadorEmQuadra = jogadorEmQuadra.map(jogador => jogador.idJogador)
+			const idsjogadorEmQuadra = jogadorEmQuadra.map(jogador => jogador.idJogador)
 			// Verificar se o jogador está na
 			if (lado === "Esquerda") {
-				if(idsjogadorEmQuadra.includes(jogadorId)){
-					openModalSubstituicaoJogador(lado,id,jogadorId,idsjogadorEmQuadra)
+				if (idsjogadorEmQuadra.includes(jogadorId)) {
+					openModalSubstituicaoJogador(lado, timeEsquerda, id, jogadorId, idsjogadorEmQuadra)
 				}
-			} else if (lado === "Direita"){
-				if(idsjogadorEmQuadra.includes(jogadorId)){
-					openModalSubstituicaoJogador(lado,id,jogadorId,idsjogadorEmQuadra)
+			} else if (lado === "Direita") {
+				if (idsjogadorEmQuadra.includes(jogadorId)) {
+					openModalSubstituicaoJogador(lado, timeDireita, id, jogadorId, idsjogadorEmQuadra)
 				}
 			}
 		})
@@ -1157,7 +1158,7 @@ function adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, tim
 					break // Interrompe o loop assim que o jogador é encontrado
 				}
 			} */
-			
+
 			if (jogador) {
 				const jogadorDiv = criarJogador(index, jogador.idJogador, jogador.numeroCamiseta, lado, posicoesLeft, posicoesTop, libero, elemento.local)
 				if (lado === "Esquerda") {
@@ -1188,13 +1189,13 @@ function adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, tim
 	}
 	// Verificar qual time é da esquerda e qual é da direita
 	if (jogadoresTime1.idTime === timeEsquerda) {
-		rotacaoliberoEsquerda=rotacaoLiberoT1
-		rotacaoliberoDireita=rotacaoLiberoT2
+		rotacaoliberoEsquerda = rotacaoLiberoT1
+		rotacaoliberoDireita = rotacaoLiberoT2
 		adicionarJogadores(jogadoresEmQuadraEsquerda, jogadoresTime1.Jogadors, "Esquerda", posiocaoLeftT1, posiocaoTopT1, posiocaoLiberoT1)
 		adicionarJogadores(jogadoresEmQuadraDireita, jogadoresTime2.Jogadors, "Direita", posiocaoLeftT2, posiocaoTopT2, posiocaoLiberoT2)
 	} else {
-		rotacaoliberoEsquerda=rotacaoLiberoT2
-		rotacaoliberoDireita=rotacaoLiberoT1
+		rotacaoliberoEsquerda = rotacaoLiberoT2
+		rotacaoliberoDireita = rotacaoLiberoT1
 		adicionarJogadores(jogadoresEmQuadraDireita, jogadoresTime1.Jogadors, "Direita", posiocaoLeftT2, posiocaoTopT2, posiocaoLiberoT2)
 		adicionarJogadores(jogadoresEmQuadraEsquerda, jogadoresTime2.Jogadors, "Esquerda", posiocaoLeftT1, posiocaoTopT1, posiocaoLiberoT1)
 	}
@@ -1231,7 +1232,7 @@ function AtualizarDadosPartida(response) {
 		}
 	})
 }
-function openModalSubstituicaoJogador(lado,idPosicaoJogador,jogadorId,jogadorEmQuadra){
+function openModalSubstituicaoJogador(lado, idTimeSubstituicao, IndexPosicaoJogador, jogadorId, jogadorEmQuadra) {
 	const modalSubstituicao = document.createElement("div")
 	modalSubstituicao.id = `modalSubstituicaoJogador`
 	modalSubstituicao.classList.add("modal")
@@ -1258,43 +1259,44 @@ function openModalSubstituicaoJogador(lado,idPosicaoJogador,jogadorId,jogadorEmQ
 			</div>
 	`
 	document.body.appendChild(modalSubstituicao)
-	openModal("modalSubstituicaoJogador",true)
-	renderizarSubstituicaoJogadores(lado,idPosicaoJogador,jogadorId,jogadorEmQuadra)
+	openModal("modalSubstituicaoJogador", true)
+	renderizarSubstituicaoJogadores(lado, IndexPosicaoJogador, jogadorId, jogadorEmQuadra)
+	idJogadorEntrouSubstituicao = null
 	// Evento para salvar os dados quando o usuário clica no botão "Salvar"
 	document
-	.getElementById("btnSalvarModalmodalSubstituicaoJogador")
-	.addEventListener("click", function () {
-		console.log(lado,idPosicaoJogador,jogadorId,jogadorEmQuadra);
-		
-		/*
-		const dadosParaEnviarAPI =
-			prepararDadosParaAPIDefinicaoJogadores()
-		// Fazer uma solicitação POST para vincular jogadores em suas posições
-		axios
-			.post(`${url}posicao/create`, dadosParaEnviarAPI, config)
-			.then((response) => {
-				closeModal("modalDefinicaoJogadores")
-				adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, timeEsquerda, timeDireita, jogadoresEmQuadraEsquerda,jogadoresEmQuadraDireita)
-			})
-			.catch((error) => {
-				console.error(error)
-				if (error.response) {
-					const { data, status } = error.response
-					Swal.fire({
-						icon: "error",
-						title: `${data.error}`,
-						text: `Erro ${status} ` || "Erro desconhecido",
-					})
-				} else if (error.request) {
-					// A solicitação foi feita, mas não houve resposta do servidor
-					console.error("Sem resposta do servidor")
-				} else {
-					// Algo aconteceu durante a configuração da solicitação que acionou um erro
-					console.error("Erro na configuração da solicitação",error.message)
-				}
-			})
-			*/
-	})
+		.getElementById("btnSalvarModalmodalSubstituicaoJogador")
+		.addEventListener("click", function () {
+			console.log(lado,idTimeSubstituicao, IndexPosicaoJogador, jogadorId, idJogadorEntrouSubstituicao, jogadorEmQuadra);
+
+			/*
+			const dadosParaEnviarAPI =
+				prepararDadosParaAPIDefinicaoJogadores()
+			// Fazer uma solicitação POST para vincular jogadores em suas posições
+			axios
+				.post(`${url}posicao/create`, dadosParaEnviarAPI, config)
+				.then((response) => {
+					closeModal("modalDefinicaoJogadores")
+					adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, timeEsquerda, timeDireita, jogadoresEmQuadraEsquerda,jogadoresEmQuadraDireita)
+				})
+				.catch((error) => {
+					console.error(error)
+					if (error.response) {
+						const { data, status } = error.response
+						Swal.fire({
+							icon: "error",
+							title: `${data.error}`,
+							text: `Erro ${status} ` || "Erro desconhecido",
+						})
+					} else if (error.request) {
+						// A solicitação foi feita, mas não houve resposta do servidor
+						console.error("Sem resposta do servidor")
+					} else {
+						// Algo aconteceu durante a configuração da solicitação que acionou um erro
+						console.error("Erro na configuração da solicitação",error.message)
+					}
+				})
+				*/
+		})
 }
 function renderizarSubstituicaoJogadores(lado, idPosicaoJogador, jogadorId, jogadorEmQuadra) {
 	let JogadoresSubstituicao
@@ -1302,33 +1304,33 @@ function renderizarSubstituicaoJogadores(lado, idPosicaoJogador, jogadorId, joga
 	container.className = ''
 	container.innerHTML = ''
 	if (lado === "Esquerda") {
-			container.classList.add("jogadoresSubistituicaoLadoEsquerdo")
-			// Determinar qual time é da esquerda
-			if (jogadoresTime1.idTime === timeEsquerda) {
-					JogadoresSubstituicao = jogadoresTime1.Jogadors.filter(jogadorEstaEmQuadra)
-			} else if (jogadoresTime2.idTime === timeEsquerda) {
-					JogadoresSubstituicao = jogadoresTime2.Jogadors.filter(jogadorEstaEmQuadra)
-			}
+		container.classList.add("jogadoresSubistituicaoLadoEsquerdo")
+		// Determinar qual time é da esquerda
+		if (jogadoresTime1.idTime === timeEsquerda) {
+			JogadoresSubstituicao = jogadoresTime1.Jogadors.filter(jogadorEstaEmQuadra)
+		} else if (jogadoresTime2.idTime === timeEsquerda) {
+			JogadoresSubstituicao = jogadoresTime2.Jogadors.filter(jogadorEstaEmQuadra)
+		}
 	} else {
-			container.classList.add("jogadoresSubistituicaoLadoDireito")
-			// Determinar qual time é da direita
-			if (jogadoresTime1.idTime === timeDireita) {
-					JogadoresSubstituicao = jogadoresTime1.Jogadors.filter(jogadorEstaEmQuadra)
-			} else if (jogadoresTime2.idTime === timeDireita) {
-					JogadoresSubstituicao = jogadoresTime2.Jogadors.filter(jogadorEstaEmQuadra)
-			}
+		container.classList.add("jogadoresSubistituicaoLadoDireito")
+		// Determinar qual time é da direita
+		if (jogadoresTime1.idTime === timeDireita) {
+			JogadoresSubstituicao = jogadoresTime1.Jogadors.filter(jogadorEstaEmQuadra)
+		} else if (jogadoresTime2.idTime === timeDireita) {
+			JogadoresSubstituicao = jogadoresTime2.Jogadors.filter(jogadorEstaEmQuadra)
+		}
 	}
 
 	let jogadorSelecionado = null
 
 	JogadoresSubstituicao.forEach((jogador) => {
-			const jogadorDiv = document.createElement("div")
-			jogadorDiv.id = `jogador${jogador.idJogador}`
-			jogadorDiv.classList.add("bolinhaEscolhaJogadores")
-			jogadorDiv.innerText = jogador.numeroCamiseta
+		const jogadorDiv = document.createElement("div")
+		jogadorDiv.id = `jogador${jogador.idJogador}`
+		jogadorDiv.classList.add("bolinhaEscolhaJogadores")
+		jogadorDiv.innerText = jogador.numeroCamiseta
 
-			jogadorDiv.addEventListener("click", function() {
-				// Verifica se outro jogador já estiver selecionado
+		jogadorDiv.addEventListener("click", function () {
+			// Verifica se outro jogador já estiver selecionado
 			if (jogadorSelecionado && jogadorSelecionado !== this) {
 				Swal.fire({
 					icon: "error",
@@ -1339,19 +1341,26 @@ function renderizarSubstituicaoJogadores(lado, idPosicaoJogador, jogadorId, joga
 				})
 			} else {
 				this.classList.toggle("jogadorSelecionado")
-				jogadorSelecionado = this.classList.contains("jogadorSelecionado") ? this : null
+				// Verifica se o jogador foi selecionado ou deselecionado
+				if (this.classList.contains("jogadorSelecionado")) {
+					idJogadorEntrouSubstituicao = jogador.idJogador;
+					jogadorSelecionado = this;
+				} else {
+					idJogadorEntrouSubstituicao = null;
+					jogadorSelecionado = null;
+				}
 			}
 		})
-			container.appendChild(jogadorDiv)
+		container.appendChild(jogadorDiv)
 	})
-	
+
 	function jogadorEstaEmQuadra(jogador) {
 		const idsJogadoresEmQuadraDireita = jogadoresEmQuadraDireita.map(jogador => jogador.idJogador);
 		const idsJogadoresEmQuadraEsquerda = jogadoresEmQuadraEsquerda.map(jogador => jogador.idJogador);
 		return !idsJogadoresEmQuadraEsquerda.includes(jogador.idJogador) && !idsJogadoresEmQuadraDireita.includes(jogador.idJogador)
 	}
 }
-function exibirMensagemVencedor(idTimeVencedor,timeVencedor,set,placarTime1,placarTime2) {
+function exibirMensagemVencedor(idTimeVencedor, timeVencedor, set, placarTime1, placarTime2) {
 	// busca o token armazenado no login
 	var token = localStorage.getItem("token")
 	// Configurar o cabeçalho com a autorização do token
@@ -1362,22 +1371,22 @@ function exibirMensagemVencedor(idTimeVencedor,timeVencedor,set,placarTime1,plac
 		},
 	}
 	if (!partida.vencedor) {
-		if (partidaResponse.idTime1 == idTimeVencedor){
+		if (partidaResponse.idTime1 == idTimeVencedor) {
 			partida.placarTime1++
-		}else if(partidaResponse.idTime2 == idTimeVencedor){
+		} else if (partidaResponse.idTime2 == idTimeVencedor) {
 			partida.placarTime2++
 		}
 		console.log("debug: tentativa de atualizar set");
 		//Proxima alteração aqui, realizar ajuste de time vencedor no set, e criar novo set.
 		axios.put(
-				`${url}set/${partida.idSet}`,
-				{
-					vencedor: idTimeVencedor,
-					placarTime1: partida.placarTime1,
-					placarTime2: partida.placarTime2,
-				},
-				config
-			)
+			`${url}set/${partida.idSet}`,
+			{
+				vencedor: idTimeVencedor,
+				placarTime1: partida.placarTime1,
+				placarTime2: partida.placarTime2,
+			},
+			config
+		)
 			.catch((error) => {
 				console.error(error)
 				if (error.response) {
@@ -1399,47 +1408,47 @@ function exibirMensagemVencedor(idTimeVencedor,timeVencedor,set,placarTime1,plac
 				}
 			})
 	}
-  const isUltimoSet = set === partidaResponse.qtdeSets
-  Swal.fire({
-    title: 'Fim do Set!',
-    text: `O time ${timeVencedor} venceu o ${set}º set!`,
-    icon: 'success',
-    showCancelButton: isUltimoSet,
+	const isUltimoSet = set === partidaResponse.qtdeSets
+	Swal.fire({
+		title: 'Fim do Set!',
+		text: `O time ${timeVencedor} venceu o ${set}º set!`,
+		icon: 'success',
+		showCancelButton: isUltimoSet,
 		showConfirmButton: !isUltimoSet,
 		allowOutsideClick: false,
-    cancelButtonText: 'Finalizar Partida',
-    confirmButtonText: 'Próximo Set',
-  }).then((result) => {
-    if (result.isConfirmed) {
-      // Lógica para ir para o próximo set
+		cancelButtonText: 'Finalizar Partida',
+		confirmButtonText: 'Próximo Set',
+	}).then((result) => {
+		if (result.isConfirmed) {
+			// Lógica para ir para o próximo set
 			const saqueSet = partidaResponse.saqueInicial === partidaResponse.idTime1
-			? partidaResponse.idTime2
-			: partidaResponse.idTime1
+				? partidaResponse.idTime2
+				: partidaResponse.idTime1
 			axios
-			.post(
-				`${url}ponto/next-set/${partidaID}`,
-				{
-					ladoQuadraTime2: partida.ladoQuadraTime1,
-					ladoQuadraTime1: partida.ladoQuadraTime2,
-					saqueInicial: saqueSet,					
-					set: ++partida.set,
-					placarTime1: partida.placarTime1,
-					placarTime2: partida.placarTime2,
-				},
-				config
-			)
-			.then((response) => {
-				partida = response.data
-				jogadoresEmQuadraEsquerda = []
-				jogadoresEmQuadraDireita = []
-				document.getElementsByClassName("jogadoresTime01")[0].innerHTML=''
-				document.getElementsByClassName("jogadoresTime02")[0].innerHTML=''
+				.post(
+					`${url}ponto/next-set/${partidaID}`,
+					{
+						ladoQuadraTime2: partida.ladoQuadraTime1,
+						ladoQuadraTime1: partida.ladoQuadraTime2,
+						saqueInicial: saqueSet,
+						set: ++partida.set,
+						placarTime1: partida.placarTime1,
+						placarTime2: partida.placarTime2,
+					},
+					config
+				)
+				.then((response) => {
+					partida = response.data
+					jogadoresEmQuadraEsquerda = []
+					jogadoresEmQuadraDireita = []
+					document.getElementsByClassName("jogadoresTime01")[0].innerHTML = ''
+					document.getElementsByClassName("jogadoresTime02")[0].innerHTML = ''
 
-				renderizarPlacar()
-				const newModelPartida = document.createElement("div")
-				newModelPartida.id = `modalDefinicaoJogadores`
-				newModelPartida.classList.add("modal")
-				newModelPartida.innerHTML = `
+					renderizarPlacar()
+					const newModelPartida = document.createElement("div")
+					newModelPartida.id = `modalDefinicaoJogadores`
+					newModelPartida.classList.add("modal")
+					newModelPartida.innerHTML = `
 					<div class="modal-content">
 							<h2>Definição de jogadores titulares</h2>
 							<div class="modal-body">
@@ -1512,79 +1521,79 @@ function exibirMensagemVencedor(idTimeVencedor,timeVencedor,set,placarTime1,plac
 					</div>
 				`
 
-				document.body.appendChild(newModelPartida)
-				renderizarJogadores(jogadoresTime1, jogadoresTime2, timeEsquerda, timeDireita)
-				openModal("modalDefinicaoJogadores")
-				// Evento para salvar os dados quando o usuário clica no botão "Salvar"
-				document
-					.getElementById("btnSalvarModalmodalDefinicaoJogadores")
-					.addEventListener("click", function () {
-						const dadosParaEnviarAPI =
-							prepararDadosParaAPIDefinicaoJogadores()
-						// Fazer uma solicitação POST para vincular jogadores em suas posições
-						axios
-							.post(`${url}posicao/create`, dadosParaEnviarAPI, config)
-							.then((response) => {
-								closeModal("modalDefinicaoJogadores")
-								adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, timeEsquerda, timeDireita, jogadoresEmQuadraEsquerda,jogadoresEmQuadraDireita)
-							})
-							.catch((error) => {
-								console.error(error)
-								if (error.response) {
-									const { data, status } = error.response
-									Swal.fire({
-										icon: "error",
-										title: `${data.error}`,
-										text: `Erro ${status} ` || "Erro desconhecido",
-									})
-								} else if (error.request) {
-									// A solicitação foi feita, mas não houve resposta do servidor
-									console.error("Sem resposta do servidor")
-								} else {
-									// Algo aconteceu durante a configuração da solicitação que acionou um erro
-									console.error(
-										"Erro na configuração da solicitação",
-										error.message
-									)
-								}
-							})
-					})
-			})
-			.catch((error) => {
-				console.error(error)
-				if (error.response) {
-					const { data, status } = error.response
-					Swal.fire({
-						icon: "error",
-						title: `Erro ao atualizar ponto inicial da Partida.\n${data.error}`,
-						text: `Erro ${status} ` || "Erro desconhecido",
-					})
-				} else if (error.request) {
-					// A solicitação foi feita, mas não houve resposta do servidor
-					console.error("Sem resposta do servidor")
-				} else {
-					// Algo aconteceu durante a configuração da solicitação que acionou um erro
-					console.error(
-						"Erro na configuração da solicitação",
-						error.message
-					)
-				}
-			})
-    } else {
-      // Lógica para finalizar a partida
-    }
-  })
+					document.body.appendChild(newModelPartida)
+					renderizarJogadores(jogadoresTime1, jogadoresTime2, timeEsquerda, timeDireita)
+					openModal("modalDefinicaoJogadores")
+					// Evento para salvar os dados quando o usuário clica no botão "Salvar"
+					document
+						.getElementById("btnSalvarModalmodalDefinicaoJogadores")
+						.addEventListener("click", function () {
+							const dadosParaEnviarAPI =
+								prepararDadosParaAPIDefinicaoJogadores()
+							// Fazer uma solicitação POST para vincular jogadores em suas posições
+							axios
+								.post(`${url}posicao/create`, dadosParaEnviarAPI, config)
+								.then((response) => {
+									closeModal("modalDefinicaoJogadores")
+									adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, timeEsquerda, timeDireita, jogadoresEmQuadraEsquerda, jogadoresEmQuadraDireita)
+								})
+								.catch((error) => {
+									console.error(error)
+									if (error.response) {
+										const { data, status } = error.response
+										Swal.fire({
+											icon: "error",
+											title: `${data.error}`,
+											text: `Erro ${status} ` || "Erro desconhecido",
+										})
+									} else if (error.request) {
+										// A solicitação foi feita, mas não houve resposta do servidor
+										console.error("Sem resposta do servidor")
+									} else {
+										// Algo aconteceu durante a configuração da solicitação que acionou um erro
+										console.error(
+											"Erro na configuração da solicitação",
+											error.message
+										)
+									}
+								})
+						})
+				})
+				.catch((error) => {
+					console.error(error)
+					if (error.response) {
+						const { data, status } = error.response
+						Swal.fire({
+							icon: "error",
+							title: `Erro ao atualizar ponto inicial da Partida.\n${data.error}`,
+							text: `Erro ${status} ` || "Erro desconhecido",
+						})
+					} else if (error.request) {
+						// A solicitação foi feita, mas não houve resposta do servidor
+						console.error("Sem resposta do servidor")
+					} else {
+						// Algo aconteceu durante a configuração da solicitação que acionou um erro
+						console.error(
+							"Erro na configuração da solicitação",
+							error.message
+						)
+					}
+				})
+		} else {
+			// Lógica para finalizar a partida
+		}
+	})
 }
-function atualizarRotacaoLibero(rotacao, posicaoAtual) {	
+function atualizarRotacaoLibero(rotacao, posicaoAtual) {
 	const index = rotacao.indexOf(posicaoAtual);
 
 	if (index === -1) {
-			console.warn(`Posição atual ${posicaoAtual} não encontrada na rotação.`);
-			return rotacao;
+		console.warn(`Posição atual ${posicaoAtual} não encontrada na rotação.`);
+		return rotacao;
 	}
 
 	// Reorganizar o array para que a posição atual fique no início
-	let novaRotacao = rotacao.slice(index).concat(rotacao.slice(0, index));	
+	let novaRotacao = rotacao.slice(index).concat(rotacao.slice(0, index));
 	/* // Ajustar o array para ficar uma casa a frente
 	const lastElement = novaRotacao.shift();
 	console.log("novaRotacao pop: ", novaRotacao);
