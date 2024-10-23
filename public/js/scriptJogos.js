@@ -1266,20 +1266,25 @@ function openModalSubstituicaoJogador(lado, idTimeSubstituicao, IndexPosicaoJoga
 	document
 		.getElementById("btnSalvarModalmodalSubstituicaoJogador")
 		.addEventListener("click", function () {
-			console.log(lado,idTimeSubstituicao, IndexPosicaoJogador, jogadorId, idJogadorEntrouSubstituicao, jogadorEmQuadra);
+			console.log(lado, idTimeSubstituicao, IndexPosicaoJogador, jogadorId, idJogadorEntrouSubstituicao, jogadorEmQuadra);
+			console.log("teste de substituição, mandando:", jogadorId, idJogadorEntrouSubstituicao);
 
-			/*
-			const dadosParaEnviarAPI =
-				prepararDadosParaAPIDefinicaoJogadores()
-			// Fazer uma solicitação POST para vincular jogadores em suas posições
+			var token = localStorage.getItem("token")
+			const config = {
+				headers: {
+					Authorization: `Bearer ${token}`,
+					"Content-Type": "application/x-www-form-urlencoded",
+				},
+			}
+			// Fazer uma solicitação POST para criar substituição em suas posições
 			axios
-				.post(`${url}posicao/create`, dadosParaEnviarAPI, config)
+				.post(`${url}substituicao/create`, { idJogadorSai: jogadorId, idJogadorEntra: idJogadorEntrouSubstituicao }, config)
 				.then((response) => {
-					closeModal("modalDefinicaoJogadores")
-					adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, timeEsquerda, timeDireita, jogadoresEmQuadraEsquerda,jogadoresEmQuadraDireita)
+					// Alterando aqui - fazer subistituição do id e do numero do jogador antes de fechar modal
+					closeModal("modalSubstituicaoJogador")
 				})
 				.catch((error) => {
-					console.error(error)
+					console.error("Erro ao CRIAR SUBSTITUIÇÂO:", error)
 					if (error.response) {
 						const { data, status } = error.response
 						Swal.fire({
@@ -1289,13 +1294,12 @@ function openModalSubstituicaoJogador(lado, idTimeSubstituicao, IndexPosicaoJoga
 						})
 					} else if (error.request) {
 						// A solicitação foi feita, mas não houve resposta do servidor
-						console.error("Sem resposta do servidor")
+						console.error("Sem resposta do servidor ao tentar CRIAR SUBSTITUIÇÂO")
 					} else {
 						// Algo aconteceu durante a configuração da solicitação que acionou um erro
-						console.error("Erro na configuração da solicitação",error.message)
+						console.error("Erro na configuração da solicitação para CRIAR SUBSTITUIÇÂO", error.message)
 					}
 				})
-				*/
 		})
 }
 function renderizarSubstituicaoJogadores(lado, idPosicaoJogador, jogadorId, jogadorEmQuadra) {
