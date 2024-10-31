@@ -9,7 +9,7 @@ exports.getPartidaCampeonatoById = async (req,res) =>{
         const token = await req.session.token
         const user = res.locals.user
         const config = {
-            headers: { Authorization: `Bearer ${token}` }
+            headers: { Authorization: `Bearer ${token}`}
         }
         // Fazer a requisição para a API
         let response = await api.get(`/partida/${idPartida}`, config)
@@ -19,7 +19,15 @@ exports.getPartidaCampeonatoById = async (req,res) =>{
         const jogadoresTime1 = response.data
         response = await api.get(`/time/players/${partida.idTime2}`, config)
         const jogadoresTime2 = response.data
-        res.render('jogos', { jsonPartida: JSON.stringify(partida), idPartida: partida.idPartida , jogadoresTime1: JSON.stringify(jogadoresTime1), jogadoresTime2: JSON.stringify(jogadoresTime2), user, spaUrl, apiUrl, layout : 'painelws' })
+        response = await api.post(`/substituicao/all/${idPartida}`,{ idSet: partida.setAtual }, config)
+        const substituicao = response.data
+        res.render('jogos', { 
+            idPartida: partida.idPartida,
+            substituicao: substituicao,
+            jsonPartida: JSON.stringify(partida),
+            jogadoresTime1: JSON.stringify(jogadoresTime1),
+            jogadoresTime2: JSON.stringify(jogadoresTime2),
+            user, spaUrl, apiUrl, layout : 'painelws'})
     } catch (error) {
         res.status(500).json({ error: 'Erro ao buscar datas.' });
         console.error(error)

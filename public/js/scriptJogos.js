@@ -1240,7 +1240,7 @@ function openModalSubstituicaoJogador(lado, idTimeSubstituicao, IndexPosicaoJoga
 			<div class="modal-content">
 					<div class="modal-content-header">
 							<h2>Substituição de jogador</h2>
-							<h4 class="modalDescription">Escolha um jogador para substituir.</h4>
+							<h4 class="modalDescription">Escolha um jogador para substituir por ${jogadorId}.</h4>
 					</div>
 					<div class="modal-body">
 							<form id="selecaoJogadoresForm" enctype="multipart/form-data" class="form">
