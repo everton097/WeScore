@@ -465,8 +465,13 @@
 #partidasContainer p,
 #timesContainer p,
 #jogadoresContainer p,
-#substituicaoContainer p {
+#substituicaoContainerEsquerda p,
+#substituicaoContainerDireita p {
 	justify-content: center;
+}
+#substituicaoContainerEsquerda p,
+#substituicaoContainerDireita p{
+	margin-top: 15px;
 }
 /* inversão do tooltip */
 .cardDashboard_division:first-child

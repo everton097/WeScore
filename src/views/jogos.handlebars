@@ -55,31 +55,10 @@
 <section id="substituicao" style="display: none;">
 		<div class="cardPartidaSubstituicao">
 			<div class="container__">
-				<div id="substituicaoContainer" class="cardDashboard_container">
-					{{#if jogadores.length}}
-						{{#each jogadores}}
+				<div id="substituicaoContainerEsquerda" class="cardDashboard_container">
+					{{#if substituicaoEsquerda.length}}
+						{{#each substituicaoEsquerda}}
 							<div class="cardDashboard_division" aria-current="true" data-jogador-id={{idJogador}}>
-								<div class="cardDashboard_division_content">
-									<div class="cardDashboard_division_text">
-										<span class="cardDashboard_division_name">{{nomeJogador}} {{sobrenome}}</span>
-										<p class="cardDashboard_division_username">Nº Camiseta:{{numeroCamiseta}}</p>
-									</div>
-									<div class="paste-button">
-										<button class="painelws_Btn">
-											<i class="ri-more-2-fill"></i>
-											<div class="painelws_Btn_text">Opções</div>
-										</button>
-										<div class="dropdown-content">
-											<a id="editJogador{{idJogador}}" href="/painelws/jogador/{{idJogador}}"><i class="ri-pencil-line"></i>Editar</a>
-											<a id="delJogador{{idJogador}}" ><i class="ri-delete-bin-line"></i>Remover</a>
-										</div>
-									</div>
-								</div>
-							</div>
-						{{/each}}
-					{{else}}
-						{{!-- <p>Nenhuma substituição disponível.</p> --}}
-						<div class="cardDashboard_division" aria-current="true" data-jogador-id={{idJogador}}>
 								<div class="cardDashboard_division_content">
 									<div class="cardDashboard_division_text">
 										<span class="scorePartidaSubstituicao">0-1</span>
@@ -87,36 +66,17 @@
 										<span class="cardDashboard_division_name"><i class="ri-arrow-down-double-line"></i>teste1</span>
 									</div>
 								</div>
-						</div>
-
+							</div>
+						{{/each}}
+					{{else}}
+						<p>Nenhuma substituição disponível.</p>
 					{{/if}}
 
 				</div>
-				<div id="substituicaoContainer" class="cardDashboard_container">
-					{{#if jogadores.length}}
-						{{#each jogadores}}
+				<div id="substituicaoContainerDireita" class="cardDashboard_container">
+					{{#if substituicaoDireita.length}}
+						{{#each substituicaoDireita}}
 							<div class="cardDashboard_division" aria-current="true" data-jogador-id={{idJogador}}>
-								<div class="cardDashboard_division_content">
-									<div class="cardDashboard_division_text">
-										<span class="cardDashboard_division_name">{{nomeJogador}} {{sobrenome}}</span>
-										<p class="cardDashboard_division_username">Nº Camiseta:{{numeroCamiseta}}</p>
-									</div>
-									<div class="paste-button">
-										<button class="painelws_Btn">
-											<i class="ri-more-2-fill"></i>
-											<div class="painelws_Btn_text">Opções</div>
-										</button>
-										<div class="dropdown-content">
-											<a id="editJogador{{idJogador}}" href="/painelws/jogador/{{idJogador}}"><i class="ri-pencil-line"></i>Editar</a>
-											<a id="delJogador{{idJogador}}" ><i class="ri-delete-bin-line"></i>Remover</a>
-										</div>
-									</div>
-								</div>
-							</div>
-						{{/each}}
-					{{else}}
-						{{!-- <p>Nenhuma substituição disponível.</p> --}}
-						<div class="cardDashboard_division" aria-current="true" data-jogador-id={{idJogador}}>
 								<div class="cardDashboard_division_content">
 									<div class="cardDashboard_division_text">
 										<span class="cardDashboard_division_name">teste1<i class="ri-arrow-up-double-line"></i></span>
@@ -124,8 +84,10 @@
 										<span class="scorePartidaSubstituicao">0-1</span>
 									</div>
 								</div>
-						</div>
-
+							</div>
+						{{/each}}
+					{{else}}
+						<p>Nenhuma substituição disponível.</p>
 					{{/if}}
 
 				</div>

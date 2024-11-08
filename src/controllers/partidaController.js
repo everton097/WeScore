@@ -39,13 +39,15 @@ exports.getPartidaCampeonatoById = async (req, res) => {
 
         res.render('jogos', {
             idPartida: partida.idPartida,
-            substituicaoEsquerda: JSON.stringify(substituicaoEsquerda),
-            substituicaoDireita: JSON.stringify(substituicaoDireita),
+            substituicaoEsquerda: substituicaoEsquerda,
+            substituicaoDireita: substituicaoDireita,
             jsonPartida: JSON.stringify(partida),
             jogadoresTime1: JSON.stringify(jogadoresTime1),
             jogadoresTime2: JSON.stringify(jogadoresTime2),
             user, spaUrl, apiUrl, layout: 'painelws'
         })
+        console.log(pontos);
+        
 
     } catch (error) {
         res.status(500).json({ error: 'Erro ao buscar datas.' });

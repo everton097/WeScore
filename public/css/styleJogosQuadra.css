@@ -37,7 +37,8 @@
 .cardPartidaSubstituicao .cardDashboard_division_text{
   align-items: center;
 }
-.cardPartidaSubstituicao #substituicaoContainer{
+.cardPartidaSubstituicao #substituicaoContainerEsquerda,
+.cardPartidaSubstituicao #substituicaoContainerDireita{
   width: calc(100%);
 }
 .cardPartidaSubstituicao .cardDashboard_division_name{
