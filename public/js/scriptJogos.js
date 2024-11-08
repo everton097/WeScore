@@ -1078,46 +1078,46 @@ function adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, tim
 	containerDireita.innerHTML = ""
 
 	// Função auxiliar para criar e posicionar jogadores
-	function criarJogador(id, jogadorID, numeroCamiseta, lado, posicoesLeft, posicoesTop, libero, posicaoLibero) {
+	function criarJogador(id, jogadorID, numeroCamiseta, lado, posicoesLeft, posicoesTop, islibero, posicaoLibero, posicaoJogador) {
 		const jogadorDiv = document.createElement("div")
 		jogadorDiv.id = `Jogador${lado}${id}`
 		jogadorDiv.dataset.jogadorId = `${jogadorID}`
-		if (id == 6) {
+		if (islibero) {
 			jogadorDiv.classList.add(`bolinha${lado === "Direita" ? "2" : ""}`)
 			jogadorDiv.classList.add("libero")
-			jogadorDiv.style.left = `${libero[0]}%`
-			jogadorDiv.style.top = `${libero[2]}%`
+			jogadorDiv.style.left = `${posicaoLibero[0]}%`
+			jogadorDiv.style.top = `${posicaoLibero[2]}%`
 			if (lado === "Direita") {
-				if (posicaoLibero === 0) {
-					jogadorDiv.style.left = `${libero[0]}%`
-					jogadorDiv.style.top = `${libero[1]}%`
-				} else if (posicaoLibero === 5) {
-					jogadorDiv.style.left = `${libero[0]}%`
-					jogadorDiv.style.top = `${libero[2]}%`
-				} else if (posicaoLibero === 4) {
-					jogadorDiv.style.left = `${libero[0]}%`
-					jogadorDiv.style.top = `${libero[3]}%`
+				if (posicaoJogador === 0) {
+					jogadorDiv.style.left = `${posicaoLibero[0]}%`
+					jogadorDiv.style.top = `${posicaoLibero[1]}%`
+				} else if (posicaoJogador === 5) {
+					jogadorDiv.style.left = `${posicaoLibero[0]}%`
+					jogadorDiv.style.top = `${posicaoLibero[2]}%`
+				} else if (posicaoJogador === 4) {
+					jogadorDiv.style.left = `${posicaoLibero[0]}%`
+					jogadorDiv.style.top = `${posicaoLibero[3]}%`
 				}
 			} else {
-				if (posicaoLibero === 0) {
-					jogadorDiv.style.left = `${libero[0]}%`
-					jogadorDiv.style.top = `${libero[3]}%`
-				} else if (posicaoLibero === 5) {
-					jogadorDiv.style.left = `${libero[0]}%`
-					jogadorDiv.style.top = `${libero[2]}%`
-				} else if (posicaoLibero === 4) {
-					jogadorDiv.style.left = `${libero[0]}%`
-					jogadorDiv.style.top = `${libero[1]}%`
+				if (posicaoJogador === 0) {
+					jogadorDiv.style.left = `${posicaoLibero[0]}%`
+					jogadorDiv.style.top = `${posicaoLibero[3]}%`
+				} else if (posicaoJogador === 5) {
+					jogadorDiv.style.left = `${posicaoLibero[0]}%`
+					jogadorDiv.style.top = `${posicaoLibero[2]}%`
+				} else if (posicaoJogador === 4) {
+					jogadorDiv.style.left = `${posicaoLibero[0]}%`
+					jogadorDiv.style.top = `${posicaoLibero[1]}%`
 				}
 			}
 
-		} else if (id !== 6) {
+		} else if (!islibero) {
 			jogadorDiv.classList.add(`bolinha${lado === "Direita" ? "2" : ""}`)
-			jogadorDiv.style.left = `${posicoesLeft[id]}%`
-			jogadorDiv.style.top = `${posicoesTop[id]}%`
+			jogadorDiv.style.left = `${posicoesLeft[posicaoJogador]}%`
+			jogadorDiv.style.top = `${posicoesTop[posicaoJogador]}%`
 		}
-		jogadorDiv.innerText = numeroCamiseta
-
+		jogadorDiv.innerText = numeroCamiseta	
+		
 		// Adicionar ouvinte de clique
 		jogadorDiv.addEventListener("click", function (event) {
 			if (id == 6) {
@@ -1160,10 +1160,10 @@ function adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, tim
 			} */
 
 			if (jogador) {
-				const jogadorDiv = criarJogador(index, jogador.idJogador, jogador.numeroCamiseta, lado, posicoesLeft, posicoesTop, libero, elemento.local)
+				const jogadorDiv = criarJogador(index, jogador.idJogador, jogador.numeroCamiseta, lado, posicoesLeft, posicoesTop, elemento.libero, libero, elemento.local)
 				if (lado === "Esquerda") {
 					// Verifica se é o libero, se for, adiciona o jogador junto ao jogador5
-					if (index == 6) {
+					if (elemento.libero) {
 						rotacaoliberoEsquerda = atualizarRotacaoLibero(rotacaoliberoEsquerda, elemento.local)
 						/* const liberoEsquerda = document.querySelector(`#JogadorEsquerda${elemento.local}`)
 						liberoEsquerda.appendChild(jogadorDiv) */
@@ -1173,7 +1173,7 @@ function adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, tim
 					}
 				} else {
 					// Verifica se é o libero, se for, adiciona o jogador junto ao jogador5
-					if (index == 6) {
+					if (elemento.libero) {
 						rotacaoliberoDireita = atualizarRotacaoLibero(rotacaoliberoDireita, elemento.local)
 						/* const liberoDireita = document.querySelector(`#JogadorDireita${elemento.local}`)
 						liberoDireita.appendChild(jogadorDiv) */
@@ -1223,7 +1223,8 @@ function AtualizarDadosPartida(response) {
 	posicoes.forEach((posicao, index) => {
 		const jogador = {
 			idJogador: Number(posicao.idJogador),
-			local: posicao.local
+			local: posicao.local,
+			libero: posicao.libero
 		}
 		if (posicao.ladoQuadra === "Esquerda") {
 			jogadoresEmQuadraEsquerda.push(jogador)
