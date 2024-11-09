@@ -58,12 +58,17 @@
 				<div id="substituicaoContainerEsquerda" class="cardDashboard_container">
 					{{#if substituicaoEsquerda.length}}
 						{{#each substituicaoEsquerda}}
-							<div class="cardDashboard_division" aria-current="true" data-jogador-id={{idJogador}}>
+							<div class="cardDashboard_division" aria-current="true" data-substituicao-id={{idSubstituicao}}>
 								<div class="cardDashboard_division_content">
 									<div class="cardDashboard_division_text">
-										<span class="scorePartidaSubstituicao">0-1</span>
-										<span class="cardDashboard_division_name">teste1<i class="ri-arrow-up-double-line"></i></span>
-										<span class="cardDashboard_division_name"><i class="ri-arrow-down-double-line"></i>teste1</span>
+										{{#is ponto.ladoQuadraTime1 "Esquerda"}}
+											<span class="scorePartidaSubstituicao">{{ponto.ptTime1}}-{{ponto.ptTime2}}</span>
+										{{/is}}
+										{{#isnt ponto.ladoQuadraTime1 "Esquerda"}}
+											<span class="scorePartidaSubstituicao">{{ponto.ptTime2}}-{{ponto.ptTime1}}</span>
+										{{/isnt}}
+										<span class="cardDashboard_division_name">{{jogadorEntrou.numeroCamiseta}}<i class="ri-arrow-up-double-line"></i></span>
+										<span class="cardDashboard_division_name"><i class="ri-arrow-down-double-line"></i>{{jogadorSaiu.numeroCamiseta}}</span>
 									</div>
 								</div>
 							</div>
@@ -76,12 +81,17 @@
 				<div id="substituicaoContainerDireita" class="cardDashboard_container">
 					{{#if substituicaoDireita.length}}
 						{{#each substituicaoDireita}}
-							<div class="cardDashboard_division" aria-current="true" data-jogador-id={{idJogador}}>
+							<div class="cardDashboard_division" aria-current="true" data-substituicao-id={{idSubstituicao}}>
 								<div class="cardDashboard_division_content">
 									<div class="cardDashboard_division_text">
-										<span class="cardDashboard_division_name">teste1<i class="ri-arrow-up-double-line"></i></span>
-										<span class="cardDashboard_division_name"><i class="ri-arrow-down-double-line"></i>teste1</span>
-										<span class="scorePartidaSubstituicao">0-1</span>
+										<span class="cardDashboard_division_name">{{jogadorEntrou.numeroCamiseta}}<i class="ri-arrow-up-double-line"></i></span>
+										<span class="cardDashboard_division_name"><i class="ri-arrow-down-double-line"></i>{{jogadorSaiu.numeroCamiseta}}</span>
+										{{#is ponto.ladoQuadraTime1 "Esquerda"}}
+											<span class="scorePartidaSubstituicao">{{ponto.ptTime1}}-{{ponto.ptTime2}}</span>
+										{{/is}}
+										{{#isnt ponto.ladoQuadraTime1 "Esquerda"}}
+											<span class="scorePartidaSubstituicao">{{ponto.ptTime2}}-{{ponto.ptTime1}}</span>
+										{{/isnt}}
 									</div>
 								</div>
 							</div>
@@ -89,7 +99,6 @@
 					{{else}}
 						<p>Nenhuma substituição disponível.</p>
 					{{/if}}
-
 				</div>
 				
 			</div>

@@ -46,8 +46,6 @@ exports.getPartidaCampeonatoById = async (req, res) => {
             jogadoresTime2: JSON.stringify(jogadoresTime2),
             user, spaUrl, apiUrl, layout: 'painelws'
         })
-        console.log(pontos);
-        
 
     } catch (error) {
         res.status(500).json({ error: 'Erro ao buscar datas.' });
