@@ -1,4 +1,3 @@
-console.log("usando !!",url);
 function validateForm(formData) {
   const nomeJogador = formData.get("nomeJogador");
   const sobrenome = formData.get("sobrenome");

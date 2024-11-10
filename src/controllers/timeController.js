@@ -171,6 +171,5 @@ exports.jogadorTimeAddByID = async (req,res) => {
     // Requisição para retorno de jogadores sem time.
     let response = await api.get(`/jogador/nolink`, config)
     const jogador = response.data
-    console.log(jogador);
     res.render('jogador/add', { jogador,idTime, user, spaUrl, apiUrl, layout : 'painelws'})
 }

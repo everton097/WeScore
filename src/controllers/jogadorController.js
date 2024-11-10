@@ -14,7 +14,6 @@ exports.getALLDatas = async (req,res) => {
         // Fazer a requisição para a API
         let response = await api.get("/jogador/all", config)
         const jogador = response.data
-        console.log(jogador)
         
         res.render('jogador/', { jogador, user, spaUrl, apiUrl, layout : 'painelws' })
     } catch (error) {

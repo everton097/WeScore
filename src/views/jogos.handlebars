@@ -50,7 +50,56 @@
 </div>
 
 <section id="cartoes" style="display: none;">
-	<div>cartoes</div>
+	<div class="cardPartidaCartoes">
+			<div class="container__">
+				<div id="substituicaoContainerEsquerda" class="cardDashboard_container">
+					{{#if substituicaoEsquerda.length}}
+						{{#each substituicaoEsquerda}}
+							<div class="cardDashboard_division" aria-current="true" data-substituicao-id={{idSubstituicao}}>
+								<div class="cardDashboard_division_content">
+									<div class="cardDashboard_division_text">
+										{{#is ponto.ladoQuadraTime1 "Esquerda"}}
+											<span class="scorePartidaSubstituicao">{{ponto.ptTime1}}-{{ponto.ptTime2}}</span>
+										{{/is}}
+										{{#isnt ponto.ladoQuadraTime1 "Esquerda"}}
+											<span class="scorePartidaSubstituicao">{{ponto.ptTime2}}-{{ponto.ptTime1}}</span>
+										{{/isnt}}
+										<span class="cardDashboard_division_name">{{jogadorEntrou.numeroCamiseta}}<i class="ri-arrow-up-double-line"></i></span>
+										<span class="cardDashboard_division_name"><i class="ri-arrow-down-double-line"></i>{{jogadorSaiu.numeroCamiseta}}</span>
+									</div>
+								</div>
+							</div>
+						{{/each}}
+					{{else}}
+						<p>Nenhuma substituição disponível.</p>
+					{{/if}}
+
+				</div>
+				<div id="substituicaoContainerDireita" class="cardDashboard_container">
+					{{#if substituicaoDireita.length}}
+						{{#each substituicaoDireita}}
+							<div class="cardDashboard_division" aria-current="true" data-substituicao-id={{idSubstituicao}}>
+								<div class="cardDashboard_division_content">
+									<div class="cardDashboard_division_text">
+										<span class="cardDashboard_division_name">{{jogadorEntrou.numeroCamiseta}}<i class="ri-arrow-up-double-line"></i></span>
+										<span class="cardDashboard_division_name"><i class="ri-arrow-down-double-line"></i>{{jogadorSaiu.numeroCamiseta}}</span>
+										{{#is ponto.ladoQuadraTime1 "Esquerda"}}
+											<span class="scorePartidaSubstituicao">{{ponto.ptTime1}}-{{ponto.ptTime2}}</span>
+										{{/is}}
+										{{#isnt ponto.ladoQuadraTime1 "Esquerda"}}
+											<span class="scorePartidaSubstituicao">{{ponto.ptTime2}}-{{ponto.ptTime1}}</span>
+										{{/isnt}}
+									</div>
+								</div>
+							</div>
+						{{/each}}
+					{{else}}
+						<p>Nenhuma substituição disponível.</p>
+					{{/if}}
+				</div>
+				
+			</div>
+		</div>
 </section>
 <section id="substituicao" style="display: none;">
 		<div class="cardPartidaSubstituicao">
