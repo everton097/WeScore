@@ -9,13 +9,20 @@
   top: 0;
   position: sticky;
 }
-.scorePartidaSubstituicao{
+.scorePartidaSubstituicao,
+.scorePartidaCartoes,
+.setPartidaCartoes{
   background-color: var(--nav-bar-a-color-border-solid);
   border-radius: 5px;
   padding: 5px;
   color: #fff;
 }
-.cardPartidaSubstituicao{
+.setPartidaCartoes{
+  display: flex;
+  flex-direction: column;
+}
+.cardPartidaSubstituicao,
+.cardPartidaCartoes{
   width: 50%;
   aspect-ratio: 16 / 9;
   background: #e8eaea;
@@ -28,25 +35,32 @@
   overflow-x: hidden;
 }
 .cardPartidaSubstituicao .cardDashboard_division_text,
-.cardPartidaSubstituicao .container__{
+.cardPartidaSubstituicao .container__,
+.cardPartidaCartoes .container__,
+.cardPartidaCartoes .cardDashboard_division_text{
   display: flex;
   flex-direction: row;
   width: calc(100%);
   justify-content: space-evenly;
 }
-.cardPartidaSubstituicao .cardDashboard_division_text{
+.cardPartidaSubstituicao .cardDashboard_division_text,
+.cardPartidaCartoes .cardDashboard_division_text{
   align-items: center;
 }
 .cardPartidaSubstituicao #substituicaoContainerEsquerda,
-.cardPartidaSubstituicao #substituicaoContainerDireita{
+.cardPartidaSubstituicao #substituicaoContainerDireita,
+.cardPartidaCartoes #cartoesContainerEsquerda,
+.cardPartidaCartoes #cartoesContainerDireita{
   width: calc(100%);
 }
-.cardPartidaSubstituicao .cardDashboard_division_name{
+.cardPartidaSubstituicao .cardDashboard_division_name,
+.cardPartidaCartoes .cardDashboard_division_name{
   width: 40px;
   display: flex;
   align-items: center;
 }
-.cardPartidaSubstituicao .cardDashboard_division_text .cardDashboard_division_name:nth-child(2) {
+.cardPartidaSubstituicao .cardDashboard_division_text .cardDashboard_division_name:nth-child(2),
+.cardPartidaCartoes .cardDashboard_division_text .cardDashboard_division_name:nth-child(2) {
   justify-content: end;
 }
 .ri-arrow-up-double-line{
@@ -56,6 +70,11 @@
 }
 .ri-arrow-down-double-line{
   color: red;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+.ri-smartphone-fill{
+  color: aqua;
   font-size: 1.3rem;
   font-weight: 600;
 }
@@ -255,7 +274,8 @@
     width: 50%;
     transition: 0.5s;
   }
-  .cardPartidaSubstituicao{
+  .cardPartidaSubstituicao,
+  .cardPartidaCartoes{
     width: 50%;
     transition: 0.5s;
   }
@@ -283,7 +303,8 @@
     width: 70%;
     transition: 0.5s;
   }
-  .cardPartidaSubstituicao{
+  .cardPartidaSubstituicao,
+  .cardPartidaCartoes{
     width: 70%;
     transition: 0.5s;
   }
@@ -297,7 +318,8 @@
     width: 80%;
     transition: 0.5s;
   }
-  .cardPartidaSubstituicao{
+  .cardPartidaSubstituicao,
+  .cardPartidaCartoes{
     width: 80%;
     transition: 0.5s;
   }
@@ -321,7 +343,8 @@
     width: 90%;
     transition: 0.5s;
   }
-  .cardPartidaSubstituicao{
+  .cardPartidaSubstituicao,
+  .cardPartidaCartoes{
     width: 90%;
     transition: 0.5s;
   }

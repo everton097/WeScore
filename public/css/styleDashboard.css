@@ -466,11 +466,15 @@
 #timesContainer p,
 #jogadoresContainer p,
 #substituicaoContainerEsquerda p,
-#substituicaoContainerDireita p {
+#substituicaoContainerDireita p,
+#cartoesContainerEsquerda p,
+#cartoesContainerDireita p {
 	justify-content: center;
 }
 #substituicaoContainerEsquerda p,
-#substituicaoContainerDireita p{
+#substituicaoContainerDireita p,
+#cartoesContainerEsquerda p,
+#cartoesContainerDireita p{
 	margin-top: 15px;
 }
 /* inversão do tooltip */
