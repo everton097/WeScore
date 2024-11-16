@@ -19,7 +19,8 @@ let selectedTimes = [],
 	partida = {},
 	jogadoresEmQuadraDireita = [],
 	jogadoresEmQuadraEsquerda = [],
-	idJogadorEntrouSubstituicao = null
+	idJogadorEntrouSubstituicao = null,
+	jogadorSubstituicaoSelecionado = null
 
 // Obtenha todos os botões com atributo 'data-target'
 const alterCards = document.querySelectorAll("[data-target]")
@@ -1128,15 +1129,15 @@ function adicionarJogadoresTitularesEmQuadra(jogadoresTime1, jogadoresTime2, tim
 			const jogadorEmQuadra = lado === "Esquerda"
 				? jogadoresEmQuadraEsquerda
 				: jogadoresEmQuadraDireita
-			const idsjogadorEmQuadra = jogadorEmQuadra.map(jogador => jogador.idJogador)
+				const idsjogadorEmQuadra = jogadorEmQuadra.map(jogador => jogador.idJogador)
 			// Verificar se o jogador está na
 			if (lado === "Esquerda") {
 				if (idsjogadorEmQuadra.includes(jogadorId)) {
-					openModalSubstituicaoJogador(lado, timeEsquerda, id, jogadorId, idsjogadorEmQuadra)
+					openModalSubstituicaoJogador(lado, timeEsquerda, id, jogadorId, jogadorEmQuadra)
 				}
 			} else if (lado === "Direita") {
 				if (idsjogadorEmQuadra.includes(jogadorId)) {
-					openModalSubstituicaoJogador(lado, timeDireita, id, jogadorId, idsjogadorEmQuadra)
+					openModalSubstituicaoJogador(lado, timeDireita, id, jogadorId, jogadorEmQuadra)
 				}
 			}
 		})
@@ -1261,15 +1262,12 @@ function openModalSubstituicaoJogador(lado, idTimeSubstituicao, IndexPosicaoJoga
 	`
 	document.body.appendChild(modalSubstituicao)
 	openModal("modalSubstituicaoJogador", true)
-	renderizarSubstituicaoJogadores(lado, IndexPosicaoJogador, jogadorId, jogadorEmQuadra)
+	renderizarSubstituicaoJogadores(lado)
 	idJogadorEntrouSubstituicao = null
 	// Evento para salvar os dados quando o usuário clica no botão "Salvar"
 	document
 		.getElementById("btnSalvarModalmodalSubstituicaoJogador")
 		.addEventListener("click", function () {
-			console.log(lado, idTimeSubstituicao, IndexPosicaoJogador, jogadorId, idJogadorEntrouSubstituicao, jogadorEmQuadra);
-			console.log("teste de substituição, mandando:", jogadorId, idJogadorEntrouSubstituicao);
-
 			var token = localStorage.getItem("token")
 			const config = {
 				headers: {
@@ -1281,8 +1279,13 @@ function openModalSubstituicaoJogador(lado, idTimeSubstituicao, IndexPosicaoJoga
 			axios
 				.post(`${url}substituicao/create`, { idJogadorSai: jogadorId, idJogadorEntra: idJogadorEntrouSubstituicao }, config)
 				.then((response) => {
-					// Alterando aqui - fazer subistituição do id e do numero do jogador antes de fechar modal
+					const jogadorSai = document.getElementById(`Jogador${lado}${IndexPosicaoJogador}`)
+					jogadorSai.dataset.jogadorId = idJogadorEntrouSubstituicao
+					jogadorSai.innerText = jogadorSubstituicaoSelecionado.numeroCamiseta
 					closeModal("modalSubstituicaoJogador")
+					// Atualiza jogadores em quadra, alterando IdJogador que saiu pelo que entrou, mantendo a posição e	se é libero
+					jogadorEmQuadra[IndexPosicaoJogador].idJogador = idJogadorEntrouSubstituicao;
+					jogadorSubstituicaoSelecionado = null
 				})
 				.catch((error) => {
 					console.error("Erro ao CRIAR SUBSTITUIÇÂO:", error)
@@ -1303,8 +1306,8 @@ function openModalSubstituicaoJogador(lado, idTimeSubstituicao, IndexPosicaoJoga
 				})
 		})
 }
-function renderizarSubstituicaoJogadores(lado, idPosicaoJogador, jogadorId, jogadorEmQuadra) {
-	let JogadoresSubstituicao
+function renderizarSubstituicaoJogadores(lado) {
+	let JogadoresSubstituicao	
 	const container = document.getElementById("jogadoresSubistituicao")
 	container.className = ''
 	container.innerHTML = ''
@@ -1326,7 +1329,7 @@ function renderizarSubstituicaoJogadores(lado, idPosicaoJogador, jogadorId, joga
 		}
 	}
 
-	let jogadorSelecionado = null
+	jogadorSelecionado = null
 
 	JogadoresSubstituicao.forEach((jogador) => {
 		const jogadorDiv = document.createElement("div")
@@ -1350,6 +1353,7 @@ function renderizarSubstituicaoJogadores(lado, idPosicaoJogador, jogadorId, joga
 				if (this.classList.contains("jogadorSelecionado")) {
 					idJogadorEntrouSubstituicao = jogador.idJogador;
 					jogadorSelecionado = this;
+					jogadorSubstituicaoSelecionado = jogador;
 				} else {
 					idJogadorEntrouSubstituicao = null;
 					jogadorSelecionado = null;
@@ -1358,7 +1362,7 @@ function renderizarSubstituicaoJogadores(lado, idPosicaoJogador, jogadorId, joga
 		})
 		container.appendChild(jogadorDiv)
 	})
-
+	//Função considerando o libero
 	function jogadorEstaEmQuadra(jogador) {
 		const idsJogadoresEmQuadraDireita = jogadoresEmQuadraDireita.map(jogador => jogador.idJogador);
 		const idsJogadoresEmQuadraEsquerda = jogadoresEmQuadraEsquerda.map(jogador => jogador.idJogador);
